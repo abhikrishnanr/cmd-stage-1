@@ -5,17 +5,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
+  BarChart3,
   Building2,
-  CheckCircle2,
-  CircleDashed,
   CloudLightning,
   Database,
-  FileCheck2,
-  Filter,
   HeartPulse,
   Landmark,
   MessageSquareText,
-  Network,
   PieChart,
   ReceiptIndianRupee,
   Rocket,
@@ -23,109 +19,127 @@ import {
   ShieldCheck,
   TrendingUp,
   type LucideIcon,
-  UserRoundCheck,
 } from "lucide-react";
-import { stageModules, statusMeta, type ApiStatus } from "@/data/modules";
+import { stageModules } from "@/data/modules";
+import {
+  chartPalette,
+  mainBusinessPerformance,
+  mainDisasterRisk,
+  mainDreamProjects,
+  mainFiscalComparison,
+  mainGuaranteeProgress,
+  mainGrievanceTrend,
+  mainHealthTrend,
+  mainPriorityCards,
+  type DemoChart,
+} from "@/data/demoDashboards";
 import { usePortal } from "./PortalContext";
 import { ModuleIcon } from "./ModuleIcon";
-import { StatusPill } from "./StatusPill";
+import { AnalyticsChart } from "./AnalyticsChart";
 
-type StatusFilter = "all" | ApiStatus;
+const priorityIcons: Record<string, LucideIcon> = {
+  income: TrendingUp,
+  expenditure: ReceiptIndianRupee,
+  budget: PieChart,
+  business: Building2,
+  disaster: CloudLightning,
+  grievance: MessageSquareText,
+  health: HeartPulse,
+  indira: ShieldCheck,
+  dream: Rocket,
+};
 
-const filterOptions: { value: StatusFilter; label: string }[] = [
-  { value: "all", label: "All modules" },
-  { value: "available", label: "API available" },
-  { value: "nic", label: "NIC coordination" },
-  { value: "not-available", label: "Alternative intake" },
-];
-
-interface PriorityView {
-  name: string;
-  note: string;
-  icon: LucideIcon;
-  tone: string;
-  href?: string;
-  primaryLabel?: string;
-  secondaryHref?: string;
-  secondaryLabel?: string;
-  pending?: boolean;
-}
-
-const priorityViews: PriorityView[] = [
+const overviewCharts: DemoChart[] = [
   {
-    name: "Income",
-    note: "Source module: Budget (Income / Revenue)",
-    href: "/modules/budget-income-revenue",
-    icon: TrendingUp,
-    tone: "blue",
+    id: "main-fiscal",
+    title: "Income, expenditure and plan fund",
+    subtitle: "Planned value versus achieved / utilized value (₹ Cr)",
+    type: "bar",
+    xKey: "category",
+    data: mainFiscalComparison,
+    series: [
+      { key: "plan", label: "Plan / target", color: chartPalette.blue },
+      { key: "achieved", label: "Achieved / spent", color: chartPalette.teal },
+    ],
+    unit: "₹ Cr",
   },
   {
-    name: "Expenditure",
-    note: "Source modules: Planspace and Non-Plan Expenditure",
-    href: "/modules/non-plan-expenditure",
-    primaryLabel: "Non-plan expenditure",
-    secondaryHref: "/modules/planspace",
-    secondaryLabel: "Plan expenditure",
-    icon: ReceiptIndianRupee,
-    tone: "violet",
+    id: "main-business",
+    title: "Investments and business delivery",
+    subtitle: "Agency physical versus financial progress",
+    type: "bar",
+    xKey: "agency",
+    data: mainBusinessPerformance,
+    series: [
+      { key: "physical", label: "Physical", color: chartPalette.blue },
+      { key: "financial", label: "Financial", color: chartPalette.amber },
+    ],
+    unit: "%",
   },
   {
-    name: "Budget & Utilization",
-    note: "Source module: Planspace (Plan Expenditure)",
-    href: "/modules/planspace",
-    icon: PieChart,
-    tone: "teal",
+    id: "main-disaster",
+    title: "Disaster monitoring",
+    subtitle: "District composite risk score",
+    type: "bar",
+    xKey: "district",
+    data: mainDisasterRisk,
+    series: [{ key: "risk", label: "Risk score", color: chartPalette.red }],
+    horizontal: true,
   },
   {
-    name: "Investments & Business",
-    note: "K-SWIFT is the related Stage 1 module; investment-detail scope is pending confirmation",
-    href: "/modules/k-swift",
-    icon: Building2,
-    tone: "orange",
-    pending: true,
+    id: "main-health",
+    title: "Health surveillance",
+    subtitle: "Monthly reported disease cases",
+    type: "line",
+    xKey: "month",
+    data: mainHealthTrend,
+    series: [
+      { key: "dengue", label: "Dengue", color: chartPalette.red },
+      { key: "lepto", label: "Leptospirosis", color: chartPalette.amber },
+      { key: "chikungunya", label: "Chikungunya", color: chartPalette.violet },
+    ],
   },
   {
-    name: "Disaster Monitoring",
-    note: "Source module: Disaster Management",
-    href: "/modules/disaster-management",
-    icon: CloudLightning,
-    tone: "red",
+    id: "main-grievances",
+    title: "Grievance and feedback flow",
+    subtitle: "Weekly cases received and resolved",
+    type: "area",
+    xKey: "week",
+    data: mainGrievanceTrend,
+    series: [
+      { key: "received", label: "Received", color: chartPalette.orange },
+      { key: "resolved", label: "Resolved", color: chartPalette.green },
+    ],
   },
   {
-    name: "Grievance & Feedback Monitoring",
-    note: "No Stage 1 data source is confirmed; CMO is shown only as a related integration",
-    href: "/modules/cmo",
-    icon: MessageSquareText,
-    tone: "indigo",
-    pending: true,
+    id: "main-guarantees",
+    title: "Indira Guarantees performance",
+    subtitle: "Progress across six guarantee programmes",
+    type: "bar",
+    xKey: "guarantee",
+    data: mainGuaranteeProgress,
+    series: [{ key: "progress", label: "Progress", color: chartPalette.green }],
+    unit: "%",
+    horizontal: true,
   },
   {
-    name: "Health",
-    note: "Source module: e-Health",
-    href: "/modules/e-health",
-    icon: HeartPulse,
-    tone: "rose",
-  },
-  {
-    name: "Indira Guarantees",
-    note: "Scope and data connection to be confirmed",
-    icon: ShieldCheck,
-    tone: "gold",
-    pending: true,
-  },
-  {
-    name: "Dream Projects",
-    note: "Mission Samudra is the documented linked module; broader portfolio scope is pending",
-    href: "/modules/mission-samudra",
-    icon: Rocket,
-    tone: "cyan",
+    id: "main-dream-projects",
+    title: "Dream Projects",
+    subtitle: "Physical versus financial progress",
+    type: "bar",
+    xKey: "project",
+    data: mainDreamProjects,
+    series: [
+      { key: "physical", label: "Physical", color: chartPalette.blue },
+      { key: "financial", label: "Financial", color: chartPalette.amber },
+    ],
+    unit: "%",
   },
 ];
 
 export function DashboardClient() {
   const { activeRole } = usePortal();
   const [query, setQuery] = useState("");
-  const [status, setStatus] = useState<StatusFilter>("all");
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -141,188 +155,129 @@ export function DashboardClient() {
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    return stageModules.filter((module) => {
-      const matchesStatus = status === "all" || module.apiStatus === status;
-      const haystack = `${module.name} ${module.description} ${module.scope.join(" ")}`.toLowerCase();
-      return matchesStatus && (!normalized || haystack.includes(normalized));
-    });
-  }, [query, status]);
-
-  const available = stageModules.filter((module) => module.apiStatus === "available").length;
-  const nic = stageModules.filter((module) => module.apiStatus === "nic").length;
-  const alternate = stageModules.filter((module) => module.apiStatus === "not-available").length;
+    if (!normalized) return stageModules;
+    return stageModules.filter((module) => `${module.name} ${module.description} ${module.scope.join(" ")}`.toLowerCase().includes(normalized));
+  }, [query]);
 
   return (
-    <div className="page-stack dashboard-page">
-      <section className="dashboard-hero">
+    <div className="page-stack dashboard-page analytics-dashboard">
+      <section className="dashboard-hero analytics-dashboard-hero">
         <div className="hero-pattern" />
         <div className="hero-orb hero-orb-one" />
         <div className="hero-orb hero-orb-two" />
         <div className="hero-content">
-          <div className="hero-kicker"><span>Government of Kerala</span><i /> Stage 1 command view</div>
-          <h1>A focused portfolio for the first ten confirmed modules.</h1>
-          <p>Review documented service scope, data availability and the next integration action without placeholder performance figures.</p>
+          <div className="hero-kicker"><span>Government of Kerala</span><i /> Stage 1 executive dashboard</div>
+          <h1>Kerala at a glance.</h1>
+          <p>Financial performance, public services, guarantees, risks and priority projects in one decision view.</p>
           <div className="hero-role">
             <span className="hero-role-avatar">{activeRole.initials}</span>
             <div><small>Current role view</small><strong>{activeRole.name} · {activeRole.title}</strong><span>{activeRole.focus}</span></div>
           </div>
         </div>
-        <div className="hero-brief">
-          <div className="brief-head"><ShieldCheck size={18} /><span>Scope briefing</span></div>
-          <div className="brief-number">10</div>
-          <strong>confirmed modules</strong>
+        <div className="hero-brief analytics-hero-brief">
+          <span className="demo-data-badge light"><Database size={14} /> Demo data</span>
+          <div className="brief-number">9</div>
+          <strong>executive priority views</strong>
           <div className="brief-rule" />
-          <div className="brief-row"><FileCheck2 size={15} /><span>Requirements mapped</span></div>
-          <div className="brief-row muted"><Database size={15} /><span>Live metric data not connected</span></div>
+          <div className="brief-row"><BarChart3 size={15} /><span>Charts, comparisons and trends</span></div>
+          <div className="brief-row muted"><ShieldCheck size={15} /><span>Seeded from the existing main portal</span></div>
         </div>
       </section>
 
-      <section className="readiness-grid" aria-label="Documented data availability summary">
-        <ReadinessCard icon={<CheckCircle2 />} value={available} label="API available" detail="Ready to begin the documented integration action" tone="green" />
-        <ReadinessCard icon={<Network />} value={nic} label="NIC-coordinated" detail="Credentials and documentation to be obtained" tone="amber" />
-        <ReadinessCard icon={<CircleDashed />} value={alternate} label="Alternative intake" detail="Upload, flat-file or data-entry path required" tone="slate" />
-        <div className="role-focus-card">
-          <div className="role-focus-icon"><UserRoundCheck size={20} /></div>
-          <div><span>Role focus</span><strong>{activeRole.title}</strong><p>{activeRole.focus}</p></div>
-        </div>
-      </section>
-
-      <section className="priority-views" aria-labelledby="priority-views-title">
+      <section className="priority-views executive-priorities" aria-labelledby="priority-views-title">
         <div className="section-heading priority-heading">
           <div>
             <span className="section-kicker">Main dashboard</span>
-            <h2 id="priority-views-title">Priority views</h2>
-            <p>Nine requested views, connected to documented modules where Stage 1 scope exists.</p>
+            <h2 id="priority-views-title">Executive priorities</h2>
+            <p>The nine most prominent measures requested for Stage 1.</p>
           </div>
-          <span className="priority-seal"><Landmark size={15} /> Portfolio entry points</span>
+          <span className="priority-seal"><Landmark size={15} /> Portfolio overview</span>
         </div>
-        <div className="priority-grid">
-          {priorityViews.map((view, index) => {
-            const Icon = view.icon;
-            const hasDualLinks = Boolean(view.href && view.secondaryHref);
-            const card = (
-              <>
-                <div className="priority-card-head">
-                  <span className="priority-order">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="priority-icon"><Icon size={23} /></span>
-                  {view.href && !hasDualLinks && <ArrowUpRight className="priority-arrow" size={18} />}
+        <div className="executive-priority-grid">
+          {mainPriorityCards.map((item, index) => {
+            const Icon = priorityIcons[item.id];
+            return (
+              <Link href={item.href} className={`executive-priority-card tone-${item.tone}`} key={item.id}>
+                <div className="executive-priority-head">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <i><Icon size={20} /></i>
+                  <ArrowUpRight size={17} />
                 </div>
-                <h3>{view.name}</h3>
-                <p>{view.note}</p>
-                <div className="priority-card-foot">
-                  {view.pending ? <span className="confirmation-tag"><CircleDashed size={12} /> Confirmation required</span> : <span className="mapped-tag"><CheckCircle2 size={12} /> Source mapped</span>}
-                  {hasDualLinks && view.href && view.secondaryHref && (
-                    <span className="priority-dual-links">
-                      <Link className="secondary-theme-link" href={view.href}>{view.primaryLabel} <ArrowRight size={12} /></Link>
-                      <Link className="secondary-theme-link" href={view.secondaryHref}>{view.secondaryLabel} <ArrowRight size={12} /></Link>
-                    </span>
-                  )}
-                </div>
-              </>
-            );
-
-            return hasDualLinks ? (
-              <article key={view.name} className={`priority-card priority-${view.tone}`}>{card}</article>
-            ) : view.href ? (
-              <Link key={view.name} href={view.href} className={`priority-card priority-${view.tone}`}>{card}</Link>
-            ) : (
-              <article key={view.name} className={`priority-card priority-${view.tone} pending-card`}>{card}</article>
+                <h3>{item.name}</h3>
+                <strong>{item.value}</strong>
+                <p>{item.detail}</p>
+              </Link>
             );
           })}
         </div>
       </section>
 
-      <section id="modules" className="section-card module-directory">
+      <section className="analytics-section executive-analysis" aria-labelledby="executive-analysis-title">
+        <div className="section-heading analytics-section-heading">
+          <div>
+            <span className="section-kicker">Decision views</span>
+            <h2 id="executive-analysis-title">Performance and trends</h2>
+            <p>Chart-led monitoring across finance, grievances, guarantees and major projects.</p>
+          </div>
+          <span className="demo-source-note"><Database size={14} /> Existing portal seed data</span>
+        </div>
+        <div className="executive-chart-grid">
+          {overviewCharts.map((chart, index) => (
+            <article id={chart.id === "main-guarantees" ? "indira-performance" : undefined} className={`analytics-panel ${index === 0 ? "executive-panel-wide" : ""}`} key={chart.id}>
+              <div className="analytics-panel-head">
+                <div><h3>{chart.title}</h3><p>{chart.subtitle}</p></div>
+                <span>{chart.type === "area" ? "Trend" : "Comparison"}</span>
+              </div>
+              <AnalyticsChart chart={chart} />
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="modules" className="section-card module-directory dashboard-module-directory">
         <div className="section-heading">
           <div>
-            <span className="section-kicker">Stage 1 directory</span>
-            <h2>Confirmed modules</h2>
-            <p>Open a module to review scope, readiness and its integration plan.</p>
+            <span className="section-kicker">Stage 1 modules</span>
+            <h2>Open a detailed dashboard</h2>
+            <p>Each module includes KPI cards, charts, comparisons and a supporting data table.</p>
           </div>
           <span className="result-count">{filtered.length} of {stageModules.length}</span>
         </div>
 
-        <div className="directory-tools">
+        <div className="directory-tools analytics-directory-tools">
           <label className="module-search">
             <Search size={17} />
-            <input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search modules or documented scope" />
+            <input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search dashboards" />
             {query ? <button onClick={() => setQuery("")} type="button">Clear</button> : <kbd>/</kbd>}
           </label>
-          <div className="filter-row" aria-label="Filter by data availability">
-            <Filter size={15} />
-            {filterOptions.map((option) => (
-              <button key={option.value} onClick={() => setStatus(option.value)} className={status === option.value ? "active" : ""}>
-                {option.label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {filtered.length ? (
           <div className="module-grid">
             {filtered.map((module) => (
-              <Link href={`/modules/${module.slug}`} className="module-card" key={module.slug}>
+              <Link href={`/modules/${module.slug}`} className="module-card analytics-module-card" key={module.slug}>
                 <div className="module-card-top">
                   <span className="module-number">{String(module.order).padStart(2, "0")}</span>
-                  <span className="module-card-icon" style={{ color: module.accent, background: `${module.accent}12` }}>
-                    <ModuleIcon name={module.icon} size={23} />
-                  </span>
+                  <span className="module-card-icon" style={{ color: module.accent, background: `${module.accent}12` }}><ModuleIcon name={module.icon} size={23} /></span>
                   <ArrowRight className="module-arrow" size={18} />
                 </div>
                 <h3>{module.name}</h3>
                 <p>{module.description}</p>
-                <div className="module-card-bottom">
-                  <StatusPill status={module.apiStatus} compact />
-                  <span>{module.scope.length} {module.scope.length === 1 ? "scope item" : "scope items"}</span>
-                </div>
+                <div className="module-card-bottom analytics-module-bottom"><span><BarChart3 size={13} /> Open dashboard</span><strong>View <ArrowRight size={13} /></strong></div>
               </Link>
             ))}
           </div>
         ) : (
           <div className="no-results">
-            <Search size={24} />
-            <h3>No matching Stage 1 module</h3>
-            <p>Clear the search or choose a different readiness filter.</p>
-            <button onClick={() => { setQuery(""); setStatus("all"); }}>Reset directory</button>
+            <Search size={24} /><h3>No matching dashboard</h3><p>Clear the search to view all ten Stage 1 modules.</p><button onClick={() => setQuery("")}>Reset search</button>
           </div>
         )}
       </section>
 
-      <section className="section-card integration-register">
-        <div className="section-heading compact">
-          <div>
-            <span className="section-kicker">Implementation reference</span>
-            <h2>Integration register</h2>
-            <p>Documented availability and the next action for each module.</p>
-          </div>
-        </div>
-        <div className="register-table-wrap">
-          <table className="register-table">
-            <thead><tr><th>Module</th><th>Data pathway</th><th>Next documented action</th><th><span className="sr-only">Open</span></th></tr></thead>
-            <tbody>
-              {stageModules.map((module) => (
-                <tr key={module.slug}>
-                  <td><span className="table-index">{String(module.order).padStart(2, "0")}</span><strong>{module.name}</strong></td>
-                  <td><StatusPill status={module.apiStatus} compact /></td>
-                  <td>{module.nextAction}</td>
-                  <td><Link href={`/modules/${module.slug}`} aria-label={`Open ${module.name}`}><ArrowRight size={16} /></Link></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-function ReadinessCard({ icon, value, label, detail, tone }: { icon: React.ReactNode; value: number; label: string; detail: string; tone: string }) {
-  return (
-    <div className={`readiness-card tone-${tone}`}>
-      <div className="readiness-icon">{icon}</div>
-      <div className="readiness-value">{value}</div>
-      <strong>{label}</strong>
-      <p>{detail}</p>
+      <aside className="analytics-provenance dashboard-provenance">
+        <Database size={17} />
+        <div><strong>Data basis</strong><p>All figures are demonstration values carried over from the existing main portal. They show the intended dashboard design and must not be read as a current operational feed.</p></div>
+      </aside>
     </div>
   );
 }

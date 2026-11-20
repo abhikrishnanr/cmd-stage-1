@@ -123,7 +123,7 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
           </Link>
           <div className="topbar-spacer" />
           <div className="scope-chip"><span /> Stage 1</div>
-          <button className="icon-button notification-button" aria-label="No live notifications connected" title="No live notifications connected" disabled>
+          <button className="icon-button notification-button" aria-label="Notifications unavailable in demo" title="Notifications unavailable in demo" disabled>
             <Bell size={18} />
           </button>
           <div className="role-switcher" ref={roleRef}>
