@@ -9,11 +9,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { stageModules } from "@/data/modules";
-import type { CmoData, EcoStatData, IndustryKeraData } from "@/data/departmentSources";
+import type { CmoData, EHealthData, EcoStatData, IndustryKeraData } from "@/data/departmentSources";
 import planspaceJson from "@/data/planspace-source.json";
 import {
   chartPalette, mainDreamProjects, mainGuaranteeProgress,
-  mainHealthTrend, type DemoChart,
+  type DemoChart,
 } from "@/data/demoDashboards";
 import { usePortal } from "./PortalContext";
 import { ModuleIcon } from "./ModuleIcon";
@@ -32,7 +32,7 @@ const planTotals = planspaceJson.at_a_glance;
 const totalPlanOutlay = planTotals.state_outlay + planTotals.css_outlay + planTotals.lsgi_outlay;
 const totalPlanExpense = planTotals.state_expenditure + planTotals.css_expenditure + planTotals.lsgi_expenditure;
 
-export function DashboardClient({ ecoStatData, industryKeraData, cmoData }: { ecoStatData: EcoStatData; industryKeraData: IndustryKeraData; cmoData: CmoData }) {
+export function DashboardClient({ ecoStatData, industryKeraData, cmoData, eHealthData }: { ecoStatData: EcoStatData; industryKeraData: IndustryKeraData; cmoData: CmoData; eHealthData: EHealthData }) {
   const { activeRole } = usePortal();
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -72,7 +72,7 @@ export function DashboardClient({ ecoStatData, industryKeraData, cmoData }: { ec
     { id: "business", name: "Investments & Business", value: `₹${formatNumber(industryKeraData.investment)} Cr`, detail: `${formatNumber(industryKeraData.enterprises)} enterprises`, source: "Year of Enterprises", tone: "good", href: "/modules/k-swift" },
     { id: "disaster", name: "Disaster Monitoring", value: "37 reservoirs", detail: "Daily KSDMA dam bulletin coverage", source: "KSDMA · 25 Nov 2026", tone: "info", href: "/modules/disaster-management" },
     { id: "grievance", name: "Grievance & Feedback", value: formatNumber(cmoData.grievances), detail: `${formatNumber(cmoData.applicationsDisposed)} disposed of ${formatNumber(cmoData.applicationsReceived)} in the processing series`, source: `CMO · ${cmoData.lastUpdatedDisplay}`, tone: "watch", href: "/modules/cmo" },
-    { id: "health", name: "Health", value: "1,114", detail: "eHealth institutions in the existing portal reference", source: "CMO reference", tone: "info", href: "/modules/e-health" },
+    { id: "health", name: "Health", value: formatNumber(eHealthData.institutionsOnboarded), detail: "eHealth institutions; workforce vacancy register prepared for the department feed", source: `eHealth Kerala · ${formatDate(eHealthData.referenceDate)}`, tone: "info", href: "/modules/e-health" },
     { id: "indira", name: "Indira Guarantees", value: "12.54 Cr", detail: "Priyadarshini journeys reported at 97 days", source: "I&PRD · 22 Sep 2026", tone: "good", href: "/modules/ksrtc" },
     { id: "dream", name: "Dream Projects", value: "₹72,115 Cr", detail: "Mission Samudra programme value in the existing portal", source: "CMO reference", tone: "info", href: "/modules/mission-samudra" },
   ];
@@ -102,8 +102,8 @@ export function DashboardClient({ ecoStatData, industryKeraData, cmoData }: { ec
       series: [{ key: "received", label: "Petitions", color: chartPalette.violet }],
     },
     {
-      id: "main-health", title: "Health surveillance", subtitle: "Reported disease cases · existing CMO reference series", type: "line", xKey: "month", data: mainHealthTrend,
-      series: [{ key: "dengue", label: "Dengue", color: chartPalette.red }, { key: "lepto", label: "Leptospirosis", color: chartPalette.amber }, { key: "chikungunya", label: "Chikungunya", color: chartPalette.violet }],
+      id: "main-health", title: "eHealth workload by district", subtitle: `Recorded visits on ${formatDate(eHealthData.referenceDate)} · not a staffing-shortage measure`, type: "bar", xKey: "district", data: eHealthData.dailyDistrictVisits.slice(0, 10).map((row) => ({ ...row, district: shortDistrict(row.district) })),
+      series: [{ key: "visits", label: "Visits", color: chartPalette.red }], horizontal: true,
     },
     {
       id: "main-guarantees", title: "Indira Guarantees", subtitle: "Programme progress · existing CMO reference series", type: "bar", xKey: "guarantee", data: mainGuaranteeProgress,
@@ -142,6 +142,7 @@ export function DashboardClient({ ecoStatData, industryKeraData, cmoData }: { ec
           <Kpi label="Enterprises" value={formatNumber(industryKeraData.enterprises)} detail="Year of Enterprises" tone="good" icon={Building2} />
           <Kpi label="Wholesale commodities" value={formatNumber(ecoStatData.latest.length)} detail={formatDate(ecoStatData.priceDate)} tone="info" icon={ShoppingBasket} />
           <Kpi label="CMO grievances" value={formatNumber(cmoData.grievances)} detail={cmoData.lastUpdatedDisplay} tone="watch" icon={MessageSquareText} />
+          <Kpi label="eHealth daily visits" value={formatNumber(eHealthData.daily.visits)} detail={formatDate(eHealthData.referenceDate)} tone="info" icon={Stethoscope} />
         </div>
       </section>
 
@@ -162,6 +163,7 @@ export function DashboardClient({ ecoStatData, industryKeraData, cmoData }: { ec
           <ReviewItem number="02" title="Source reconciliation" text="Rural Development and General Services show expenditure above outlay in the supplied Planspace file. Confirm classification before using these as performance conclusions." source="Planspace · 23 Nov 2026" tone="risk" />
           <ReviewItem number="03" title="Enterprise delivery" text={`${formatNumber(industryKeraData.enterprises)} enterprises report ₹${formatNumber(industryKeraData.investment)} Cr investment and ${formatNumber(industryKeraData.employment)} employment.`} source={`Industries · checked ${industryKeraData.fetchedAt}`} tone="good" />
           <ReviewItem number="04" title="Disaster data exchange" text="KSDMA routine monitoring and War Room fields are mapped. The dashboard is ready to receive dated rainfall, river, dam, camp, relief and response-team updates." source="Department meeting note and KSDMA formats" tone="info" />
+          <ReviewItem number="05" title="Health workforce requirements" text="The institution-wise register is ready for sanctioned, working and vacant doctor and health-staff posts. The public eHealth source does not publish these workforce values." source={`eHealth Kerala checked ${eHealthData.fetchedAt}`} tone="watch" />
         </div>
       </section>
 
@@ -175,7 +177,7 @@ export function DashboardClient({ ecoStatData, industryKeraData, cmoData }: { ec
       <section className="section-card departmental-feeds">
         <div className="section-heading"><div><span className="section-kicker">Department data streams</span><h2>Fields prepared for department sharing</h2><p>The following sections are included without inventing current values.</p></div></div>
         <div className="feed-field-grid">
-          <FeedCard icon={Stethoscope} title="Health" text="Medical staff availability and vacancies, medicine stock, hospital capacity and disease surveillance." />
+          <FeedCard icon={Stethoscope} title="Health" text="Institution-wise sanctioned, working and vacant doctor and health-staff posts, specialty gaps, leave or deputation and medicine stock." />
           <FeedCard icon={Zap} title="Power" text="Power availability, peak demand, electricity consumption, outages and service-area breakdown." />
           <FeedCard icon={Droplets} title="Water" text="Availability, shortages, supply interruptions, storage and regional coverage." />
           <FeedCard icon={LandPlot} title="Land bank" text="Parcel inventory, district, ownership, extent, infrastructure readiness and constraints." />
@@ -192,6 +194,7 @@ export function DashboardClient({ ecoStatData, industryKeraData, cmoData }: { ec
           <SourceRow area="Priyadarshini" source="Kerala I&PRD 97-day report" date="22 Sep 2026" coverage="Journeys, daily and peak use, zero-ticket value" />
           <SourceRow area="Disaster monitoring" source="KSDMA daily reports and department exchange" date="25–26 Nov 2026" coverage="Reservoir bulletin plus routine and War Room field structure" />
           <SourceRow area="CMO grievances" source="cmo.kerala.gov.in" date={cmoData.lastUpdatedDisplay} coverage="Offices, grievances, CMDRF, petition/application channels, processing and department totals" />
+          <SourceRow area="Health services" source="eHealth Kerala public dashboard" date={formatDate(eHealthData.referenceDate)} coverage="Institutions, registrations, visits, admissions, appointments, prescriptions, lab tests and district workload" />
         </tbody></table></div>
       </section>
 

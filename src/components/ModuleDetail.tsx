@@ -13,7 +13,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { stageModules, type StageModule } from "@/data/modules";
-import type { CmoData, EcoStatData, IndustryKeraData } from "@/data/departmentSources";
+import type { CmoData, EHealthData, EcoStatData, IndustryKeraData } from "@/data/departmentSources";
 import { moduleDashboards, type DemoKpi } from "@/data/demoDashboards";
 import { AnalyticsChart } from "./AnalyticsChart";
 import { ModuleIcon } from "./ModuleIcon";
@@ -25,8 +25,9 @@ import { IndustriesKeraDashboard } from "./modules/IndustriesKeraDashboard";
 import { KsrtcPriyadarshiniDashboard } from "./modules/KsrtcPriyadarshiniDashboard";
 import { KsdmaDashboard } from "./modules/KsdmaDashboard";
 import { CmoDashboard } from "./modules/CmoDashboard";
+import { HealthDashboard } from "./modules/HealthDashboard";
 
-export function ModuleDetail({ module, ecoStatData, industryKeraData, cmoData }: { module: StageModule; ecoStatData?: EcoStatData; industryKeraData?: IndustryKeraData; cmoData?: CmoData }) {
+export function ModuleDetail({ module, ecoStatData, industryKeraData, cmoData, eHealthData }: { module: StageModule; ecoStatData?: EcoStatData; industryKeraData?: IndustryKeraData; cmoData?: CmoData; eHealthData?: EHealthData }) {
   const dashboard = moduleDashboards[module.slug];
   const previous = stageModules[module.order - 2];
   const next = stageModules[module.order];
@@ -37,6 +38,7 @@ export function ModuleDetail({ module, ecoStatData, industryKeraData, cmoData }:
   if (module.slug === "ksrtc") return <KsrtcPriyadarshiniDashboard />;
   if (module.slug === "disaster-management") return <KsdmaDashboard />;
   if (module.slug === "cmo" && cmoData) return <CmoDashboard data={cmoData} />;
+  if (module.slug === "e-health" && eHealthData) return <HealthDashboard data={eHealthData} />;
 
   if (!dashboard) return null;
 

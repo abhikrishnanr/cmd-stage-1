@@ -1056,6 +1056,274 @@
   }
 }
 
+/* Health workforce and eHealth module */
+.health-kpi-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.health-workforce-card {
+  padding: clamp(18px, 2vw, 24px);
+  overflow: hidden;
+  border-top: 4px solid #e11d48;
+  background:
+    radial-gradient(circle at 100% 0, rgba(225, 29, 72, 0.08), transparent 24rem),
+    #fff;
+}
+
+.health-workforce-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.health-workforce-head > div:first-child {
+  max-width: 800px;
+}
+
+.health-workforce-head .section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.health-workforce-head h2 {
+  margin: 7px 0 6px;
+  color: #14224d;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}
+
+.health-workforce-head p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+
+.health-workforce-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 9px;
+}
+
+.health-workforce-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--ribbon), var(--ribbon-dark));
+  box-shadow: 0 8px 20px rgba(224, 36, 94, 0.18);
+  font-size: 10.5px;
+  font-weight: 850;
+}
+
+.health-workforce-method {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 20px 0 14px;
+}
+
+.health-workforce-method > div {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 11px;
+  padding: 13px 14px;
+  color: #15365d;
+  border: 1px solid #dce7f3;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fbff, #fff);
+}
+
+.health-workforce-method > div:nth-child(2) {
+  color: #9f1239;
+  border-color: #ffe0e7;
+  background: linear-gradient(135deg, #fff5f7, #fff);
+}
+
+.health-workforce-method > div:nth-child(3) {
+  color: #92400e;
+  border-color: #fde7bd;
+  background: linear-gradient(135deg, #fffbeb, #fff);
+}
+
+.health-workforce-method svg {
+  flex: 0 0 auto;
+}
+
+.health-workforce-method span,
+.health-service-summary span {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.health-workforce-method small,
+.health-service-summary small {
+  color: #64748b;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.health-workforce-method strong {
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.health-workforce-table table {
+  min-width: 1480px;
+}
+
+.health-empty-row td {
+  padding: 0 !important;
+  background: #fbfdff !important;
+}
+
+.health-empty-row td > div {
+  display: grid;
+  justify-items: center;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 34px 24px;
+  color: #64748b;
+  text-align: center;
+}
+
+.health-empty-row svg {
+  margin-bottom: 9px;
+  color: #f59e0b;
+}
+
+.health-empty-row strong {
+  color: #14224d;
+  font-size: 13px;
+}
+
+.health-empty-row span {
+  margin-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+.health-method-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 13px;
+  padding: 12px 14px;
+  color: #1e3a5f;
+  border: 1px solid #cfe0f2;
+  border-radius: 11px;
+  background: #f2f8ff;
+}
+
+.health-method-note svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: #2563eb;
+}
+
+.health-method-note p {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.health-chart-grid .analytics-panel {
+  min-width: 0;
+}
+
+.health-chart-tall .analytics-chart {
+  height: 430px;
+}
+
+.health-service-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.health-service-summary article {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 11px;
+  padding: 15px;
+  color: #fff;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #082f49, #14532d 78%);
+  box-shadow: 0 10px 24px rgba(13, 92, 67, 0.12);
+}
+
+.health-service-summary article:nth-child(2) { background: linear-gradient(135deg, #3b173f, #7f1d1d); }
+.health-service-summary article:nth-child(3) { background: linear-gradient(135deg, #1e3a8a, #3730a3); }
+.health-service-summary article:nth-child(4) { background: linear-gradient(135deg, #0f4c5c, #0f766e); }
+
+.health-service-summary svg {
+  flex: 0 0 auto;
+  padding: 8px;
+  box-sizing: content-box;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.health-service-summary small {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.health-service-summary strong {
+  overflow: hidden;
+  font-size: clamp(17px, 1.65vw, 24px);
+  font-weight: 900;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1100px) {
+  .health-workforce-head {
+    flex-direction: column;
+  }
+
+  .health-workforce-actions {
+    flex-wrap: wrap;
+  }
+
+  .health-service-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .health-kpi-grid,
+  .health-workforce-method {
+    grid-template-columns: 1fr;
+  }
+
+  .health-chart-tall .analytics-chart {
+    height: 390px;
+  }
+}
+
+@media (max-width: 520px) {
+  .health-workforce-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .health-service-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

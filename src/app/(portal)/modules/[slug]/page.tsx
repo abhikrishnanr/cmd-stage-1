@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ModuleDetail } from "@/components/ModuleDetail";
-import { getCmoData, getEcoStatData, getIndustryKeraData } from "@/data/departmentSources";
+import { getCmoData, getEHealthData, getEcoStatData, getIndustryKeraData } from "@/data/departmentSources";
 import { moduleBySlug, stageModules } from "@/data/modules";
 
 export const revalidate = 1800;
@@ -23,5 +23,6 @@ export default async function ModulePage({ params }: { params: Promise<{ slug: s
   const ecoStatData = slug === "economics-statistics" ? await getEcoStatData() : undefined;
   const industryKeraData = slug === "k-swift" ? await getIndustryKeraData() : undefined;
   const cmoData = slug === "cmo" ? await getCmoData() : undefined;
-  return <ModuleDetail module={module} ecoStatData={ecoStatData} industryKeraData={industryKeraData} cmoData={cmoData} />;
+  const eHealthData = slug === "e-health" ? await getEHealthData() : undefined;
+  return <ModuleDetail module={module} ecoStatData={ecoStatData} industryKeraData={industryKeraData} cmoData={cmoData} eHealthData={eHealthData} />;
 }

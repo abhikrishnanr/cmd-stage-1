@@ -132,17 +132,6 @@ export const mainDisasterRisk = [
   { district: "Kottayam", risk: 60 },
 ];
 
-export const mainHealthTrend = [
-  { month: "Sep", dengue: 120, lepto: 40, chikungunya: 20 },
-  { month: "Oct", dengue: 140, lepto: 55, chikungunya: 18 },
-  { month: "Nov", dengue: 165, lepto: 48, chikungunya: 26 },
-  { month: "Dec", dengue: 210, lepto: 62, chikungunya: 32 },
-  { month: "Jan", dengue: 260, lepto: 70, chikungunya: 28 },
-  { month: "Feb", dengue: 330, lepto: 88, chikungunya: 40 },
-  { month: "Mar", dengue: 410, lepto: 76, chikungunya: 44 },
-  { month: "Apr", dengue: 520, lepto: 94, chikungunya: 52 },
-];
-
 export const mainDreamProjects = [
   { project: "Mission Samudra", physical: 38, financial: 44 },
   { project: "Aviation", physical: 40, financial: 48 },
@@ -240,30 +229,6 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
     ],
     table: { title: "Agency portfolio", subtitle: "Selected delivery agencies", columns: ["Agency", "Projects", "Physical", "Financial", "Delay"], rows: [["KSIDC", "34", "68%", "63%", "18 days"], ["KINFRA", "27", "64%", "58%", "22 days"], ["BPT-PSUs", "95", "54%", "49%", "41 days"], ["Khadi Board", "24", "59%", "52%", "29 days"], ["DIC", "6", "72%", "66%", "12 days"], ["Coir Development", "5", "74%", "69%", "9 days"]] },
     insight: "Execution is the largest pipeline stage; land, finance release and utility readiness account for the highest bottleneck load.",
-  },
-
-  "e-health": {
-    title: "Health dashboard",
-    description: "Disease surveillance, hospital network, capacity and digital health activity.",
-    kpis: [
-      { label: "Active alerts", value: "5", detail: "Disease and capacity alerts", tone: "risk" },
-      { label: "Public hospitals", value: "406", detail: "Hospital-class establishments", tone: "good" },
-      { label: "Private hospitals", value: "1,150", detail: "Hospital-class establishments", tone: "info" },
-      { label: "eHealth institutions", value: "1,114", detail: "Implemented institutions", tone: "good" },
-      { label: "Total visits", value: "24.66 Cr", detail: "Existing CMO portal reference", tone: "info" },
-    ],
-    charts: [
-      { id: "disease-trend", title: "Disease surveillance trend", subtitle: "Monthly reported cases", type: "line", xKey: "month", data: [
-        { month: "Sep", dengue: 120, lepto: 40, chikungunya: 20 }, { month: "Oct", dengue: 140, lepto: 55, chikungunya: 18 },
-        { month: "Nov", dengue: 165, lepto: 48, chikungunya: 26 }, { month: "Dec", dengue: 210, lepto: 62, chikungunya: 32 },
-        { month: "Jan", dengue: 260, lepto: 70, chikungunya: 28 }, { month: "Feb", dengue: 330, lepto: 88, chikungunya: 40 },
-        { month: "Mar", dengue: 410, lepto: 76, chikungunya: 44 }, { month: "Apr", dengue: 520, lepto: 94, chikungunya: 52 },
-      ], series: [{ key: "dengue", label: "Dengue", color: red }, { key: "lepto", label: "Leptospirosis", color: amber }, { key: "chikungunya", label: "Chikungunya", color: violet }] },
-      { id: "hospital-capacity", title: "Hospital bed capacity", subtitle: "Occupied versus available beds", type: "bar", xKey: "resource", data: [{ resource: "ICU beds", occupied: 3108, available: 1092 }, { resource: "General beds", occupied: 27400, available: 11200 }], series: [{ key: "occupied", label: "Occupied", color: pink, stackId: "capacity" }, { key: "available", label: "Available", color: green, stackId: "capacity" }] },
-      { id: "institution-mix", title: "eHealth institution mix", subtitle: "Implemented facilities by type", type: "bar", xKey: "type", data: [{ type: "Medical colleges", value: 19 }, { type: "DH / GH", value: 33 }, { type: "Taluk", value: 85 }, { type: "CHC", value: 102 }, { type: "PHC / FHC", value: 578 }, { type: "Urban PHC", value: 99 }, { type: "Specialty", value: 16 }, { type: "Other", value: 182 }], series: [{ key: "value", label: "Institutions", color: teal }] },
-    ],
-    table: { title: "Health alerts", subtitle: "Alert records retained from the existing CMO portal", columns: ["Alert", "District", "Signal"], rows: [["Dengue threshold breached", "Palakkad", "Critical"], ["Leptospirosis cluster", "Alappuzha / Kottayam", "Watch"], ["ICU occupancy at 91%", "Kozhikode", "Watch"], ["Anti-snake venom below two weeks", "Wayanad", "Critical"]] },
-    insight: "Dengue shows the steepest growth in the reference surveillance series, while ICU use remains the tightest hospital-capacity constraint.",
   },
 
   ksrtc: {

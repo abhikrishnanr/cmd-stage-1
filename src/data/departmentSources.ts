@@ -106,6 +106,53 @@ export type CmoData = {
   sourceUrl: string;
 };
 
+export type EHealthInstitution = {
+  id: string;
+  name: string;
+  type: string;
+  district: string;
+  startDate: string;
+};
+
+export type EHealthData = {
+  institutionsOnboarded: number;
+  registrations: number;
+  visits: number;
+  inpatientAdmissions: number;
+  inpatientDischarges: number;
+  onlineAppointments: number;
+  onlineConsultations: number;
+  prechecks: number;
+  diagnoses: number;
+  prescriptions: number;
+  labTests: number;
+  memberRegistrations: number;
+  houseRegistrations: number;
+  daily: {
+    registrations: number;
+    visits: number;
+    inpatientAdmissions: number;
+    inpatientDischarges: number;
+    onlineAppointments: number;
+    onlineConsultations: number;
+    prechecks: number;
+    diagnoses: number;
+    prescriptions: number;
+    labTests: number;
+  };
+  dailyDistrictVisits: Array<{ district: string; visits: number }>;
+  facilityMix: Array<{ facility: string; institutions: number }>;
+  districtCoverage: Array<{ district: string; institutions: number }>;
+  commissioningTrend: Array<{ year: string; institutions: number }>;
+  recentInstitutions: EHealthInstitution[];
+  referenceDate: string;
+  portalLastModified: string;
+  fetchedAt: string;
+  sourceUrl: string;
+  publicWorkforceData: boolean;
+  sourceMode: "live" | "official-snapshot";
+};
+
 type EcoStatApiRecord = {
   date?: string;
   dim_1_name?: string;
@@ -129,6 +176,7 @@ const ECOSTAT_BASE = "https://www.ecostat.kerala.gov.in/api/data-subset";
 const YEAR_OF_ENTERPRISES_URL = "https://yearofenterprises.kerala.gov.in/index.php/public_dashboard";
 const KERA_BASE = "https://www.keraplantation.kerala.gov.in/public/index.php/public_scheme_dashboard";
 const CMO_DASHBOARD_URL = "https://cmo.kerala.gov.in/dashboard-en.php";
+const EHEALTH_DASHBOARD_URL = "https://dashboard.ehealth.kerala.gov.in/index.php/Init";
 
 export async function getEcoStatData(): Promise<EcoStatData> {
   const fetchedAt = indiaTimestamp();
@@ -234,6 +282,49 @@ export async function getCmoData(): Promise<CmoData> {
   } catch {
     return cmoReferenceData;
   }
+}
+
+export async function getEHealthData(): Promise<EHealthData> {
+  const fetchedAt = indiaTimestamp();
+  try {
+    const response = await fetch(EHEALTH_DASHBOARD_URL, {
+      next: { revalidate: 1800 },
+      headers: {
+        Accept: "text/html",
+        "User-Agent": "Kerala CM Dashboard Stage 1",
+      },
+    });
+    if (!response.ok) throw new Error(`Source returned ${response.status}`);
+
+    const html = await response.text();
+    const referenceDate = html.match(/id="end_date" value="(\d{4}-\d{2}-\d{2})"/i)?.[1] || "2026-11-25";
+    const form = { frm_dt: referenceDate, to_dt: referenceDate, dist_id: "0" };
+    const [dailyHtml, permanentVisitHtml, temporaryVisitHtml] = await Promise.all([
+      postEHealthHtml("ShowProjStats", form),
+      postEHealthHtml("ShowProjStatsDist", { ...form, ind_id: "PID" }),
+      postEHealthHtml("ShowProjStatsDist", { ...form, ind_id: "TID" }),
+    ]);
+
+    return parseEHealthDashboard(html, dailyHtml, permanentVisitHtml, temporaryVisitHtml, fetchedAt);
+  } catch {
+    return eHealthReferenceData(fetchedAt);
+  }
+}
+
+async function postEHealthHtml(endpoint: string, values: Record<string, string>) {
+  const response = await fetch(`${EHEALTH_DASHBOARD_URL}/${endpoint}`, {
+    method: "POST",
+    next: { revalidate: 1800 },
+    headers: {
+      Accept: "text/html",
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "User-Agent": "Kerala CM Dashboard Stage 1",
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    body: new URLSearchParams(values),
+  });
+  if (!response.ok) throw new Error(`eHealth ${endpoint} returned ${response.status}`);
+  return response.text();
 }
 
 async function fetchJson<T>(url: string, init: RequestInit = {}): Promise<T> {
@@ -346,6 +437,135 @@ function parseCmoDashboard(html: string): CmoData {
   };
 }
 
+function parseEHealthDashboard(
+  html: string,
+  dailyHtml: string,
+  permanentVisitHtml: string,
+  temporaryVisitHtml: string,
+  fetchedAt: string,
+): EHealthData {
+  const withoutComments = html.replace(/<!--[\s\S]*?-->/g, "");
+  const institutions = [...withoutComments.matchAll(/<tr role="row"[^>]*hospital_id=['"]?(\d+)['"]?[^>]*>([\s\S]*?)<\/tr>/gi)]
+    .map((match): EHealthInstitution | null => {
+      const cells = [...match[2].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((cell) => cleanHtmlText(cell[1]));
+      const startDate = match[2].match(/data-sort=['"](\d{4}-\d{2}-\d{2})['"]/i)?.[1] || "";
+      if (cells.length < 4 || !startDate) return null;
+      return { id: match[1], name: cells[0], type: cells[1], district: titleCase(cells[2]), startDate };
+    })
+    .filter((row): row is EHealthInstitution => Boolean(row));
+
+  if (!institutions.length) throw new Error("No institution rows found in eHealth source");
+
+  const districtCounts = countBy(institutions, (row) => row.district);
+  const yearCounts = countBy(institutions, (row) => row.startDate.slice(0, 4));
+  const smallBoxMatches = [...withoutComments.matchAll(/<h3 class="counter-count">\s*([\d,]+)\s*<\/h3>[\s\S]{0,500}?<p>\s*([^<]+?)\s*<\/p>/gi)];
+  const facilityLabels = new Set(["Medical College Hospitals", "DHs / GHs", "Taluk Hospitals", "CHCs", "PHCs / FHCs", "Urban PHC", "Specialty Hospital", "Public Health Labs", "Others"]);
+  const facilityMix = smallBoxMatches
+    .map((match) => ({ facility: cleanHtmlText(match[2]), institutions: numberFromText(match[1]) }))
+    .filter((row) => facilityLabels.has(row.facility));
+
+  const permanentVisits = readDistrictTable(permanentVisitHtml);
+  const temporaryVisits = readDistrictTable(temporaryVisitHtml);
+  const dailyDistrictVisits = [...new Set([...permanentVisits.keys(), ...temporaryVisits.keys()])]
+    .map((district) => ({ district, visits: (permanentVisits.get(district) || 0) + (temporaryVisits.get(district) || 0) }))
+    .sort((a, b) => b.visits - a.visits);
+
+  return {
+    institutionsOnboarded: institutions.length,
+    registrations: readInfoBoxMetric(withoutComments, "Total Registrations"),
+    visits: readInfoBoxMetric(withoutComments, "Total Visits"),
+    inpatientAdmissions: readInfoBoxMetric(withoutComments, "Inpatient Admissions"),
+    inpatientDischarges: readInfoBoxMetric(withoutComments, "Inpatient Discharges"),
+    onlineAppointments: readCardMetricById(withoutComments, "onvisitsCardBox"),
+    onlineConsultations: readCardMetricById(withoutComments, "onconsCardBox"),
+    prechecks: readInfoBoxMetric(withoutComments, "Precheck"),
+    diagnoses: readInfoBoxMetric(withoutComments, "Diagnosis"),
+    prescriptions: readInfoBoxMetric(withoutComments, "Prescriptions"),
+    labTests: readInfoBoxMetric(withoutComments, "Lab Tests"),
+    memberRegistrations: readInfoBoxMetric(withoutComments, "Member Registrations"),
+    houseRegistrations: readInfoBoxMetric(withoutComments, "House Registrations"),
+    daily: {
+      registrations: readInfoBoxMetric(dailyHtml, "Total Registrations"),
+      visits: readInfoBoxMetric(dailyHtml, "Total Visits"),
+      inpatientAdmissions: readInfoBoxMetric(dailyHtml, "Inpatient Admissions"),
+      inpatientDischarges: readInfoBoxMetric(dailyHtml, "Inpatient Discharges"),
+      onlineAppointments: readCardMetricById(dailyHtml, "onvisitsCardBox2"),
+      onlineConsultations: readCardMetricById(dailyHtml, "onconsCardBox2"),
+      prechecks: readInfoBoxMetric(dailyHtml, "Precheck"),
+      diagnoses: readInfoBoxMetric(dailyHtml, "Diagnosis"),
+      prescriptions: readInfoBoxMetric(dailyHtml, "Prescriptions"),
+      labTests: readInfoBoxMetric(dailyHtml, "Lab Tests"),
+    },
+    dailyDistrictVisits,
+    facilityMix: facilityMix.length ? facilityMix : eHealthReferenceData(fetchedAt).facilityMix,
+    districtCoverage: [...districtCounts.entries()]
+      .map(([district, count]) => ({ district, institutions: count }))
+      .sort((a, b) => b.institutions - a.institutions),
+    commissioningTrend: [...yearCounts.entries()]
+      .map(([year, count]) => ({ year, institutions: count }))
+      .sort((a, b) => a.year.localeCompare(b.year)),
+    recentInstitutions: [...institutions].sort((a, b) => b.startDate.localeCompare(a.startDate)).slice(0, 12),
+    referenceDate: withoutComments.match(/id="end_date" value="(\d{4}-\d{2}-\d{2})"/i)?.[1] || "2026-11-25",
+    portalLastModified: cleanHtmlText(withoutComments.match(/Site Last Modified On:\s*([^<]+)/i)?.[1] || ""),
+    fetchedAt,
+    sourceUrl: EHEALTH_DASHBOARD_URL,
+    publicWorkforceData: /(?:doctor|vacanc(?:y|ies)|sanctioned strength|medical officer|nurs(?:e|ing))/i.test(withoutComments),
+    sourceMode: "live",
+  };
+}
+
+function readInfoBoxMetric(html: string, label: string) {
+  const normalizedLabel = label.toLowerCase();
+  for (const match of html.matchAll(/<div class="info-box-content">([\s\S]*?)<\/div>/gi)) {
+    const text = cleanHtmlText(match[1]).toLowerCase();
+    if (!text.startsWith(normalizedLabel)) continue;
+    const value = match[1].match(/info-box-number[^>]*>\s*([\d,]+)/i)?.[1];
+    return numberFromText(value);
+  }
+  return 0;
+}
+
+function readCardMetricById(html: string, id: string) {
+  const index = html.indexOf(`id="${id}"`);
+  if (index < 0) return 0;
+  return numberFromText(html.slice(index, index + 1800).match(/info-box-number[^>]*>\s*([\d,]+)/i)?.[1]);
+}
+
+function readDistrictTable(html: string) {
+  const tableStart = html.indexOf('id="inst_table"');
+  const tableEnd = tableStart >= 0 ? html.indexOf("</table>", tableStart) : -1;
+  const tableHtml = tableStart >= 0 && tableEnd >= 0 ? html.slice(tableStart, tableEnd + 8) : "";
+  const rows = new Map<string, number>();
+  for (const match of tableHtml.matchAll(/<tr[^>]*>\s*<td[^>]*>\s*([^<]+?)\s*<\/td>\s*<td[^>]*>\s*([\d,]+)\s*<\/td>\s*<\/tr>/gi)) {
+    rows.set(titleCase(cleanHtmlText(match[1])), numberFromText(match[2]));
+  }
+  return rows;
+}
+
+function cleanHtmlText(value: string) {
+  return value
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&#0*39;|&apos;/gi, "'")
+    .replace(/&quot;/gi, '"')
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function titleCase(value: string) {
+  return value.toLowerCase().replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+function countBy<T>(rows: T[], keyFor: (row: T) => string) {
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    const key = keyFor(row);
+    counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  return counts;
+}
+
 function readHeadline(html: string, label: string) {
   const labelIndex = html.indexOf(label);
   if (labelIndex < 0) return 0;
@@ -445,6 +665,103 @@ function ecoStatReferenceData(fetchedAt: string): EcoStatData {
     monthlySourceName: "MI: Monthly State average prices of commodities, time series",
     priceDate: "2026-11-25",
     fetchedAt,
+  };
+}
+
+function eHealthReferenceData(fetchedAt: string): EHealthData {
+  return {
+    institutionsOnboarded: 1163,
+    registrations: 108783369,
+    visits: 283175211,
+    inpatientAdmissions: 2217266,
+    inpatientDischarges: 2006973,
+    onlineAppointments: 2808812,
+    onlineConsultations: 749537,
+    prechecks: 59151036,
+    diagnoses: 132870809,
+    prescriptions: 88261313,
+    labTests: 32646427,
+    memberRegistrations: 25955998,
+    houseRegistrations: 6835747,
+    daily: {
+      registrations: 46992,
+      visits: 269954,
+      inpatientAdmissions: 1423,
+      inpatientDischarges: 1526,
+      onlineAppointments: 4942,
+      onlineConsultations: 1429,
+      prechecks: 58664,
+      diagnoses: 119606,
+      prescriptions: 79276,
+      labTests: 31302,
+    },
+    dailyDistrictVisits: [
+      { district: "Thiruvananthapuram", visits: 55410 },
+      { district: "Malappuram", visits: 31213 },
+      { district: "Kozhikode", visits: 27815 },
+      { district: "Ernakulam", visits: 26575 },
+      { district: "Thrissur", visits: 24059 },
+      { district: "Kottayam", visits: 16272 },
+      { district: "Kannur", visits: 15738 },
+      { district: "Palakkad", visits: 14537 },
+      { district: "Alappuzha", visits: 14270 },
+      { district: "Kollam", visits: 12063 },
+      { district: "Wayanad", visits: 11652 },
+      { district: "Kasaragod", visits: 9217 },
+      { district: "Pathanamthitta", visits: 6858 },
+      { district: "Idukki", visits: 4275 },
+    ],
+    facilityMix: [
+      { facility: "Medical College Hospitals", institutions: 19 },
+      { facility: "DHs / GHs", institutions: 33 },
+      { facility: "Taluk Hospitals", institutions: 85 },
+      { facility: "CHCs", institutions: 115 },
+      { facility: "PHCs / FHCs", institutions: 599 },
+      { facility: "Urban PHC", institutions: 99 },
+      { facility: "Specialty Hospital", institutions: 16 },
+      { facility: "Public Health Labs", institutions: 4 },
+      { facility: "Others", institutions: 193 },
+    ],
+    districtCoverage: [
+      { district: "Thiruvananthapuram", institutions: 158 },
+      { district: "Ernakulam", institutions: 140 },
+      { district: "Thrissur", institutions: 117 },
+      { district: "Malappuram", institutions: 113 },
+      { district: "Kozhikode", institutions: 93 },
+      { district: "Palakkad", institutions: 82 },
+      { district: "Kannur", institutions: 76 },
+      { district: "Kollam", institutions: 75 },
+      { district: "Alappuzha", institutions: 72 },
+      { district: "Kottayam", institutions: 70 },
+      { district: "Pathanamthitta", institutions: 44 },
+      { district: "Wayanad", institutions: 44 },
+      { district: "Kasaragod", institutions: 43 },
+      { district: "Idukki", institutions: 36 },
+    ],
+    commissioningTrend: [
+      { year: "2016", institutions: 10 }, { year: "2017", institutions: 3 },
+      { year: "2018", institutions: 19 }, { year: "2019", institutions: 57 },
+      { year: "2020", institutions: 86 }, { year: "2021", institutions: 152 },
+      { year: "2022", institutions: 161 }, { year: "2023", institutions: 114 },
+      { year: "2024", institutions: 65 }, { year: "2025", institutions: 408 },
+      { year: "2026", institutions: 88 },
+    ],
+    recentInstitutions: [
+      { id: "699", name: "PRIMARY HEALTH CENTRE THRIKKAKARA", type: "Primary Health Centre", district: "Ernakulam", startDate: "2026-11-19" },
+      { id: "1163", name: "URBAN HEALTH AND WELLNESS CENTRE KALLEKKAD", type: "Urban Health Wellness Centre", district: "Palakkad", startDate: "2026-11-18" },
+      { id: "1161", name: "URBAN HEALTH AND WELLNESS CENTRE PUTHUPALLI STREET", type: "Urban Health Wellness Centre", district: "Palakkad", startDate: "2026-11-18" },
+      { id: "1160", name: "URBAN HEALTH AND WELLNESS CENTER MANALANCHERI", type: "Urban Health Wellness Centre", district: "Palakkad", startDate: "2026-11-18" },
+      { id: "1162", name: "URBAN HEALTH AND WELLNESS CENTRE VITHUNNI", type: "Urban Health Wellness Centre", district: "Palakkad", startDate: "2026-11-18" },
+      { id: "588", name: "PRIMARY HEALTH CENTRE NEDUMBASSERY", type: "Primary Health Centre", district: "Ernakulam", startDate: "2026-11-17" },
+      { id: "263", name: "COMMUNITY HEALTH CENTRE VARAPETTY", type: "Block Family Health Centre", district: "Ernakulam", startDate: "2026-11-14" },
+      { id: "226", name: "COMMUNITY HEALTH CENTRE PAMPAKUDA", type: "Community Health Centre", district: "Ernakulam", startDate: "2026-11-07" },
+    ],
+    referenceDate: "2026-11-25",
+    portalLastModified: "16 Nov 2026 · 1:48 PM",
+    fetchedAt,
+    sourceUrl: EHEALTH_DASHBOARD_URL,
+    publicWorkforceData: false,
+    sourceMode: "official-snapshot",
   };
 }
 
