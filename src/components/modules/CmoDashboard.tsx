@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { AnalyticsChart } from "@/components/AnalyticsChart";
 import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
+import { SignalBadge } from "@/components/SignalBadge";
 import type { CmoData } from "@/data/departmentSources";
 import { chartPalette, type DemoChart } from "@/data/demoDashboards";
 
@@ -141,13 +142,14 @@ export function CmoDashboard({ data }: { data: CmoData }) {
               {data.departments.map((row) => {
                 const pending = Math.max(row.received - row.disposed, 0);
                 const rate = row.received ? (row.disposed / row.received) * 100 : 0;
+                const pendingRate = row.received ? (pending / row.received) * 100 : 0;
                 return (
                   <tr key={row.department}>
                     <td><strong>{row.department}</strong></td>
                     <td>{formatNumber(row.received)}</td>
-                    <td>{formatNumber(row.disposed)}</td>
-                    <td>{formatNumber(pending)}</td>
-                    <td>{rate.toFixed(2)}%</td>
+                    <td><SignalBadge value={formatNumber(row.disposed)} tone="good" force /></td>
+                    <td><SignalBadge value={formatNumber(pending)} tone={pendingRate >= 50 ? "risk" : pendingRate >= 25 ? "watch" : "info"} force /></td>
+                    <td><SignalBadge value={`${rate.toFixed(2)}%`} context="Disposal rate" /></td>
                   </tr>
                 );
               })}

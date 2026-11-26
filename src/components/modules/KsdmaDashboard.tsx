@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { AnalyticsChart } from "@/components/AnalyticsChart";
 import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
+import { SignalBadge } from "@/components/SignalBadge";
 type ChartSpec = Parameters<typeof AnalyticsChart>[0]["chart"];
 type SignalTone = "good" | "watch" | "risk" | "info";
 
@@ -199,7 +200,7 @@ function RoutineMonitoring() {
         <div className="analytics-table-wrap">
           <table className="analytics-table">
             <thead><tr><th>Data stream</th><th>Fields</th><th>Frequency</th><th>Current position</th></tr></thead>
-            <tbody>{routineStreams.map((row) => <tr key={row[0]}>{row.map((cell, index) => <td key={cell}>{index === 0 ? <strong>{cell}</strong> : cell}</td>)}</tr>)}</tbody>
+            <tbody>{routineStreams.map((row) => <tr key={row[0]}>{row.map((cell, index) => <td key={cell}>{index === 0 ? <strong>{cell}</strong> : index === 3 ? <SignalBadge value={cell} context="Current position" /> : cell}</td>)}</tr>)}</tbody>
           </table>
         </div>
       </section>
@@ -216,9 +217,9 @@ function RoutineMonitoring() {
           <table className="analytics-table">
             <thead><tr><th>Weather and rainfall</th><th>Water and coast</th><th>Public safety</th></tr></thead>
             <tbody>
-              <tr><td><strong>Rainfall warning</strong></td><td><strong>Flood warning</strong></td><td><strong>Lightning warning</strong></td></tr>
-              <tr><td>Strong-wind warning</td><td>Dam-level warning</td><td>Temperature warning</td></tr>
-              <tr><td>UV warning</td><td>High-wave warning</td><td>Fishermen warning</td></tr>
+              <tr><td><WarningLabel value="Rainfall warning" /></td><td><WarningLabel value="Flood warning" /></td><td><WarningLabel value="Lightning warning" /></td></tr>
+              <tr><td><WarningLabel value="Strong-wind warning" /></td><td><WarningLabel value="Dam-level warning" /></td><td><WarningLabel value="Temperature warning" /></td></tr>
+              <tr><td><WarningLabel value="UV warning" /></td><td><WarningLabel value="High-wave warning" /></td><td><WarningLabel value="Fishermen warning" /></td></tr>
             </tbody>
           </table>
         </div>
@@ -274,6 +275,10 @@ function ResponseCard({ icon, title, copy }: { icon: React.ReactNode; title: str
       </div>
     </article>
   );
+}
+
+function WarningLabel({ value }: { value: string }) {
+  return <span className="warning-category-label"><ShieldAlert size={14} />{value}</span>;
 }
 
 function Kpi({ label, value, detail, tone }: { label: string; value: string; detail: string; tone: SignalTone }) {

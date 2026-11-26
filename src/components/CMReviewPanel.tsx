@@ -5,7 +5,10 @@ import {
   AudioLines,
   CalendarDays,
   CheckCircle2,
+  CircleAlert,
+  Clock3,
   FileText,
+  Gauge,
   Mic,
   Paperclip,
   Pause,
@@ -14,6 +17,7 @@ import {
   Send,
   Square,
   Trash2,
+  TriangleAlert,
   X,
 } from "lucide-react";
 import { portalRoles } from "@/data/roles";
@@ -21,6 +25,7 @@ import { portalRoles } from "@/data/roles";
 type RecorderState = "idle" | "recording" | "recorded";
 
 const priorities = ["Critical", "High", "Medium", "Watch"] as const;
+const priorityIcons = { Critical: CircleAlert, High: TriangleAlert, Medium: Gauge, Watch: Clock3 };
 const responseTypes = [
   "Brief note",
   "Action taken report",
@@ -112,9 +117,10 @@ export function CMReviewPanel({ open, onClose, initialTitle = "" }: { open: bool
 
               <Field label="Priority">
                 <div className="review-priorities" role="group" aria-label="Priority">
-                  {priorities.map((item) => (
-                    <button type="button" key={item} className={priority === item ? "active" : ""} data-priority={item.toLowerCase()} onClick={() => setPriority(item)}>{item}</button>
-                  ))}
+                  {priorities.map((item) => {
+                    const Icon = priorityIcons[item];
+                    return <button type="button" key={item} className={priority === item ? "active" : ""} data-priority={item.toLowerCase()} onClick={() => setPriority(item)}><Icon size={13} />{item}</button>;
+                  })}
                 </div>
               </Field>
 

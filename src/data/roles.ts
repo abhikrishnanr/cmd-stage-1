@@ -18,9 +18,9 @@ export const portalRoles: PortalRole[] = [
   },
   {
     id: "chief-secretary",
-    name: "Dr. A. Jayathilak IAS",
+    name: "Bishwanath Sinha IAS",
     title: "Chief Secretary",
-    initials: "AJ",
+    initials: "BS",
     kind: "secretary",
     focus: "Cross-department performance and coordination",
   },

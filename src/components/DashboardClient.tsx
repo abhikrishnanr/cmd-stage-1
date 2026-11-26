@@ -18,6 +18,7 @@ import {
 import { usePortal } from "./PortalContext";
 import { ModuleIcon } from "./ModuleIcon";
 import { AnalyticsChart } from "./AnalyticsChart";
+import { SignalBadge, type DataSignalTone } from "./SignalBadge";
 
 const priorityIcons: Record<string, LucideIcon> = {
   income: TrendingUp, expenditure: ReceiptIndianRupee, budget: PieChart,
@@ -207,8 +208,9 @@ function Kpi({ label, value, detail, tone, icon: Icon }: { label: string; value:
   return <article className={`analytics-kpi tone-${tone}`}><div className="analytics-kpi-top"><span>{label}</span><Icon size={16} /></div><strong>{value}</strong><div className="analytics-kpi-bottom"><span>{detail}</span></div></article>;
 }
 
-function ReviewItem({ number, title, text, source, tone }: { number: string; title: string; text: string; source: string; tone: string }) {
-  return <article className={`cm-review-item tone-${tone}`}><span>{number}</span><div><h3>{title}</h3><p>{text}</p><small>{source}</small><button type="button" className="inline-review-button" onClick={() => openReview(`Review: ${title}`)}><Mic size={12} /> Send for review</button></div></article>;
+function ReviewItem({ number, title, text, source, tone }: { number: string; title: string; text: string; source: string; tone: DataSignalTone }) {
+  const signalLabel = tone === "risk" ? "Critical" : tone === "watch" ? "Watch" : tone === "good" ? "On track" : "Information";
+  return <article className={`cm-review-item tone-${tone}`}><span>{number}</span><div><div className="review-title-row"><h3>{title}</h3><SignalBadge value={signalLabel} tone={tone} force /></div><p>{text}</p><small>{source}</small><button type="button" className="inline-review-button" onClick={() => openReview(`Review: ${title}`)}><Mic size={12} /> Send for review</button></div></article>;
 }
 
 function FeedCard({ icon: Icon, title, text }: { icon: LucideIcon; title: string; text: string }) {

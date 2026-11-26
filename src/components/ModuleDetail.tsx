@@ -18,6 +18,7 @@ import { moduleDashboards, type DemoKpi } from "@/data/demoDashboards";
 import { AnalyticsChart } from "./AnalyticsChart";
 import { ModuleIcon } from "./ModuleIcon";
 import { ModuleHeaderMeta } from "./ModuleHeaderMeta";
+import { SignalBadge } from "./SignalBadge";
 import { PlanspaceDashboard } from "./modules/PlanspaceDashboard";
 import { EcoStatDashboard } from "./modules/EcoStatDashboard";
 import { IndustriesKeraDashboard } from "./modules/IndustriesKeraDashboard";
@@ -105,7 +106,11 @@ export function ModuleDetail({ module, ecoStatData, industryKeraData, cmoData }:
             <tbody>
               {dashboard.table.rows.map((row, rowIndex) => (
                 <tr key={`${module.slug}-${rowIndex}`}>
-                  {row.map((cell, cellIndex) => <td key={`${cell}-${cellIndex}`}>{cellIndex === 0 ? <strong>{cell}</strong> : cell}</td>)}
+                  {row.map((cell, cellIndex) => (
+                    <td key={`${cell}-${cellIndex}`}>
+                      {cellIndex === 0 ? <strong>{cell}</strong> : <SignalBadge value={cell} context={dashboard.table.columns[cellIndex]} />}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { AnalyticsChart } from "@/components/AnalyticsChart";
 import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
+import { SignalBadge } from "@/components/SignalBadge";
 type ChartSpec = Parameters<typeof AnalyticsChart>[0]["chart"];
 type SignalTone = "good" | "watch" | "risk" | "info";
 
@@ -167,7 +168,7 @@ export function KsrtcPriyadarshiniDashboard() {
         <div className="analytics-table-wrap">
           <table className="analytics-table">
             <thead><tr><th>Dashboard view</th><th>Required fields</th><th>Current position</th></tr></thead>
-            <tbody>{requestedViews.map((row) => <tr key={row[0]}>{row.map((cell, index) => <td key={cell}>{index === 0 ? <strong>{cell}</strong> : cell}</td>)}</tr>)}</tbody>
+            <tbody>{requestedViews.map((row) => <tr key={row[0]}>{row.map((cell, index) => <td key={cell}>{index === 0 ? <strong>{cell}</strong> : index === 2 ? <SignalBadge value={cell} context="Current position" /> : cell}</td>)}</tr>)}</tbody>
           </table>
         </div>
       </section>

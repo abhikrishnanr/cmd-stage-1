@@ -27,6 +27,7 @@ import {
   YAxis,
 } from "recharts";
 import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
+import { SignalBadge } from "@/components/SignalBadge";
 import planspaceJson from "@/data/planspace-source.json";
 
 type MonthRecord = {
@@ -507,10 +508,10 @@ function SortHeader({ label, field, current, direction, onSort }: { label: strin
 }
 
 function UtilisationCell({ value }: { value: number }) {
-  const color = value > 100 ? "#c64555" : value < 20 ? amber : value >= 50 ? teal : blue;
+  const color = value > 100 ? "#e11d48" : value >= 75 ? "#16a34a" : value >= 50 ? "#f59e0b" : "#e11d48";
   return (
     <div style={{ minWidth: 104 }}>
-      <strong style={{ color }}>{percent(value)}</strong>
+      <SignalBadge value={percent(value)} context="Utilisation" />
       <div style={{ height: 4, width: 86, marginTop: 5, overflow: "hidden", background: "#e9edf3", borderRadius: 99 }}>
         <span style={{ display: "block", width: `${Math.min(value, 100)}%`, height: "100%", background: color, borderRadius: 99 }} />
       </div>
