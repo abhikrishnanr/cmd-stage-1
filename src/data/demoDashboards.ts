@@ -176,7 +176,7 @@ export const mainDreamProjects = [
 
 export const moduleDashboards: Record<string, DemoDashboard> = {
   planspace: {
-    title: "Plan expenditure command dashboard",
+    title: "Plan expenditure dashboard",
     description: "Plan allocation, spending velocity, department absorption and scheme utilization.",
     kpis: [
       { label: "Plan allocation", value: "₹38,600 Cr", detail: "Annual plan envelope", tone: "info" },
@@ -191,7 +191,7 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
     ],
     table: {
       title: "Major scheme utilization",
-      subtitle: "Seeded scheme portfolio from the existing main dashboard",
+      subtitle: "Scheme portfolio retained from the existing CMO portal",
       columns: ["Scheme", "Department", "Allocation", "Utilization"],
       rows: [
         ["PMAY-G Housing", "LSGD", "₹2,400 Cr", "73%"],
@@ -265,14 +265,14 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
   },
 
   "e-health": {
-    title: "Health command dashboard",
+    title: "Health dashboard",
     description: "Disease surveillance, hospital network, capacity and digital health activity.",
     kpis: [
       { label: "Active alerts", value: "5", detail: "Disease and capacity alerts", tone: "risk" },
       { label: "Public hospitals", value: "406", detail: "Hospital-class establishments", tone: "good" },
       { label: "Private hospitals", value: "1,150", detail: "Hospital-class establishments", tone: "info" },
       { label: "eHealth institutions", value: "1,114", detail: "Implemented institutions", tone: "good" },
-      { label: "Total visits", value: "24.66 Cr", detail: "Seeded workflow total", tone: "info" },
+      { label: "Total visits", value: "24.66 Cr", detail: "Existing CMO portal reference", tone: "info" },
     ],
     charts: [
       { id: "disease-trend", title: "Disease surveillance trend", subtitle: "Monthly reported cases", type: "line", xKey: "month", data: [
@@ -284,8 +284,8 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
       { id: "hospital-capacity", title: "Hospital bed capacity", subtitle: "Occupied versus available beds", type: "bar", xKey: "resource", data: [{ resource: "ICU beds", occupied: 3108, available: 1092 }, { resource: "General beds", occupied: 27400, available: 11200 }], series: [{ key: "occupied", label: "Occupied", color: pink, stackId: "capacity" }, { key: "available", label: "Available", color: green, stackId: "capacity" }] },
       { id: "institution-mix", title: "eHealth institution mix", subtitle: "Implemented facilities by type", type: "bar", xKey: "type", data: [{ type: "Medical colleges", value: 19 }, { type: "DH / GH", value: 33 }, { type: "Taluk", value: 85 }, { type: "CHC", value: 102 }, { type: "PHC / FHC", value: 578 }, { type: "Urban PHC", value: 99 }, { type: "Specialty", value: 16 }, { type: "Other", value: 182 }], series: [{ key: "value", label: "Institutions", color: teal }] },
     ],
-    table: { title: "Seeded health alerts", subtitle: "Alert examples from the existing main portal", columns: ["Alert", "District", "Signal"], rows: [["Dengue threshold breached", "Palakkad", "Critical"], ["Leptospirosis cluster", "Alappuzha / Kottayam", "Watch"], ["ICU occupancy at 91%", "Kozhikode", "Watch"], ["Anti-snake venom below two weeks", "Wayanad", "Critical"]] },
-    insight: "Dengue shows the steepest growth in the seeded surveillance series, while ICU use remains the tightest hospital-capacity constraint.",
+    table: { title: "Health alerts", subtitle: "Alert records retained from the existing CMO portal", columns: ["Alert", "District", "Signal"], rows: [["Dengue threshold breached", "Palakkad", "Critical"], ["Leptospirosis cluster", "Alappuzha / Kottayam", "Watch"], ["ICU occupancy at 91%", "Kozhikode", "Watch"], ["Anti-snake venom below two weeks", "Wayanad", "Critical"]] },
+    insight: "Dengue shows the steepest growth in the reference surveillance series, while ICU use remains the tightest hospital-capacity constraint.",
   },
 
   ksrtc: {
@@ -304,7 +304,7 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
       { id: "trip-purpose", title: "Trip purpose", subtitle: "Share of surveyed trips", type: "donut", xKey: "name", data: [{ name: "Work", value: 35, color: blue }, { name: "Education", value: 25, color: violet }, { name: "Healthcare", value: 15, color: pink }, { name: "Shopping", value: 15, color: amber }, { name: "Other", value: 10, color: slate }], series: [{ key: "value", label: "Share", color: blue }], unit: "%" },
       { id: "target-actual", title: "Outcome performance", subtitle: "Target versus actual (%)", type: "bar", xKey: "metric", data: [{ metric: "Priority trips", target: 65, actual: 60 }, { metric: "Rural availability", target: 95, actual: 88 }, { metric: "Satisfaction", target: 95, actual: 93 }, { metric: "Settlement", target: 95, actual: 90.7 }, { metric: "Grievance SLA", target: 98, actual: 96 }], series: [{ key: "target", label: "Target", color: slate }, { key: "actual", label: "Actual", color: green }], unit: "%" },
     ],
-    table: { title: "Operating indicators", subtitle: "Seeded KSRTC programme metrics", columns: ["Indicator", "Value", "Benchmark", "Signal"], rows: [["Average distance", "24.8 km", "Programme actual", "Good"], ["Average ticket value", "₹27.30", "Fare waived", "Info"], ["Daily services", "24,800", "Network operations", "Good"], ["Digital validation", "98.2%", "Transaction success", "Good"], ["Complaints within SLA", "96%", "98% target", "Watch"], ["Pending liability", "₹220 Cr", "₹2,360 Cr total", "Watch"]] },
+    table: { title: "Operating indicators", subtitle: "KSRTC programme reference metrics", columns: ["Indicator", "Value", "Benchmark", "Signal"], rows: [["Average distance", "24.8 km", "Programme actual", "Good"], ["Average ticket value", "₹27.30", "Fare waived", "Info"], ["Daily services", "24,800", "Network operations", "Good"], ["Digital validation", "98.2%", "Transaction success", "Good"], ["Complaints within SLA", "96%", "98% target", "Watch"], ["Pending liability", "₹220 Cr", "₹2,360 Cr total", "Watch"]] },
     insight: "Ridership and satisfaction are close to target; rural availability and settlement timing remain the principal operating gaps.",
   },
 
@@ -313,8 +313,8 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
     description: "Workforce, employment creation, labour participation and regional economic indicators.",
     kpis: [
       { label: "Employed population", value: "1.38 Cr", detail: "Estimated workforce", tone: "good" },
-      { label: "New jobs", value: "1.84 L", detail: "Since May 2026 in seed data", tone: "good" },
-      { label: "Unemployment", value: "7.1%", detail: "Seeded estimate", tone: "watch", delta: "-0.4 pp" },
+      { label: "New jobs", value: "1.84 L", detail: "Existing CMO portal reference", tone: "good" },
+      { label: "Unemployment", value: "7.1%", detail: "Existing CMO portal reference", tone: "watch", delta: "-0.4 pp" },
       { label: "Labour participation", value: "52.8%", detail: "Overall LFPR", tone: "info" },
       { label: "Female LFPR", value: "34.6%", detail: "Participation rate", tone: "risk" },
     ],
@@ -338,16 +338,16 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
       { label: "Dam watch", value: "82%", detail: "Idukki reservoir", tone: "watch" },
     ],
     charts: [
-      { id: "district-risk", title: "District disaster risk", subtitle: "Seeded composite risk score", type: "bar", xKey: "district", data: [{ district: "Wayanad", risk: 92 }, { district: "Idukki", risk: 84 }, { district: "Alappuzha", risk: 78 }, { district: "Palakkad", risk: 66 }, { district: "Pathanamthitta", risk: 64 }, { district: "Kottayam", risk: 60 }, { district: "Thrissur", risk: 58 }, { district: "Malappuram", risk: 57 }, { district: "Ernakulam", risk: 55 }, { district: "Kasaragod", risk: 54 }], series: [{ key: "risk", label: "Risk score", color: red }], horizontal: true },
+      { id: "district-risk", title: "District disaster risk", subtitle: "Existing CMO portal reference score", type: "bar", xKey: "district", data: [{ district: "Wayanad", risk: 92 }, { district: "Idukki", risk: 84 }, { district: "Alappuzha", risk: 78 }, { district: "Palakkad", risk: 66 }, { district: "Pathanamthitta", risk: 64 }, { district: "Kottayam", risk: 60 }, { district: "Thrissur", risk: 58 }, { district: "Malappuram", risk: 57 }, { district: "Ernakulam", risk: 55 }, { district: "Kasaragod", risk: 54 }], series: [{ key: "risk", label: "Risk score", color: red }], horizontal: true },
       { id: "hazard-profile", title: "Hazard profile", subtitle: "Operational risk signals", type: "bar", xKey: "hazard", data: [{ hazard: "Flood", score: 88 }, { hazard: "Landslide", score: 91 }, { hazard: "Dam level", score: 82 }, { hazard: "Coastal erosion", score: 74 }, { hazard: "Heat stress", score: 58 }, { hazard: "Power outage", score: 62 }], series: [{ key: "score", label: "Risk", color: orange }] },
       { id: "readiness", title: "Response readiness", subtitle: "Preparedness components", type: "donut", xKey: "name", data: [{ name: "Ready", value: 71, color: green }, { name: "Gap", value: 29, color: "#dfe6ee" }], series: [{ key: "value", label: "Share", color: green }], unit: "%" },
     ],
-    table: { title: "Warning timeline", subtitle: "Seeded operational events", columns: ["Time", "Warning", "Signal"], rows: [["06:00", "Orange alert - Idukki, Wayanad, Kozhikode", "Watch"], ["09:30", "Dam shutter opening advisory - Idukki at 82%", "Watch"], ["12:15", "Landslide red alert - three Wayanad panchayats", "Critical"], ["15:40", "142 relief camps activated", "Ready"], ["18:00", "Pre-emptive coastal power shutdown", "Watch"]] },
-    insight: "Wayanad and Idukki carry the highest seeded risk; landslide and flood readiness should remain at the centre of the response view.",
+    table: { title: "Warning timeline", subtitle: "Operational events retained from the existing CMO portal", columns: ["Time", "Warning", "Signal"], rows: [["06:00", "Orange alert - Idukki, Wayanad, Kozhikode", "Watch"], ["09:30", "Dam shutter opening advisory - Idukki at 82%", "Watch"], ["12:15", "Landslide red alert - three Wayanad panchayats", "Critical"], ["15:40", "142 relief camps activated", "Ready"], ["18:00", "Pre-emptive coastal power shutdown", "Watch"]] },
+    insight: "Wayanad and Idukki carry the highest reference risk; landslide and flood readiness should remain at the centre of the response view.",
   },
 
   cmo: {
-    title: "CMO executive dashboard",
+    title: "CMO dashboard",
     description: "Executive delivery, grievances, sector performance and the decision queue.",
     kpis: [
       { label: "Governance score", value: "72/100", detail: "State pulse", tone: "watch", delta: "+3" },
@@ -362,7 +362,7 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
       { id: "grievance-trend", title: "Grievance flow", subtitle: "Received versus resolved by week", type: "area", xKey: "week", data: grievanceTrend, series: [{ key: "received", label: "Received", color: orange }, { key: "resolved", label: "Resolved", color: green }] },
       { id: "project-delay", title: "Delayed major projects", subtitle: "Physical versus financial progress", type: "bar", xKey: "project", data: [{ project: "Vizhinjam P2", physical: 62, financial: 58 }, { project: "Outer ring road", physical: 41, financial: 47 }, { project: "Thalassery bypass", physical: 73, financial: 70 }, { project: "Sabari rail", physical: 28, financial: 33 }, { project: "Kozhikode hub", physical: 55, financial: 61 }], series: [{ key: "physical", label: "Physical", color: blue }, { key: "financial", label: "Financial", color: amber }], unit: "%" },
     ],
-    table: { title: "Executive attention queue", subtitle: "Seeded cross-department matters", columns: ["Matter", "Owner", "Signal", "Next focus"], rows: [["Revenue arrears recovery", "Revenue Secretary", "High", "Recovery plan"], ["Files over 90 days", "Revenue Secretary", "Watch", "Disposal plan"], ["Girl student DBT failures", "Education Secretary", "Watch", "Reconciliation"], ["Wayanad landslide readiness", "Chief Secretary", "High", "Preparedness review"], ["Plan absorption gaps", "Finance Secretary", "Watch", "Department review"]] },
+    table: { title: "Items for review", subtitle: "Cross-department matters retained from the existing CMO portal", columns: ["Matter", "Owner", "Signal", "Next focus"], rows: [["Revenue arrears recovery", "Revenue Secretary", "High", "Recovery plan"], ["Files over 90 days", "Revenue Secretary", "Watch", "Disposal plan"], ["Girl student DBT failures", "Education Secretary", "Watch", "Reconciliation"], ["Wayanad landslide readiness", "Chief Secretary", "High", "Preparedness review"], ["Plan absorption gaps", "Finance Secretary", "Watch", "Department review"]] },
     insight: "The largest delivery drop occurs between acknowledgement and Action Taken Reports; project delays and grievance closure need coordinated secretary review.",
   },
 
@@ -388,8 +388,8 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
       { id: "category-allocation", title: "Programme allocation", subtitle: "Investment by activity category", type: "bar", xKey: "category", data: [{ category: "Vizhinjam & major infra", value: 54650 }, { category: "Minor ports & clusters", value: 14400 }, { category: "Policy / governance / social", value: 3065 }], series: [{ key: "value", label: "Investment", color: cyan }], unit: "₹ Cr" },
       { id: "stage-progress", title: "Stage progress", subtitle: "Programme progress by stage", type: "bar", xKey: "stage", data: [{ stage: "Stage 1", progress: 46 }, { stage: "Stage 2", progress: 66 }, { stage: "Stage 3", progress: 79 }], series: [{ key: "progress", label: "Progress", color: amber }], unit: "%" },
     ],
-    table: { title: "Programme milestones", subtitle: "Seeded roadmap from the existing main portal", columns: ["Milestone", "Timing", "Stage", "Signal"], rows: [["Authority constituted and PPP template", "Sep 2026", "Stage 1", "Complete"], ["EXIM gateway and CONCOR ICD", "Mar 2027", "Stage 1", "Active"], ["Vizhinjam Phase 2 commissioning", "Mar 2029", "Stage 2", "Planned"], ["Rail tunnel and Azhikkal industrial park", "Mar 2031", "Stage 2", "Planned"], ["Phase 3 and green bunkering", "Mar 2035", "Stage 3", "Planned"]] },
-    insight: "Private capital is the dominant funding source, with FY28-FY29 carrying the highest annual investment flow in the seeded roadmap.",
+    table: { title: "Programme milestones", subtitle: "Roadmap retained from the existing CMO portal", columns: ["Milestone", "Timing", "Stage", "Signal"], rows: [["Authority constituted and PPP template", "Sep 2026", "Stage 1", "Complete"], ["EXIM gateway and CONCOR ICD", "Mar 2027", "Stage 1", "Active"], ["Vizhinjam Phase 2 commissioning", "Mar 2029", "Stage 2", "Planned"], ["Rail tunnel and Azhikkal industrial park", "Mar 2031", "Stage 2", "Planned"], ["Phase 3 and green bunkering", "Mar 2035", "Stage 3", "Planned"]] },
+    insight: "Private capital is the dominant funding source, with FY28-FY29 carrying the highest annual investment flow in the reference roadmap.",
   },
 };
 

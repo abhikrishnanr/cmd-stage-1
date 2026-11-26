@@ -14,7 +14,7 @@ export const portalRoles: PortalRole[] = [
     title: "Chief Minister",
     initials: "VS",
     kind: "minister",
-    focus: "Stage 1 portfolio overview and decision view",
+    focus: "State performance and matters requiring review",
   },
   {
     id: "chief-secretary",
@@ -22,7 +22,7 @@ export const portalRoles: PortalRole[] = [
     title: "Chief Secretary",
     initials: "AJ",
     kind: "secretary",
-    focus: "Cross-department readiness and coordination view",
+    focus: "Cross-department performance and coordination",
   },
   {
     id: "secretary-to-cm",
@@ -30,7 +30,7 @@ export const portalRoles: PortalRole[] = [
     title: "Secretary to the Chief Minister",
     initials: "RK",
     kind: "secretary",
-    focus: "CMO coordination and integration action view",
+    focus: "CMO coordination and departmental follow-up",
   },
   {
     id: "it-secretary",
@@ -38,6 +38,6 @@ export const portalRoles: PortalRole[] = [
     title: "Secretary, Electronics & Information Technology",
     initials: "SS",
     kind: "secretary",
-    focus: "Digital integration readiness and data pathway view",
+    focus: "Digital systems and departmental data integration",
   },
 ];

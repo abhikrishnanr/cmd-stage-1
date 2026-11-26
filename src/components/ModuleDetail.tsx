@@ -14,23 +14,35 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { stageModules, type StageModule } from "@/data/modules";
+import type { EcoStatData, IndustryKeraData } from "@/data/departmentSources";
 import { moduleDashboards, type DemoKpi } from "@/data/demoDashboards";
 import { AnalyticsChart } from "./AnalyticsChart";
 import { ModuleIcon } from "./ModuleIcon";
 import { usePortal } from "./PortalContext";
+import { PlanspaceDashboard } from "./modules/PlanspaceDashboard";
+import { EcoStatDashboard } from "./modules/EcoStatDashboard";
+import { IndustriesKeraDashboard } from "./modules/IndustriesKeraDashboard";
+import { KsrtcPriyadarshiniDashboard } from "./modules/KsrtcPriyadarshiniDashboard";
+import { KsdmaDashboard } from "./modules/KsdmaDashboard";
 
-export function ModuleDetail({ module }: { module: StageModule }) {
+export function ModuleDetail({ module, ecoStatData, industryKeraData }: { module: StageModule; ecoStatData?: EcoStatData; industryKeraData?: IndustryKeraData }) {
   const { activeRole } = usePortal();
   const dashboard = moduleDashboards[module.slug];
   const previous = stageModules[module.order - 2];
   const next = stageModules[module.order];
+
+  if (module.slug === "planspace") return <PlanspaceDashboard />;
+  if (module.slug === "economics-statistics" && ecoStatData) return <EcoStatDashboard data={ecoStatData} />;
+  if (module.slug === "k-swift" && industryKeraData) return <IndustriesKeraDashboard data={industryKeraData} />;
+  if (module.slug === "ksrtc") return <KsrtcPriyadarshiniDashboard />;
+  if (module.slug === "disaster-management") return <KsdmaDashboard />;
 
   if (!dashboard) return null;
 
   return (
     <div className="page-stack module-page analytics-module-page">
       <div className="breadcrumbs">
-        <Link href="/dashboard"><ArrowLeft size={14} /> Executive dashboard</Link>
+        <Link href="/dashboard"><ArrowLeft size={14} /> Chief Minister Dashboard</Link>
         <ChevronRight size={13} />
         <span>{module.name}</span>
       </div>
@@ -46,8 +58,8 @@ export function ModuleDetail({ module }: { module: StageModule }) {
           </div>
         </div>
         <div className="module-hero-side analytics-hero-side">
-          <span className="demo-data-badge"><Database size={14} /> Demo data</span>
-          <strong>Seeded from existing main portal</strong>
+          <span><Database size={14} /> Source basis</span>
+          <strong>Existing CMO portal reference dataset</strong>
           <small>Viewing as {activeRole.title}</small>
         </div>
       </section>
@@ -58,17 +70,17 @@ export function ModuleDetail({ module }: { module: StageModule }) {
 
       <section className="analytics-insight">
         <span><TrendingUp size={18} /></span>
-        <div><small>Executive reading</small><p>{dashboard.insight}</p></div>
+        <div><small>Key observation</small><p>{dashboard.insight}</p></div>
       </section>
 
       <section className="analytics-section" aria-labelledby="module-charts-title">
         <div className="section-heading analytics-section-heading">
           <div>
-            <span className="section-kicker">Performance analysis</span>
+            <span className="section-kicker">Charts</span>
             <h2 id="module-charts-title">Trends and comparisons</h2>
-            <p>Interactive views built from the existing portal&apos;s seeded datasets.</p>
+            <p>Reference values retained from the existing portal, pending the dated departmental feed.</p>
           </div>
-          <span className="analytics-count"><Gauge size={15} /> {dashboard.charts.length} visual views</span>
+          <span className="analytics-count"><Gauge size={15} /> {dashboard.charts.length} charts</span>
         </div>
         <div className={`analytics-chart-grid ${dashboard.charts.length === 3 ? "three-charts" : ""}`}>
           {dashboard.charts.map((chart, index) => (
@@ -107,7 +119,7 @@ export function ModuleDetail({ module }: { module: StageModule }) {
 
       <aside className="analytics-provenance">
         <Info size={17} />
-        <div><strong>Demo-data note</strong><p>Figures on this page are seeded from the existing main portal to demonstrate the intended dashboard experience. They are not presented as a current operational feed.</p></div>
+        <div><strong>Source note</strong><p>Reference figures are retained from the existing CMO portal. The departmental source and reporting date will replace this note when the agreed data exchange is connected.</p></div>
       </aside>
 
       <nav className="module-pagination" aria-label="Module navigation">
@@ -116,7 +128,7 @@ export function ModuleDetail({ module }: { module: StageModule }) {
         ) : <span />}
         {next ? (
           <Link href={`/modules/${next.slug}`}><span><small>Next module</small><strong>{next.shortName}</strong></span><ChevronRight size={17} /></Link>
-        ) : <Link href="/dashboard"><span><small>Return to</small><strong>Executive dashboard</strong></span><ChevronRight size={17} /></Link>}
+        ) : <Link href="/dashboard"><span><small>Return to</small><strong>Chief Minister Dashboard</strong></span><ChevronRight size={17} /></Link>}
       </nav>
     </div>
   );

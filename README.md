@@ -1,52 +1,57 @@
-# CM Dashboard - Stage 1
+# Chief Minister Dashboard - Stage 1
 
-A chart-led Government of Kerala executive portal covering the ten Stage 1 modules.
+A chart-led Government of Kerala portal covering the ten first-stage modules.
 
-## Executive dashboard
+## Main dashboard
 
-The main dashboard foregrounds the nine requested views:
+The main page gives prominence to:
 
 1. Income
 2. Expenditure
-3. Budget & Utilization
-4. Investments & Business
-5. Disaster Monitoring
-6. Grievance & Feedback Monitoring
+3. Budget and utilisation
+4. Investments and business
+5. Disaster monitoring
+6. Grievance and feedback monitoring
 7. Health
 8. Indira Guarantees
 9. Dream Projects
 
-It includes KPI cards and interactive financial, investment, disaster, grievance, health, guarantee, and project charts.
+It includes KPI cards, charts, departmental follow-up items, data-exchange fields and a source register.
 
 ## Detailed modules
 
 1. Planspace (Plan Expenditure)
 2. Non-Plan Expenditure
 3. Budget (Income / Revenue)
-4. K-SWIFT
-5. e-Health
-6. KSRTC
-7. Economics & Statistics
-8. Disaster Management
-9. CMO
-10. Mission Samudra
+4. Industries, KERA and K-SWIFT
+5. Health
+6. KSRTC - Priyadarshini
+7. Economics and Statistics (EcoStat)
+8. KSDMA / Disaster Management
+9. CMO, Grievances and Feedback
+10. Dream Projects / Mission Samudra
 
-Every module has its own KPI cards, trend and comparison charts, executive reading, and supporting data table.
+Planspace, EcoStat, Industries/KERA, Priyadarshini and KSDMA have dedicated data-rich dashboards. The remaining modules retain the existing CMO portal reference series until their agreed departmental feeds are connected.
+
+The global CM review form retains the original workflow fields: related item, voice note, written instruction, secretary, department, priority, due date, expected response and attachments. Review entry points are available in the header and beside main review items and charts.
 
 ## Data basis
 
-- Dashboard figures are demonstration values carried over from the existing main portal.
-- They illustrate the intended dashboard experience and are not presented as a current operational feed.
-- The Chief Minister is the only minister role.
-- Secretary views remain available, including **S Suhas IAS** as IT Secretary.
+- Planspace uses the supplied source file generated on 23 November 2026.
+- EcoStat uses the public Market Intelligence APIs, the published 2024-25 Quick Estimate for State income and the supplied November 2026 departmental reports. Daily 50-item, weekly 20-item, fruit retail, fruit wholesale, Market Intelligence, monthly/annual variation and CPI series remain separate by date and unit.
+- Industries uses the Year of Enterprises public dashboard.
+- KERA uses its official site, public scheme dashboard and approved programme framework.
+- KSDMA uses dated daily bulletins and the department's routine and War Room reporting fields.
+- Priyadarshini uses the official 2026 scheme and 97-day progress reports. The future-dated attachment is used only for information structure.
+- The Chief Minister is the only minister role. Secretary views remain available, including S Suhas IAS as IT Secretary.
 
 ## Technology
 
-- Next.js 16.4.6
-- React / React DOM 19.3.1
-- TypeScript 5.9
-- Recharts 3.11.0
-- Lucide React 1.76.0
+- Next.js 16
+- React 19
+- TypeScript
+- Recharts
+- Lucide React
 - Responsive CSS
 
 ## Run locally
@@ -68,5 +73,5 @@ npm start
 
 ## Main routes
 
-- `/dashboard` - executive dashboard and Stage 1 module directory
-- `/modules/[slug]` - chart-led module dashboard
+- `/dashboard` - Chief Minister Dashboard and module directory
+- `/modules/[slug]` - detailed module dashboard

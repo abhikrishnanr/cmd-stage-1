@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ModuleDetail } from "@/components/ModuleDetail";
+import { getEcoStatData, getIndustryKeraData } from "@/data/departmentSources";
 import { moduleBySlug, stageModules } from "@/data/modules";
+
+export const revalidate = 1800;
 
 export function generateStaticParams() {
   return stageModules.map((module) => ({ slug: module.slug }));
@@ -17,5 +20,7 @@ export default async function ModulePage({ params }: { params: Promise<{ slug: s
   const { slug } = await params;
   const module = moduleBySlug(slug);
   if (!module) notFound();
-  return <ModuleDetail module={module} />;
+  const ecoStatData = slug === "economics-statistics" ? await getEcoStatData() : undefined;
+  const industryKeraData = slug === "k-swift" ? await getIndustryKeraData() : undefined;
+  return <ModuleDetail module={module} ecoStatData={ecoStatData} industryKeraData={industryKeraData} />;
 }
