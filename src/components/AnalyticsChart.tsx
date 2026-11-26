@@ -19,7 +19,7 @@ import {
 } from "recharts";
 import type { DemoChart } from "@/data/demoDashboards";
 
-const fallbackColors = ["#2f6fd0", "#15927e", "#7556c8", "#d98b19", "#c64555", "#1596b0"];
+const fallbackColors = ["#2563eb", "#0f766e", "#7c3aed", "#f59e0b", "#e11d48", "#1aa6c9"];
 
 export function AnalyticsChart({ chart }: { chart: DemoChart }) {
   return (
@@ -65,7 +65,7 @@ function renderChart(chart: DemoChart) {
   if (chart.type === "line") {
     return (
       <LineChart data={chart.data} margin={{ top: 12, right: 18, bottom: 10, left: 2 }}>
-        <CartesianGrid stroke="#e7edf4" strokeDasharray="3 5" vertical={false} />
+        <CartesianGrid stroke="#eef1f8" strokeDasharray="3 3" vertical={false} />
         <XAxis dataKey={chart.xKey} tick={axisTick} tickLine={false} axisLine={false} interval={0} />
         <YAxis tickFormatter={compactNumber} tick={axisTick} tickLine={false} axisLine={false} width={52} />
         {commonTooltip}
@@ -88,7 +88,7 @@ function renderChart(chart: DemoChart) {
             </linearGradient>
           ))}
         </defs>
-        <CartesianGrid stroke="#e7edf4" strokeDasharray="3 5" vertical={false} />
+        <CartesianGrid stroke="#eef1f8" strokeDasharray="3 3" vertical={false} />
         <XAxis dataKey={chart.xKey} tick={axisTick} tickLine={false} axisLine={false} />
         <YAxis tickFormatter={compactNumber} tick={axisTick} tickLine={false} axisLine={false} width={52} />
         {commonTooltip}
@@ -103,13 +103,13 @@ function renderChart(chart: DemoChart) {
   if (chart.horizontal) {
     return (
       <BarChart data={chart.data} layout="vertical" margin={{ top: 8, right: 22, bottom: 8, left: 16 }}>
-        <CartesianGrid stroke="#e7edf4" strokeDasharray="3 5" horizontal={false} />
+        <CartesianGrid stroke="#eef1f8" strokeDasharray="3 3" horizontal={false} />
         <XAxis type="number" tickFormatter={compactNumber} tick={axisTick} tickLine={false} axisLine={false} />
         <YAxis type="category" dataKey={chart.xKey} tick={axisTick} tickLine={false} axisLine={false} width={118} />
         {commonTooltip}
         {commonLegend}
         {chart.series.map((series) => (
-          <Bar key={series.key} dataKey={series.key} name={series.label} fill={series.color} stackId={series.stackId} radius={[0, 7, 7, 0]} maxBarSize={22} isAnimationActive={false} />
+          <Bar key={series.key} dataKey={series.key} name={series.label} fill={series.color} stackId={series.stackId} radius={[0, 6, 6, 0]} maxBarSize={16} isAnimationActive={false} />
         ))}
       </BarChart>
     );
@@ -117,13 +117,13 @@ function renderChart(chart: DemoChart) {
 
   return (
     <BarChart data={chart.data} margin={{ top: 10, right: 16, bottom: 28, left: 0 }}>
-      <CartesianGrid stroke="#e7edf4" strokeDasharray="3 5" vertical={false} />
+      <CartesianGrid stroke="#eef1f8" strokeDasharray="3 3" vertical={false} />
       <XAxis dataKey={chart.xKey} tick={axisTick} tickLine={false} axisLine={false} interval={0} angle={chart.data.length > 7 ? -18 : 0} textAnchor={chart.data.length > 7 ? "end" : "middle"} height={chart.data.length > 7 ? 54 : 34} />
       <YAxis tickFormatter={compactNumber} tick={axisTick} tickLine={false} axisLine={false} width={52} />
       {commonTooltip}
       {commonLegend}
       {chart.series.map((series) => (
-        <Bar key={series.key} dataKey={series.key} name={series.label} fill={series.color} stackId={series.stackId} radius={series.stackId ? undefined : [7, 7, 2, 2]} maxBarSize={34} isAnimationActive={false} />
+        <Bar key={series.key} dataKey={series.key} name={series.label} fill={series.color} stackId={series.stackId} radius={series.stackId ? undefined : [6, 6, 0, 0]} maxBarSize={30} isAnimationActive={false} />
       ))}
     </BarChart>
   );
@@ -157,4 +157,4 @@ function compactNumber(value: number) {
   return Intl.NumberFormat("en-IN", { notation: "compact", maximumFractionDigits: 1 }).format(value);
 }
 
-const axisTick = { fill: "#718096", fontSize: 10, fontWeight: 650 };
+const axisTick = { fill: "#64748b", fontSize: 10, fontWeight: 650 };

@@ -49,7 +49,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "API available",
     nextAction: "Start integration.",
     icon: "landmark",
-    accent: "#2356a8",
+    accent: "#3b82f6",
   },
   {
     order: 2,
@@ -62,7 +62,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "Available with NIC team",
     nextAction: "Coordinate with the NIC team to obtain API credentials and documentation.",
     icon: "receipt",
-    accent: "#6b4eb6",
+    accent: "#7c3aed",
   },
   {
     order: 3,
@@ -75,7 +75,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "API available",
     nextAction: "Schedule a discussion to finalize the required data points.",
     icon: "wallet",
-    accent: "#15715f",
+    accent: "#16a34a",
   },
   {
     order: 4,
@@ -88,7 +88,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "API available",
     nextAction: "Schedule a discussion to finalize the required data points.",
     icon: "workflow",
-    accent: "#b55b25",
+    accent: "#f5821f",
   },
   {
     order: 5,
@@ -101,7 +101,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "API available",
     nextAction: "Initiate API handshake and data mapping.",
     icon: "heart",
-    accent: "#b53e58",
+    accent: "#ec4899",
   },
   {
     order: 6,
@@ -114,7 +114,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "API available",
     nextAction: "Initiate API handshake and data mapping.",
     icon: "bus",
-    accent: "#bf3a32",
+    accent: "#e11d48",
   },
   {
     order: 7,
@@ -127,7 +127,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "Public source available",
     nextAction: "Complete the departmental data exchange for the full indicator catalogue.",
     icon: "chart",
-    accent: "#457098",
+    accent: "#1aa6c9",
     intake: {
       mode: "upload",
       title: "Alternative data intake",
@@ -145,7 +145,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "Department sharing confirmed",
     nextAction: "Map KSDMA's dated routine and War Room data fields into the agreed exchange.",
     icon: "shield",
-    accent: "#a24b37",
+    accent: "#f59e0b",
     intake: {
       mode: "entry-upload",
       title: "Department data intake",
@@ -163,7 +163,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "API available",
     nextAction: "Initiate API handshake and data mapping.",
     icon: "building",
-    accent: "#7047a3",
+    accent: "#7c3aed",
   },
   {
     order: 10,
@@ -176,7 +176,7 @@ export const stageModules: StageModule[] = [
     apiLabel: "API not available",
     nextAction: "Determine an alternative data-sharing mechanism or upload interface.",
     icon: "anchor",
-    accent: "#126e78",
+    accent: "#0f766e",
     intake: {
       mode: "sharing-upload",
       title: "Alternative data sharing",

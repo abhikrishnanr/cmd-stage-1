@@ -14,8 +14,10 @@ import {
   Mic,
   PanelLeftClose,
   PanelLeftOpen,
+  Route,
   Search,
   ShieldCheck,
+  ExternalLink,
   X,
 } from "lucide-react";
 import { stageModules } from "@/data/modules";
@@ -144,6 +146,9 @@ export function PortalShell({ children }: { children: React.ReactNode }) {
             <kbd>/</kbd>
           </Link>
           <div className="topbar-spacer" />
+          <Link className="topbar-external" href="https://keralamontrack.webtestingonline.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Kerala On Track">
+            <Route size={16} /><span>Kerala On Track</span><ExternalLink className="topbar-external-mark" size={12} />
+          </Link>
           <button className="topbar-review" aria-label="Review and voice note" onClick={() => { setReviewTitle(""); setReviewOpen(true); }}><Mic size={16} /><span>Review &amp; voice note</span></button>
           <div className="scope-chip"><span /> Stage 1</div>
           <button className="icon-button notification-button" aria-label="Notifications" title="Notifications" disabled>

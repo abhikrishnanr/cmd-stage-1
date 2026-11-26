@@ -19,8 +19,8 @@ type ChartSpec = Parameters<typeof AnalyticsChart>[0]["chart"];
 type SignalTone = "good" | "watch" | "risk" | "info";
 
 const chartPalette = {
-  blue: "#2f6fd0",
-  violet: "#7556c8",
+  blue: "#2563eb",
+  violet: "#7c3aed",
 };
 
 const publishedCharts: ChartSpec[] = [

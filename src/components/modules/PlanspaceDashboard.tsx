@@ -107,10 +107,10 @@ type PlanspaceSource = {
 type SortKey = "secretary_name" | "tot_outlay" | "tot_expense" | "tot_perc" | "no_of_schemes";
 
 const source = planspaceJson as PlanspaceSource;
-const blue = "#2f6fd0";
-const teal = "#15927e";
-const amber = "#d98b19";
-const violet = "#7556c8";
+const blue = "#2563eb";
+const teal = "#0f766e";
+const amber = "#f59e0b";
+const violet = "#7c3aed";
 
 const cardStyle: CSSProperties = {
   background: "#fff",

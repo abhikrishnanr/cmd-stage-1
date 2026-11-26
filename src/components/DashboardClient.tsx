@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import {
   ArrowRight, ArrowUpRight, BarChart3, Building2, CloudLightning, Database, Droplets,
-  HeartPulse, IndianRupee, LandPlot, Landmark, MessageSquareText, PieChart,
-  Mic, ReceiptIndianRupee, Rocket, Search, ShieldCheck, Stethoscope, TrendingUp, Zap,
+  HeartPulse, LandPlot, Landmark, MessageSquareText, PieChart,
+  Mic, ReceiptIndianRupee, Rocket, Search, ShieldCheck, ShoppingBasket, Stethoscope, TrendingUp, Zap,
   type LucideIcon,
 } from "lucide-react";
 import { stageModules } from "@/data/modules";
@@ -135,11 +135,11 @@ export function DashboardClient({ ecoStatData, industryKeraData }: { ecoStatData
       <section aria-labelledby="key-indicators-title">
         <div className="section-heading analytics-section-heading"><div><span className="section-kicker">Overall performance</span><h2 id="key-indicators-title">Key indicators</h2><p>Confirmed values from Planspace, EcoStat, Industries and Priyadarshini sources.</p></div><span className="analytics-count"><Database size={15} /> Source dates shown in each module</span></div>
         <div className="analytics-kpi-grid" style={{ marginTop: 16 }}>
-          <Kpi label="Plan outlay" value={`₹${formatNumber(totalPlanOutlay)} Cr`} detail="2026–27" tone="info" />
-          <Kpi label="Plan expenditure" value={`₹${formatNumber(totalPlanExpense)} Cr`} detail={`Through ${latestPlanMonth.month_name}`} tone="good" />
-          <Kpi label="Overall utilisation" value={`${latestPlanMonth.overall_perc.toFixed(2)}%`} detail="Planspace" tone="watch" />
-          <Kpi label="Enterprises" value={formatNumber(industryKeraData.enterprises)} detail="Year of Enterprises" tone="good" />
-          <Kpi label="Wholesale commodities" value={formatNumber(ecoStatData.latest.length)} detail={formatDate(ecoStatData.priceDate)} tone="info" />
+          <Kpi label="Plan outlay" value={`₹${formatNumber(totalPlanOutlay)} Cr`} detail="2026–27" tone="info" icon={Landmark} />
+          <Kpi label="Plan expenditure" value={`₹${formatNumber(totalPlanExpense)} Cr`} detail={`Through ${latestPlanMonth.month_name}`} tone="good" icon={ReceiptIndianRupee} />
+          <Kpi label="Overall utilisation" value={`${latestPlanMonth.overall_perc.toFixed(2)}%`} detail="Planspace" tone="watch" icon={PieChart} />
+          <Kpi label="Enterprises" value={formatNumber(industryKeraData.enterprises)} detail="Year of Enterprises" tone="good" icon={Building2} />
+          <Kpi label="Wholesale commodities" value={formatNumber(ecoStatData.latest.length)} detail={formatDate(ecoStatData.priceDate)} tone="info" icon={ShoppingBasket} />
         </div>
       </section>
 
@@ -195,14 +195,14 @@ export function DashboardClient({ ecoStatData, industryKeraData }: { ecoStatData
       <section id="modules" className="section-card module-directory dashboard-module-directory">
         <div className="section-heading"><div><span className="section-kicker">Stage 1 modules</span><h2>Open a detailed dashboard</h2><p>Detailed charts, comparisons, registers and source notes for each area.</p></div><span className="result-count">{filtered.length} of {stageModules.length}</span></div>
         <div className="directory-tools analytics-directory-tools"><label className="module-search"><Search size={17} /><input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search dashboards" />{query ? <button onClick={() => setQuery("")} type="button">Clear</button> : <kbd>/</kbd>}</label></div>
-        {filtered.length ? <div className="module-grid">{filtered.map((module) => <Link href={`/modules/${module.slug}`} className="module-card analytics-module-card" key={module.slug}><div className="module-card-top"><span className="module-number">{String(module.order).padStart(2, "0")}</span><span className="module-card-icon" style={{ color: module.accent, background: `${module.accent}12` }}><ModuleIcon name={module.icon} size={23} /></span><ArrowRight className="module-arrow" size={18} /></div><h3>{module.name}</h3><p>{module.description}</p><div className="module-card-bottom analytics-module-bottom"><span><BarChart3 size={13} /> Open dashboard</span><strong>View <ArrowRight size={13} /></strong></div></Link>)}</div> : <div className="no-results"><Search size={24} /><h3>No matching dashboard</h3><p>Clear the search to view all Stage 1 modules.</p><button onClick={() => setQuery("")}>Reset search</button></div>}
+        {filtered.length ? <div className="module-grid">{filtered.map((module) => <Link href={`/modules/${module.slug}`} className="module-card analytics-module-card" style={{ "--module-color": module.accent } as CSSProperties} key={module.slug}><div className="module-card-top"><span className="module-number">{String(module.order).padStart(2, "0")}</span><span className="module-card-icon"><ModuleIcon name={module.icon} size={23} /></span><ArrowRight className="module-arrow" size={18} /></div><h3>{module.name}</h3><p>{module.description}</p><div className="module-card-bottom analytics-module-bottom"><span><BarChart3 size={13} /> Open dashboard</span><strong>View <ArrowRight size={13} /></strong></div></Link>)}</div> : <div className="no-results"><Search size={24} /><h3>No matching dashboard</h3><p>Clear the search to view all Stage 1 modules.</p><button onClick={() => setQuery("")}>Reset search</button></div>}
       </section>
     </div>
   );
 }
 
-function Kpi({ label, value, detail, tone }: { label: string; value: string; detail: string; tone: "good" | "watch" | "info" }) {
-  return <article className={`analytics-kpi tone-${tone}`}><div className="analytics-kpi-top"><span>{label}</span><IndianRupee size={16} /></div><strong>{value}</strong><div className="analytics-kpi-bottom"><span>{detail}</span></div></article>;
+function Kpi({ label, value, detail, tone, icon: Icon }: { label: string; value: string; detail: string; tone: "good" | "watch" | "info"; icon: LucideIcon }) {
+  return <article className={`analytics-kpi tone-${tone}`}><div className="analytics-kpi-top"><span>{label}</span><Icon size={16} /></div><strong>{value}</strong><div className="analytics-kpi-bottom"><span>{detail}</span></div></article>;
 }
 
 function ReviewItem({ number, title, text, source, tone }: { number: string; title: string; text: string; source: string; tone: string }) {

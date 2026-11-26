@@ -7,17 +7,25 @@ import {
   Apple,
   ArrowLeft,
   BarChart3,
+  Bean,
   CalendarDays,
+  Carrot,
+  CircleDollarSign,
   Database,
   ExternalLink,
   Gauge,
   IndianRupee,
   Layers3,
   MapPinned,
+  Package,
   Search,
+  Sprout,
   Store,
+  Trees,
   TrendingDown,
   TrendingUp,
+  Wheat,
+  type LucideIcon,
 } from "lucide-react";
 import {
   Bar,
@@ -48,10 +56,10 @@ import {
   staplePrices,
 } from "@/data/ecostatAttachments";
 
-const green = "#147d68";
-const blue = "#2f6fd0";
-const amber = "#d98b19";
-const red = "#c64555";
+const green = "#16a34a";
+const blue = "#2563eb";
+const amber = "#f59e0b";
+const red = "#e11d48";
 
 const gsdp = {
   period: "2024–25 Quick Estimate",
@@ -229,7 +237,7 @@ export function EcoStatDashboard({ data }: { data: EcoStatData }) {
             <thead><tr><th>Commodity</th><th>Date</th><th>Price</th><th>Previous day</th><th>Day change</th><th>Previous month</th><th>Previous year</th></tr></thead>
             <tbody>{filtered.map((row) => (
               <tr key={`${row.commodity}-${row.date}`}>
-                <td><strong>{row.commodity}</strong></td><td>{formatDate(row.date)}</td><td>{rupees(row.price)}</td><td>{rupees(row.prevDay)}</td>
+                <td><CommodityLabel name={row.commodity} /></td><td>{formatDate(row.date)}</td><td>{rupees(row.price)}</td><td>{rupees(row.prevDay)}</td>
                 <td><Movement value={row.dayPercent} /></td><td>{rupees(row.prevMonth)}</td><td>{rupees(row.prevYear)}</td>
               </tr>
             ))}</tbody>
@@ -426,6 +434,23 @@ function Movement({ value }: { value: number | null }) {
   if (value == null) return <span>—</span>;
   const up = value >= 0;
   return <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: up ? red : green, fontWeight: 850 }}>{up ? <TrendingUp size={13} /> : <TrendingDown size={13} />}{value > 0 ? "+" : ""}{value.toFixed(2)}%</span>;
+}
+
+function CommodityLabel({ name }: { name: string }) {
+  const { icon: Icon, color } = commodityVisual(name);
+  return <span className="commodity-cell"><i className="commodity-badge" style={{ background: color }}><Icon size={17} /></i><strong>{name}</strong></span>;
+}
+
+function commodityVisual(name: string): { icon: LucideIcon; color: string } {
+  const value = name.toLowerCase();
+  if (/rice|paddy|wheat|ragi|cereal/.test(value)) return { icon: Wheat, color: "#f59e0b" };
+  if (/coconut|copra|coir/.test(value)) return { icon: CircleDollarSign, color: "#1aa6c9" };
+  if (/pepper|chill|cardam|turmeric|coriander|cumin|ginger|spice/.test(value)) return { icon: Sprout, color: "#f5821f" };
+  if (/banana|pineapple|apple|grape|fruit/.test(value)) return { icon: Apple, color: "#ec4899" };
+  if (/gram|dhal|dal|peas|lobia|bean|pulse/.test(value)) return { icon: Bean, color: "#7c3aed" };
+  if (/rubber|tea|coffee|arecanut|cashew|plantation/.test(value)) return { icon: Trees, color: "#16a34a" };
+  if (/potato|onion|tapioca|vegetable/.test(value)) return { icon: Carrot, color: "#e11d48" };
+  return { icon: Package, color: "#3b82f6" };
 }
 
 function addMovement(row: MarketPriceRecord) {

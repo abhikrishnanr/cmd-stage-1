@@ -44,17 +44,17 @@ export interface DemoDashboard {
   insight: string;
 }
 
-const blue = "#2f6fd0";
-const navy = "#12345d";
-const teal = "#15927e";
-const green = "#1b9a6c";
-const amber = "#d98b19";
-const orange = "#e06432";
-const red = "#c64555";
-const violet = "#7556c8";
-const pink = "#c74678";
-const cyan = "#1596b0";
-const slate = "#718096";
+const blue = "#2563eb";
+const navy = "#1c3f7c";
+const teal = "#0f766e";
+const green = "#16a34a";
+const amber = "#f59e0b";
+const orange = "#f97316";
+const red = "#e11d48";
+const violet = "#7c3aed";
+const pink = "#ec4899";
+const cyan = "#1aa6c9";
+const slate = "#64748b";
 
 const sectorUtilisation = [
   { sector: "Education", allocated: 6200, spent: 4150 },

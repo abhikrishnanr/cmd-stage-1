@@ -27,12 +27,12 @@ import {
 } from "recharts";
 import type { IndustryKeraData } from "@/data/departmentSources";
 
-const orange = "#b55b25";
-const blue = "#2f6fd0";
-const teal = "#15927e";
-const green = "#37835c";
-const amber = "#d98b19";
-const violet = "#7556c8";
+const orange = "#f5821f";
+const blue = "#2563eb";
+const teal = "#1aa6c9";
+const green = "#16a34a";
+const amber = "#f59e0b";
+const violet = "#7c3aed";
 
 const keraCoverage = [
   ["Districts", "12"], ["Blocks", "133"], ["Grama panchayats", "824"],
