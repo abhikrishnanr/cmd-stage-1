@@ -9,10 +9,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { stageModules } from "@/data/modules";
-import type { EcoStatData, IndustryKeraData } from "@/data/departmentSources";
+import type { CmoData, EcoStatData, IndustryKeraData } from "@/data/departmentSources";
 import planspaceJson from "@/data/planspace-source.json";
 import {
-  chartPalette, mainDreamProjects, mainGrievanceTrend, mainGuaranteeProgress,
+  chartPalette, mainDreamProjects, mainGuaranteeProgress,
   mainHealthTrend, type DemoChart,
 } from "@/data/demoDashboards";
 import { usePortal } from "./PortalContext";
@@ -31,7 +31,7 @@ const planTotals = planspaceJson.at_a_glance;
 const totalPlanOutlay = planTotals.state_outlay + planTotals.css_outlay + planTotals.lsgi_outlay;
 const totalPlanExpense = planTotals.state_expenditure + planTotals.css_expenditure + planTotals.lsgi_expenditure;
 
-export function DashboardClient({ ecoStatData, industryKeraData }: { ecoStatData: EcoStatData; industryKeraData: IndustryKeraData }) {
+export function DashboardClient({ ecoStatData, industryKeraData, cmoData }: { ecoStatData: EcoStatData; industryKeraData: IndustryKeraData; cmoData: CmoData }) {
   const { activeRole } = usePortal();
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -70,7 +70,7 @@ export function DashboardClient({ ecoStatData, industryKeraData }: { ecoStatData
     { id: "budget", name: "Budget & Utilization", value: `${latestPlanMonth.overall_perc.toFixed(2)}%`, detail: `₹${formatNumber(totalPlanOutlay)} Cr plan outlay`, source: "Planspace", tone: "watch", href: "/modules/planspace" },
     { id: "business", name: "Investments & Business", value: `₹${formatNumber(industryKeraData.investment)} Cr`, detail: `${formatNumber(industryKeraData.enterprises)} enterprises`, source: "Year of Enterprises", tone: "good", href: "/modules/k-swift" },
     { id: "disaster", name: "Disaster Monitoring", value: "37 reservoirs", detail: "Daily KSDMA dam bulletin coverage", source: "KSDMA · 25 Nov 2026", tone: "info", href: "/modules/disaster-management" },
-    { id: "grievance", name: "Grievance & Feedback", value: "7,100", detail: "Resolved in the latest week of the reference series", source: "CMO reference", tone: "watch", href: "/modules/cmo" },
+    { id: "grievance", name: "Grievance & Feedback", value: formatNumber(cmoData.grievances), detail: `${formatNumber(cmoData.applicationsDisposed)} disposed of ${formatNumber(cmoData.applicationsReceived)} in the processing series`, source: `CMO · ${cmoData.lastUpdatedDisplay}`, tone: "watch", href: "/modules/cmo" },
     { id: "health", name: "Health", value: "1,114", detail: "eHealth institutions in the existing portal reference", source: "CMO reference", tone: "info", href: "/modules/e-health" },
     { id: "indira", name: "Indira Guarantees", value: "12.54 Cr", detail: "Priyadarshini journeys reported at 97 days", source: "I&PRD · 22 Sep 2026", tone: "good", href: "/modules/ksrtc" },
     { id: "dream", name: "Dream Projects", value: "₹72,115 Cr", detail: "Mission Samudra programme value in the existing portal", source: "CMO reference", tone: "info", href: "/modules/mission-samudra" },
@@ -97,8 +97,8 @@ export function DashboardClient({ ecoStatData, industryKeraData }: { ecoStatData
       series: [{ key: "value", label: "Journeys", color: chartPalette.violet }], unit: "Lakh",
     },
     {
-      id: "main-grievances", title: "Grievance and feedback flow", subtitle: "Weekly received and resolved · existing CMO reference series", type: "area", xKey: "week", data: mainGrievanceTrend,
-      series: [{ key: "received", label: "Received", color: chartPalette.orange }, { key: "resolved", label: "Resolved", color: chartPalette.green }],
+      id: "main-grievances", title: "Petitions and applications by intake channel", subtitle: `Official CMO dashboard · statistics since ${cmoData.statisticsSince}`, type: "bar", xKey: "channel", data: cmoData.channels,
+      series: [{ key: "received", label: "Petitions", color: chartPalette.violet }],
     },
     {
       id: "main-health", title: "Health surveillance", subtitle: "Reported disease cases · existing CMO reference series", type: "line", xKey: "month", data: mainHealthTrend,
@@ -133,13 +133,14 @@ export function DashboardClient({ ecoStatData, industryKeraData }: { ecoStatData
       </section>
 
       <section aria-labelledby="key-indicators-title">
-        <div className="section-heading analytics-section-heading"><div><span className="section-kicker">Overall performance</span><h2 id="key-indicators-title">Key indicators</h2><p>Confirmed values from Planspace, EcoStat, Industries and Priyadarshini sources.</p></div><span className="analytics-count"><Database size={15} /> Source dates shown in each module</span></div>
+        <div className="section-heading analytics-section-heading"><div><span className="section-kicker">Overall performance</span><h2 id="key-indicators-title">Key indicators</h2><p>Confirmed values from Planspace, EcoStat, Industries, Priyadarshini and the official CMO dashboard.</p></div><span className="analytics-count"><Database size={15} /> Source dates shown in each module</span></div>
         <div className="analytics-kpi-grid" style={{ marginTop: 16 }}>
           <Kpi label="Plan outlay" value={`₹${formatNumber(totalPlanOutlay)} Cr`} detail="2026–27" tone="info" icon={Landmark} />
           <Kpi label="Plan expenditure" value={`₹${formatNumber(totalPlanExpense)} Cr`} detail={`Through ${latestPlanMonth.month_name}`} tone="good" icon={ReceiptIndianRupee} />
           <Kpi label="Overall utilisation" value={`${latestPlanMonth.overall_perc.toFixed(2)}%`} detail="Planspace" tone="watch" icon={PieChart} />
           <Kpi label="Enterprises" value={formatNumber(industryKeraData.enterprises)} detail="Year of Enterprises" tone="good" icon={Building2} />
           <Kpi label="Wholesale commodities" value={formatNumber(ecoStatData.latest.length)} detail={formatDate(ecoStatData.priceDate)} tone="info" icon={ShoppingBasket} />
+          <Kpi label="CMO grievances" value={formatNumber(cmoData.grievances)} detail={cmoData.lastUpdatedDisplay} tone="watch" icon={MessageSquareText} />
         </div>
       </section>
 
@@ -189,6 +190,7 @@ export function DashboardClient({ ecoStatData, industryKeraData }: { ecoStatData
           <SourceRow area="Investments and business" source="Year of Enterprises public dashboard" date={industryKeraData.fetchedAt} coverage="Enterprises, investment, employment, district, category and participation" />
           <SourceRow area="Priyadarshini" source="Kerala I&PRD 97-day report" date="22 Sep 2026" coverage="Journeys, daily and peak use, zero-ticket value" />
           <SourceRow area="Disaster monitoring" source="KSDMA daily reports and department exchange" date="25–26 Nov 2026" coverage="Reservoir bulletin plus routine and War Room field structure" />
+          <SourceRow area="CMO grievances" source="cmo.kerala.gov.in" date={cmoData.lastUpdatedDisplay} coverage="Offices, grievances, CMDRF, petition/application channels, processing and department totals" />
         </tbody></table></div>
       </section>
 

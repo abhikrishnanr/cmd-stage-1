@@ -97,15 +97,6 @@ const revenueStreams = [
   { stream: "Motor vehicles", target: 6200, actual: 5500 },
 ];
 
-const grievanceTrend = [
-  { week: "Wk1", received: 8200, resolved: 6100 },
-  { week: "Wk2", received: 8800, resolved: 6400 },
-  { week: "Wk3", received: 9100, resolved: 6600 },
-  { week: "Wk4", received: 9600, resolved: 6900 },
-  { week: "Wk5", received: 10200, resolved: 7300 },
-  { week: "Wk6", received: 9800, resolved: 7100 },
-];
-
 const guaranteeProgress = [
   { guarantee: "Free KSRTC travel", progress: 92 },
   { guarantee: "Girl student support", progress: 88 },
@@ -115,25 +106,12 @@ const guaranteeProgress = [
   { guarantee: "Elderly welfare", progress: 84 },
 ];
 
-export const mainPriorityCards = [
-  { id: "income", name: "Income", value: "₹1.12L Cr", detail: "81% of revenue target", tone: "good" as SignalTone, href: "/modules/budget-income-revenue" },
-  { id: "expenditure", name: "Expenditure", value: "₹1.07L Cr", detail: "58% of allocation", tone: "watch" as SignalTone, href: "/modules/non-plan-expenditure" },
-  { id: "budget", name: "Budget & Utilization", value: "56%", detail: "Plan fund utilization", tone: "watch" as SignalTone, href: "/modules/planspace" },
-  { id: "business", name: "Investments & Business", value: "202", detail: "Industries PMS projects", tone: "info" as SignalTone, href: "/modules/k-swift" },
-  { id: "disaster", name: "Disaster Monitoring", value: "HIGH", detail: "71/100 readiness", tone: "risk" as SignalTone, href: "/modules/disaster-management" },
-  { id: "grievance", name: "Grievance & Feedback", value: "69%", detail: "Resolved within SLA", tone: "watch" as SignalTone, href: "/modules/cmo" },
-  { id: "health", name: "Health", value: "5 alerts", detail: "1,114 eHealth institutions", tone: "risk" as SignalTone, href: "/modules/e-health" },
-  { id: "indira", name: "Indira Guarantees", value: "81%", detail: "2.6 Cr beneficiaries", tone: "good" as SignalTone, href: "/dashboard#indira-performance" },
-  { id: "dream", name: "Dream Projects", value: "41%", detail: "Mission Samudra progress", tone: "watch" as SignalTone, href: "/modules/mission-samudra" },
-];
-
 export const mainFiscalComparison = [
   { category: "Revenue", plan: 138000, achieved: 112400 },
   { category: "Total budget", plan: 184000, achieved: 106720 },
   { category: "Plan fund", plan: 38600, achieved: 21500 },
 ];
 
-export const mainGrievanceTrend = grievanceTrend;
 export const mainGuaranteeProgress = guaranteeProgress;
 
 export const mainBusinessPerformance = [
@@ -344,26 +322,6 @@ export const moduleDashboards: Record<string, DemoDashboard> = {
     ],
     table: { title: "Warning timeline", subtitle: "Operational events retained from the existing CMO portal", columns: ["Time", "Warning", "Signal"], rows: [["06:00", "Orange alert - Idukki, Wayanad, Kozhikode", "Watch"], ["09:30", "Dam shutter opening advisory - Idukki at 82%", "Watch"], ["12:15", "Landslide red alert - three Wayanad panchayats", "Critical"], ["15:40", "142 relief camps activated", "Ready"], ["18:00", "Pre-emptive coastal power shutdown", "Watch"]] },
     insight: "Wayanad and Idukki carry the highest reference risk; landslide and flood readiness should remain at the centre of the response view.",
-  },
-
-  cmo: {
-    title: "CMO dashboard",
-    description: "Executive delivery, grievances, sector performance and the decision queue.",
-    kpis: [
-      { label: "Governance score", value: "72/100", detail: "State pulse", tone: "watch", delta: "+3" },
-      { label: "Critical alerts", value: "7", detail: "Needs CM action", tone: "risk" },
-      { label: "Grievance SLA", value: "69%", detail: "Resolved within SLA", tone: "watch", delta: "+5 pp" },
-      { label: "Delayed projects", value: "38", detail: "Red and amber", tone: "risk" },
-      { label: "Investment grounding", value: "31%", detail: "MoU to ground", tone: "risk", delta: "+6 pp" },
-    ],
-    charts: [
-      { id: "sector-performance", title: "Sector performance", subtitle: "Executive score by portfolio", type: "bar", xKey: "sector", data: [{ sector: "Welfare", score: 82 }, { sector: "Health", score: 71 }, { sector: "Education", score: 78 }, { sector: "Infrastructure", score: 55 }, { sector: "Finance", score: 58 }, { sector: "Revenue", score: 66 }, { sector: "Environment", score: 64 }, { sector: "Grievances", score: 69 }], series: [{ key: "score", label: "Score", color: blue }], unit: "%" },
-      { id: "delivery-funnel", title: "Direction-to-closure funnel", subtitle: "Delivery completion by workflow stage", type: "bar", xKey: "stage", data: [{ stage: "CM direction", value: 96 }, { stage: "Acknowledged", value: 82 }, { stage: "ATR submitted", value: 61 }, { stage: "Evidence", value: 58 }, { stage: "Closed", value: 44 }], series: [{ key: "value", label: "Completion", color: violet }], unit: "%", horizontal: true },
-      { id: "grievance-trend", title: "Grievance flow", subtitle: "Received versus resolved by week", type: "area", xKey: "week", data: grievanceTrend, series: [{ key: "received", label: "Received", color: orange }, { key: "resolved", label: "Resolved", color: green }] },
-      { id: "project-delay", title: "Delayed major projects", subtitle: "Physical versus financial progress", type: "bar", xKey: "project", data: [{ project: "Vizhinjam P2", physical: 62, financial: 58 }, { project: "Outer ring road", physical: 41, financial: 47 }, { project: "Thalassery bypass", physical: 73, financial: 70 }, { project: "Sabari rail", physical: 28, financial: 33 }, { project: "Kozhikode hub", physical: 55, financial: 61 }], series: [{ key: "physical", label: "Physical", color: blue }, { key: "financial", label: "Financial", color: amber }], unit: "%" },
-    ],
-    table: { title: "Items for review", subtitle: "Cross-department matters retained from the existing CMO portal", columns: ["Matter", "Owner", "Signal", "Next focus"], rows: [["Revenue arrears recovery", "Revenue Secretary", "High", "Recovery plan"], ["Files over 90 days", "Revenue Secretary", "Watch", "Disposal plan"], ["Girl student DBT failures", "Education Secretary", "Watch", "Reconciliation"], ["Wayanad landslide readiness", "Chief Secretary", "High", "Preparedness review"], ["Plan absorption gaps", "Finance Secretary", "Watch", "Department review"]] },
-    insight: "The largest delivery drop occurs between acknowledgement and Action Taken Reports; project delays and grievance closure need coordinated secretary review.",
   },
 
   "mission-samudra": {

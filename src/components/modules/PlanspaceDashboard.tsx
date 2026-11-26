@@ -6,7 +6,6 @@ import {
   ArrowLeft,
   ArrowUpDown,
   Building2,
-  CalendarDays,
   CircleAlert,
   ClipboardCheck,
   Database,
@@ -27,6 +26,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
 import planspaceJson from "@/data/planspace-source.json";
 
 type MonthRecord = {
@@ -217,13 +217,7 @@ export function PlanspaceDashboard() {
             <p>Plan outlay, expenditure, utilisation, administrative sanctions, sectors and departments.</p>
           </div>
         </div>
-        <div className="module-hero-side analytics-hero-side">
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 11, fontWeight: 800 }}>
-            <CalendarDays size={15} /> Data generated 23 November 2026
-          </span>
-          <strong>{currentYear.fin_year} · through {latestMonth.month_name}</strong>
-          <small>Amounts shown in ₹ crore, following the Planspace source convention</small>
-        </div>
+        <ModuleHeaderMeta lastUpdated={formatSourceTimestamp(source.generated_at)} source="planspace.kerala.gov.in" sourceUrl="https://planspace.kerala.gov.in/" />
       </section>
 
       <section className="analytics-kpi-grid" aria-label="Planspace key indicators">
@@ -552,6 +546,15 @@ function percent(value: number) {
 
 function compactNumber(value: number) {
   return Intl.NumberFormat("en-IN", { notation: "compact", maximumFractionDigits: 1 }).format(value);
+}
+
+function formatSourceTimestamp(value: string) {
+  const match = value.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})\s+(\d{2}):(\d{2})/);
+  if (!match) return value;
+  const [, day, month, year, hour, minute] = match;
+  const hour24 = Number(hour);
+  const hour12 = hour24 % 12 || 12;
+  return `${Number(day)} ${month.slice(0, 3)} ${year} · ${hour12}:${minute} ${hour24 >= 12 ? "PM" : "AM"}`;
 }
 
 const axisTick = { fill: "#718096", fontSize: 10, fontWeight: 650 };

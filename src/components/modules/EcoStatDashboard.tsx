@@ -42,6 +42,7 @@ import {
   YAxis,
 } from "recharts";
 import type { EcoStatData, MarketPriceRecord } from "@/data/departmentSources";
+import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
 import {
   additionalRetailItems,
   cpiCentres,
@@ -126,11 +127,7 @@ export function EcoStatDashboard({ data }: { data: EcoStatData }) {
             <p>Daily essential and wholesale prices, fruit prices, centre-level market intelligence, CPI, monthly trends and the latest published State-income measures.</p>
           </div>
         </div>
-        <div className="module-hero-side analytics-hero-side">
-          <span>Latest wholesale price date</span>
-          <strong>{formatDate(data.priceDate)}</strong>
-          <small>Source checked {data.fetchedAt}</small>
-        </div>
+        <ModuleHeaderMeta lastUpdated={formatDate(data.priceDate)} source="EcoStat portal" sourceUrl="https://www.ecostat.kerala.gov.in/" />
       </section>
 
       <section className="analytics-kpi-grid" aria-label="Economics and Statistics key indicators">

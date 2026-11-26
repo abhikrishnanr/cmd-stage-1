@@ -5,7 +5,6 @@ import {
   Activity,
   ArrowLeft,
   Bus,
-  CalendarDays,
   CheckCircle2,
   Database,
   ExternalLink,
@@ -15,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import { AnalyticsChart } from "@/components/AnalyticsChart";
+import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
 type ChartSpec = Parameters<typeof AnalyticsChart>[0]["chart"];
 type SignalTone = "good" | "watch" | "risk" | "info";
 
@@ -89,11 +89,7 @@ export function KsrtcPriyadarshiniDashboard() {
             <p>Programme reach, free-travel value, service coverage and department reporting requirements.</p>
           </div>
         </div>
-        <div className="module-hero-side analytics-hero-side">
-          <span><CalendarDays size={14} /> Latest published review</span>
-          <strong>22 September 2026 · 97 days</strong>
-          <small>Scheme effective from 15 June 2026.</small>
-        </div>
+        <ModuleHeaderMeta />
       </section>
 
       <section className="analytics-kpi-grid" aria-label="Priyadarshini key indicators">

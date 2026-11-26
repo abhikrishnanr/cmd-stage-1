@@ -26,6 +26,7 @@ import {
   YAxis,
 } from "recharts";
 import type { IndustryKeraData } from "@/data/departmentSources";
+import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
 
 const orange = "#f5821f";
 const blue = "#2563eb";
@@ -65,7 +66,7 @@ export function IndustriesKeraDashboard({ data }: { data: IndustryKeraData }) {
           <div className="module-hero-icon"><Factory size={30} /></div>
           <div><div className="module-hero-kicker">Industries Department and KERA</div><h1>Investments &amp; Business</h1><p>Year of Enterprises results, district and category comparisons, and KERA agricultural value-chain delivery.</p></div>
         </div>
-        <div className="module-hero-side analytics-hero-side"><span>Departmental source check</span><strong>{data.fetchedAt}</strong><small>Year of Enterprises and KERA public dashboards</small></div>
+        <ModuleHeaderMeta source="Industries Department & KERA" />
       </section>
 
       <section className="analytics-kpi-grid" aria-label="Industries key indicators">

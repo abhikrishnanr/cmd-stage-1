@@ -7,26 +7,25 @@ import {
   ChevronRight,
   CircleAlert,
   CircleCheck,
-  Database,
   Gauge,
   Info,
   Table2,
   TrendingUp,
 } from "lucide-react";
 import { stageModules, type StageModule } from "@/data/modules";
-import type { EcoStatData, IndustryKeraData } from "@/data/departmentSources";
+import type { CmoData, EcoStatData, IndustryKeraData } from "@/data/departmentSources";
 import { moduleDashboards, type DemoKpi } from "@/data/demoDashboards";
 import { AnalyticsChart } from "./AnalyticsChart";
 import { ModuleIcon } from "./ModuleIcon";
-import { usePortal } from "./PortalContext";
+import { ModuleHeaderMeta } from "./ModuleHeaderMeta";
 import { PlanspaceDashboard } from "./modules/PlanspaceDashboard";
 import { EcoStatDashboard } from "./modules/EcoStatDashboard";
 import { IndustriesKeraDashboard } from "./modules/IndustriesKeraDashboard";
 import { KsrtcPriyadarshiniDashboard } from "./modules/KsrtcPriyadarshiniDashboard";
 import { KsdmaDashboard } from "./modules/KsdmaDashboard";
+import { CmoDashboard } from "./modules/CmoDashboard";
 
-export function ModuleDetail({ module, ecoStatData, industryKeraData }: { module: StageModule; ecoStatData?: EcoStatData; industryKeraData?: IndustryKeraData }) {
-  const { activeRole } = usePortal();
+export function ModuleDetail({ module, ecoStatData, industryKeraData, cmoData }: { module: StageModule; ecoStatData?: EcoStatData; industryKeraData?: IndustryKeraData; cmoData?: CmoData }) {
   const dashboard = moduleDashboards[module.slug];
   const previous = stageModules[module.order - 2];
   const next = stageModules[module.order];
@@ -36,6 +35,7 @@ export function ModuleDetail({ module, ecoStatData, industryKeraData }: { module
   if (module.slug === "k-swift" && industryKeraData) return <IndustriesKeraDashboard data={industryKeraData} />;
   if (module.slug === "ksrtc") return <KsrtcPriyadarshiniDashboard />;
   if (module.slug === "disaster-management") return <KsdmaDashboard />;
+  if (module.slug === "cmo" && cmoData) return <CmoDashboard data={cmoData} />;
 
   if (!dashboard) return null;
 
@@ -57,11 +57,7 @@ export function ModuleDetail({ module, ecoStatData, industryKeraData }: { module
             <p>{dashboard.description}</p>
           </div>
         </div>
-        <div className="module-hero-side analytics-hero-side">
-          <span><Database size={14} /> Source basis</span>
-          <strong>Existing CMO portal reference dataset</strong>
-          <small>Viewing as {activeRole.title}</small>
-        </div>
+        <ModuleHeaderMeta />
       </section>
 
       <section className="analytics-kpi-grid" aria-label={`${module.name} key performance indicators`}>

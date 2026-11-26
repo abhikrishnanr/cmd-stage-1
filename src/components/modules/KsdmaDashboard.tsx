@@ -5,7 +5,6 @@ import { useState } from "react";
 import {
   Activity,
   ArrowLeft,
-  CalendarClock,
   CloudRain,
   Database,
   ExternalLink,
@@ -18,6 +17,7 @@ import {
   Waves,
 } from "lucide-react";
 import { AnalyticsChart } from "@/components/AnalyticsChart";
+import { ModuleHeaderMeta } from "@/components/ModuleHeaderMeta";
 type ChartSpec = Parameters<typeof AnalyticsChart>[0]["chart"];
 type SignalTone = "good" | "watch" | "risk" | "info";
 
@@ -130,11 +130,7 @@ export function KsdmaDashboard() {
             <p>Daily hazard monitoring and event-response updates for review by the Chief Minister&apos;s Office.</p>
           </div>
         </div>
-        <div className="module-hero-side analytics-hero-side">
-          <span><CalendarClock size={14} /> Latest public dam bulletin</span>
-          <strong>26 November 2026 · 11:00 AM</strong>
-          <small>KSDMA has agreed to prepare the department data-point list.</small>
-        </div>
+        <ModuleHeaderMeta />
       </section>
 
       <section className="analytics-kpi-grid" aria-label="KSDMA key indicators">

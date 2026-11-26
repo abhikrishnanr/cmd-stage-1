@@ -80,6 +80,32 @@ export type IndustryKeraData = {
   fetchedAt: string;
 };
 
+export type CmoChannel = {
+  channel: string;
+  received: number;
+  color: string;
+};
+
+export type CmoDepartment = {
+  department: string;
+  received: number;
+  disposed: number;
+};
+
+export type CmoData = {
+  officesConnected: number;
+  grievances: number;
+  cmdrfApplications: number;
+  applicationsReceived: number;
+  applicationsDisposed: number;
+  lastUpdated: string;
+  lastUpdatedDisplay: string;
+  statisticsSince: string;
+  channels: CmoChannel[];
+  departments: CmoDepartment[];
+  sourceUrl: string;
+};
+
 type EcoStatApiRecord = {
   date?: string;
   dim_1_name?: string;
@@ -102,6 +128,7 @@ type EcoStatApiResponse = {
 const ECOSTAT_BASE = "https://www.ecostat.kerala.gov.in/api/data-subset";
 const YEAR_OF_ENTERPRISES_URL = "https://yearofenterprises.kerala.gov.in/index.php/public_dashboard";
 const KERA_BASE = "https://www.keraplantation.kerala.gov.in/public/index.php/public_scheme_dashboard";
+const CMO_DASHBOARD_URL = "https://cmo.kerala.gov.in/dashboard-en.php";
 
 export async function getEcoStatData(): Promise<EcoStatData> {
   const fetchedAt = indiaTimestamp();
@@ -193,6 +220,22 @@ export async function getIndustryKeraData(): Promise<IndustryKeraData> {
   }
 }
 
+export async function getCmoData(): Promise<CmoData> {
+  try {
+    const response = await fetch(CMO_DASHBOARD_URL, {
+      next: { revalidate: 1800 },
+      headers: {
+        Accept: "text/html",
+        "User-Agent": "Kerala CM Dashboard Stage 1",
+      },
+    });
+    if (!response.ok) throw new Error(`Source returned ${response.status}`);
+    return parseCmoDashboard(await response.text());
+  } catch {
+    return cmoReferenceData;
+  }
+}
+
 async function fetchJson<T>(url: string, init: RequestInit = {}): Promise<T> {
   const response = await fetch(url, {
     ...init,
@@ -274,6 +317,64 @@ function indiaTimestamp() {
   }).format(new Date());
 }
 
+function parseCmoDashboard(html: string): CmoData {
+  const lastUpdated = html.match(/Last Updated:\s*([^<]+)/i)?.[1]?.trim() || cmoReferenceData.lastUpdated;
+  const processing = html.match(/"year":\s*"\d{4}\s*\(w\.e\.f\s*([^)]+)\)"\s*,\s*"total_applications":\s*(\d+)\s*,\s*"total_disposed":\s*(\d+)/i);
+
+  const channelMatches = [...html.matchAll(/category:\s*"([^"]+)"\s*,\s*value:\s*(\d+)\s*,\s*sliceSettings:\s*\{\s*fill:\s*am5\.color\((0x[0-9a-f]+)\)/gi)];
+  const channels = channelMatches.length
+    ? channelMatches.map((match) => ({ channel: match[1].toLowerCase() === "cpgrams" ? "CPGRAMS" : match[1], received: numberFromText(match[2]), color: match[3].replace(/^0x/i, "#") }))
+    : cmoReferenceData.channels;
+
+  const departmentMatches = [...html.matchAll(/\{"year":\s*"([^"]+)",\s*"Received":\s*(\d+),\s*"Approved":\s*(\d+)\}/g)];
+  const departments = departmentMatches.length
+    ? departmentMatches.map((match) => ({ department: match[1], received: numberFromText(match[2]), disposed: numberFromText(match[3]) }))
+    : cmoReferenceData.departments;
+
+  return {
+    officesConnected: readHeadline(html, "Offices Connected") || cmoReferenceData.officesConnected,
+    grievances: readHeadline(html, "Grievances") || cmoReferenceData.grievances,
+    cmdrfApplications: readHeadline(html, "CMDRF Applications") || cmoReferenceData.cmdrfApplications,
+    applicationsReceived: processing ? numberFromText(processing[2]) : cmoReferenceData.applicationsReceived,
+    applicationsDisposed: processing ? numberFromText(processing[3]) : cmoReferenceData.applicationsDisposed,
+    lastUpdated,
+    lastUpdatedDisplay: formatCmoTimestamp(lastUpdated),
+    statisticsSince: processing ? formatCmoEffectiveDate(processing[1]) : cmoReferenceData.statisticsSince,
+    channels,
+    departments,
+    sourceUrl: CMO_DASHBOARD_URL,
+  };
+}
+
+function readHeadline(html: string, label: string) {
+  const labelIndex = html.indexOf(label);
+  if (labelIndex < 0) return 0;
+  const beforeLabel = html.slice(Math.max(0, labelIndex - 500), labelIndex);
+  const headingStart = beforeLabel.lastIndexOf("<h2");
+  if (headingStart < 0) return 0;
+  const headingText = beforeLabel.slice(headingStart).replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ");
+  const values = headingText.match(/[\d,]+/g);
+  return values?.length ? numberFromText(values.at(-1)) : 0;
+}
+
+function formatCmoTimestamp(value: string) {
+  const match = value.match(/(\d{2})-(\d{2})-(\d{4})\s+(\d{2}):(\d{2})/);
+  if (!match) return value;
+  const [, day, month, year, hour, minute] = match;
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const hour24 = Number(hour);
+  const hour12 = hour24 % 12 || 12;
+  return `${Number(day)} ${months[Number(month) - 1]} ${year} · ${hour12}:${minute} ${hour24 >= 12 ? "PM" : "AM"}`;
+}
+
+function formatCmoEffectiveDate(value: string) {
+  const match = value.trim().match(/(\d{2})\.(\d{2})\.(\d{4})/);
+  if (!match) return value.trim();
+  const [, day, month, year] = match;
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${Number(day)} ${months[Number(month) - 1]} ${year}`;
+}
+
 type YearOfEnterprisesDistrict = {
   distname: string;
   achievement: number;
@@ -346,6 +447,36 @@ function ecoStatReferenceData(fetchedAt: string): EcoStatData {
     fetchedAt,
   };
 }
+
+const cmoReferenceData: CmoData = {
+  officesConnected: 9939,
+  grievances: 77153,
+  cmdrfApplications: 79970,
+  applicationsReceived: 75434,
+  applicationsDisposed: 49067,
+  lastUpdated: "26-11-2026 14:00",
+  lastUpdatedDisplay: "26 Nov 2026 · 2:00 PM",
+  statisticsSince: "18 May 2026",
+  channels: [
+    { channel: "Akshaya", received: 992, color: "#dc4534" },
+    { channel: "Direct", received: 4375, color: "#f5821f" },
+    { channel: "Online", received: 23218, color: "#2563eb" },
+    { channel: "CPGRAMS", received: 4557, color: "#0f766e" },
+  ],
+  departments: [
+    { department: "Local Self Government Department", received: 8957, disposed: 5601 },
+    { department: "Home Department", received: 8344, disposed: 6700 },
+    { department: "Revenue Department", received: 6099, disposed: 3188 },
+    { department: "Co-operation Department", received: 3378, disposed: 2884 },
+    { department: "General Education Department", received: 3128, disposed: 2063 },
+    { department: "Finance Department", received: 2746, disposed: 1280 },
+    { department: "Health and Family Welfare Department", received: 2177, disposed: 878 },
+    { department: "Labour and Skills Department", received: 2104, disposed: 1431 },
+    { department: "Transport Department", received: 2066, disposed: 1326 },
+    { department: "Taxes Department (Commercial Taxes, Lotteries)", received: 1887, disposed: 1153 },
+  ],
+  sourceUrl: CMO_DASHBOARD_URL,
+};
 
 function industryKeraReferenceData(fetchedAt: string): IndustryKeraData {
   return {
