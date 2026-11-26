@@ -1181,7 +1181,12 @@
 }
 
 .health-workforce-table table {
-  min-width: 1480px;
+  min-width: 1680px;
+}
+
+.health-workforce-table th:nth-child(n + 4):nth-child(-n + 9),
+.health-workforce-table td:nth-child(n + 4):nth-child(-n + 9) {
+  text-align: center;
 }
 
 .health-empty-row td {

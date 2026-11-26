@@ -34,6 +34,15 @@ const amber = "#f59e0b";
 const teal = "#0f766e";
 const violet = "#7c3aed";
 
+const provisionalWorkforceRows = [
+  { institution: "Primary Health Centre Thrikkakara", district: "Ernakulam", facility: "Primary Health Centre", doctorsSanctioned: 4, doctorsWorking: 3, staffSanctioned: 18, staffWorking: 15, gap: "Staff Nurse", priority: "Watch", tone: "watch" },
+  { institution: "Urban Health and Wellness Centre Kallekkad", district: "Palakkad", facility: "Urban Health Wellness Centre", doctorsSanctioned: 2, doctorsWorking: 1, staffSanctioned: 8, staffWorking: 6, gap: "Medical Officer", priority: "High", tone: "risk" },
+  { institution: "Urban Health and Wellness Centre Puthupalli Street", district: "Palakkad", facility: "Urban Health Wellness Centre", doctorsSanctioned: 2, doctorsWorking: 2, staffSanctioned: 8, staffWorking: 7, gap: "Pharmacist", priority: "Watch", tone: "watch" },
+  { institution: "Primary Health Centre Nedumbassery", district: "Ernakulam", facility: "Primary Health Centre", doctorsSanctioned: 4, doctorsWorking: 2, staffSanctioned: 16, staffWorking: 12, gap: "Medical Officer", priority: "Critical", tone: "risk" },
+  { institution: "Community Health Centre Varapetty", district: "Ernakulam", facility: "Block Family Health Centre", doctorsSanctioned: 7, doctorsWorking: 5, staffSanctioned: 30, staffWorking: 23, gap: "Paediatrics / Lab Technician", priority: "Critical", tone: "risk" },
+  { institution: "Community Health Centre Pampakuda", district: "Ernakulam", facility: "Community Health Centre", doctorsSanctioned: 8, doctorsWorking: 6, staffSanctioned: 34, staffWorking: 28, gap: "Staff Nurse / Lab Technician", priority: "High", tone: "risk" },
+] as const;
+
 export function HealthDashboard({ data }: { data: EHealthData }) {
   const charts: DemoChart[] = [
     {
@@ -133,9 +142,9 @@ export function HealthDashboard({ data }: { data: EHealthData }) {
           <div>
             <span className="section-kicker"><UsersRound size={14} /> Workforce requirement</span>
             <h2 id="health-workforce-title">Doctor and health-staff availability by institution</h2>
-            <p>The register is prepared to identify institutions with the largest verified staffing gaps. Bed-capacity monitoring is not included because a maintainable source is not available.</p>
+            <p>The register is prepared to identify institutions with the largest staffing gaps. The rows shown below are provisional planning entries and must be replaced by dated department records.</p>
           </div>
-          <div className="health-workforce-actions"><SignalBadge value="Department workforce feed required" tone="watch" force /><button type="button" onClick={() => openReview("Review: Health workforce requirements")}><Mic size={13} /> Review</button></div>
+          <div className="health-workforce-actions"><SignalBadge value="Provisional workforce entries" tone="watch" force /><button type="button" onClick={() => openReview("Review: Health workforce requirements")}><Mic size={13} /> Review</button></div>
         </div>
 
         <div className="health-workforce-method">
@@ -144,9 +153,13 @@ export function HealthDashboard({ data }: { data: EHealthData }) {
           <div><SearchCheck size={20} /><span><small>Priority</small><strong>Vacancy rate with service workload</strong></span></div>
         </div>
 
-        <div className="analytics-table-wrap health-workforce-table"><table className="analytics-table"><thead><tr><th>Institution</th><th>District</th><th>Facility type</th><th>Doctors sanctioned</th><th>Doctors working</th><th>Doctor vacancies</th><th>Other staff sanctioned</th><th>Other staff working</th><th>Staff vacancies</th><th>Critical specialty gap</th><th>Data date</th><th>Priority</th></tr></thead><tbody><tr className="health-empty-row"><td colSpan={12}><div><Database size={22} /><strong>No public institution-level workforce values are published by eHealth Kerala</strong><span>DHS, DME and NHM are to provide sanctioned posts, staff in position, vacancies, leave or deputation and specialty gaps with an update date. Priority ranking will activate only from that dated feed.</span></div></td></tr></tbody></table></div>
+        <div className="analytics-table-wrap health-workforce-table"><table className="analytics-table"><thead><tr><th>Institution</th><th>District</th><th>Facility type</th><th>Doctors sanctioned</th><th>Doctors working</th><th>Doctor vacancies</th><th>Other staff sanctioned</th><th>Other staff working</th><th>Staff vacancies</th><th>Critical cadre / specialty gap</th><th>Data date</th><th>Record status</th><th>Priority</th></tr></thead><tbody>{provisionalWorkforceRows.map((row) => {
+          const doctorVacancies = row.doctorsSanctioned - row.doctorsWorking;
+          const staffVacancies = row.staffSanctioned - row.staffWorking;
+          return <tr key={row.institution}><td><strong>{row.institution}</strong></td><td>{row.district}</td><td>{row.facility}</td><td>{row.doctorsSanctioned}</td><td>{row.doctorsWorking}</td><td><SignalBadge value={String(doctorVacancies)} tone={doctorVacancies >= 2 ? "risk" : doctorVacancies === 1 ? "watch" : "good"} force /></td><td>{row.staffSanctioned}</td><td>{row.staffWorking}</td><td><SignalBadge value={String(staffVacancies)} tone={staffVacancies >= 5 ? "risk" : staffVacancies >= 2 ? "watch" : "good"} force /></td><td>{row.gap}</td><td>Awaiting verification</td><td><SignalBadge value="Provisional" tone="watch" force /></td><td><SignalBadge value={row.priority} tone={row.tone} force /></td></tr>;
+        })}</tbody></table></div>
 
-        <div className="health-method-note"><ClipboardList size={17} /><p><strong>Priority method after the feed is connected:</strong> show doctor vacancy percentage, other-staff vacancy percentage, unfilled critical specialties and eHealth workload side by side. High visit volume alone will not be labelled as a staffing shortage.</p></div>
+        <div className="health-method-note"><ClipboardList size={17} /><p><strong>Priority method:</strong> show doctor vacancy percentage, other-staff vacancy percentage, unfilled critical specialties and eHealth workload side by side. Values shown are temporary planning entries and must be replaced by dated DHS, DME or NHM records.</p></div>
       </section>
 
       <section className="analytics-section" aria-labelledby="health-service-title">
@@ -168,7 +181,7 @@ export function HealthDashboard({ data }: { data: EHealthData }) {
         <article><FlaskConical size={19} /><span><small>Lab tests</small><strong>{formatNumber(data.labTests)}</strong></span></article>
       </section>
 
-      <aside className="analytics-provenance"><Database size={17} /><div><strong>Source and interpretation</strong><p>eHealth Kerala public dashboard, data through {formatDate(data.referenceDate)}; source checked {data.fetchedAt}. The source publishes institution coverage and digital service transactions, but not sanctioned posts, staff in position or vacancies. District visit counts indicate recorded eHealth workload and are not a standalone measure of staffing need.</p><div className="source-links"><Link href={data.sourceUrl} target="_blank">eHealth project dashboard <ExternalLink size={12} /></Link><Link href="https://dashboard.ehealth.kerala.gov.in/" target="_blank">State Digital Health Mission <ExternalLink size={12} /></Link></div></div></aside>
+      <aside className="analytics-provenance"><Database size={17} /><div><strong>Source and interpretation</strong><p>eHealth Kerala public dashboard, data through {formatDate(data.referenceDate)}; source checked {data.fetchedAt}. Institution coverage and digital service transactions are published values. Workforce rows are provisional planning entries because the public source does not publish sanctioned posts, staff in position or vacancies. District visit counts are not a standalone measure of staffing need.</p><div className="source-links"><Link href={data.sourceUrl} target="_blank">eHealth project dashboard <ExternalLink size={12} /></Link><Link href="https://dashboard.ehealth.kerala.gov.in/" target="_blank">State Digital Health Mission <ExternalLink size={12} /></Link></div></div></aside>
     </div>
   );
 }
