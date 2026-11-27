@@ -34,7 +34,11 @@ export function LeaderHero({ leader }: { leader: Leader }) {
                     <span className="grid h-7 w-7 place-items-center rounded-lg" style={{ background: `${c}1a`, color: c }}><Icon name={k.icon} size={14} /></span>
                     <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">{k.label}</span>
                   </div>
-                  <div className="mt-1 display text-[18px] font-extrabold leading-none" style={{ color: c }}>{k.value}</div>
+                  {k.value ? (
+                    <div className="mt-1 display text-[18px] font-extrabold leading-none" style={{ color: c }}>{k.value}</div>
+                  ) : (
+                    <div className="mt-1 min-h-[18px]"><span className="sr-only">Score field is blank</span></div>
+                  )}
                   {k.sub && <div className="text-[10px] text-slate-500">{k.sub}</div>}
                 </div>
               );

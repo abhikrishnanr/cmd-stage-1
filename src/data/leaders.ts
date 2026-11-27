@@ -24,7 +24,7 @@ export const leaders: Leader[] = [
     accent: "#16a34a",
     banner: "/img/leaders/vd-satheeshan.jpg",
     greeting: "Cabinet briefings, state finances and district economy",
-    kpis: [],
+    kpis: [{ label: "Governance score", value: "", icon: "Gauge" }],
     sections: [],
   },
   {
