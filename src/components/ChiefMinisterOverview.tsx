@@ -2,6 +2,7 @@ import { CabinetDecisionsCard } from "@/components/CabinetDecisionsCard";
 import { CmDashboardHero } from "@/components/CmDashboardHero";
 import { CmDecisionSignals } from "@/components/CmDecisionSignals";
 import { CmFiscalOverview } from "@/components/CmFiscalOverview";
+import { CmIndiraProgress } from "@/components/CmIndiraProgress";
 import { CmMissionSamudra } from "@/components/CmMissionSamudra";
 import { DistrictEconomyMap } from "@/components/DistrictEconomyMap";
 
@@ -9,6 +10,7 @@ const dashboardSections = [
   { id: "what-to-watch", label: "What to watch" },
   { id: "cabinet", label: "Cabinet" },
   { id: "state-finances", label: "State finances" },
+  { id: "indira-progress", label: "Indira Guarantees" },
   { id: "mission-samudra", label: "Mission Samudra" },
   { id: "district-economy", label: "District economy" },
 ];
@@ -27,6 +29,7 @@ export function ChiefMinisterOverview() {
       <CmDecisionSignals />
       <div id="cabinet" className="min-w-0 scroll-mt-20"><CabinetDecisionsCard /></div>
       <CmFiscalOverview />
+      <CmIndiraProgress />
       <div id="mission-samudra" className="min-w-0 scroll-mt-20"><CmMissionSamudra /></div>
       <div id="district-economy" className="min-w-0 scroll-mt-20"><DistrictEconomyMap /></div>
     </div>
