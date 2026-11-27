@@ -1,148 +1,309 @@
-import { PageHero } from "@/components/PageHero";
-import { SectionCard } from "@/components/primitives";
+import type { ReactNode } from "react";
 import {
-  powerConsumerCategories, powerConsumersSource, powerDaily, powerGenerationSource,
-  powerPeakSource, powerStorageSource, powerSupplyMonths,
+  Activity, ArrowUpRight, BatteryCharging, Factory, Gauge, House, TriangleAlert, Waves, Zap,
+  type LucideIcon,
+} from "lucide-react";
+import { CmSourceDetails } from "@/components/CmSourceDetails";
+import type { DataProvenance } from "@/components/DataProvenance";
+import {
+  powerConsumptionByVoltage, powerConsumptionSource, powerConsumerCategories, powerConsumersSource,
+  powerDaily, powerGenerationSource, powerPeakSource, powerReservoirHistory, powerStorageSource, powerSupplyMonths,
 } from "@/data/power";
+import styles from "./power.module.css";
 
-const currentMonth = powerSupplyMonths[powerSupplyMonths.length - 1];
-const peakScale = Math.max(...powerSupplyMonths.map((month) => month.peakDemandMw));
 const count = new Intl.NumberFormat("en-IN");
-const energy = new Intl.NumberFormat("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-const consumerGroups = { LT: "Low tension", HT: "High tension", EHT: "Extra high tension" } as const;
+const quantity = new Intl.NumberFormat("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const percent = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
 
-const dailySupply = [
-  { label: "Net imports", value: powerDaily.netImportMu, color: "#285bab" },
-  { label: "Internal generation", value: powerDaily.internalGenerationMu, color: "#0f766e" },
+const [previousMonth, currentMonth] = powerSupplyMonths.slice(-2);
+const peakIncrease = currentMonth.peakUnmetMw - previousMonth.peakUnmetMw;
+const importShare = 100 * powerDaily.netImportMu / powerDaily.consumptionMu;
+const storageDrop = 100 * (1 - powerDaily.reservoirStorageMu / powerDaily.priorYearStorageMu);
+const peakScale = Math.ceil(Math.max(...powerSupplyMonths.map((row) => row.peakUnmetMw)) / 50) * 50;
+const energyScale = Math.ceil(Math.max(...powerSupplyMonths.map((row) => row.energyUnservedMu)) / 10) * 10;
+
+const consumerGroups = [
+  { label: "LT", title: "Low tension", color: "#0f7568", icon: House },
+  { label: "HT", title: "High tension", color: "#3156a9", icon: Factory },
+  { label: "EHT", title: "Extra high tension", color: "#8553a5", icon: Zap },
+] as const;
+const groupTotals = consumerGroups.map((group) => ({
+  ...group,
+  total: powerConsumerCategories[group.label].reduce((sum, row) => sum + row.count, 0),
+  consumption: powerConsumptionByVoltage[group.label],
+}));
+const totalConsumers = groupTotals.reduce((sum, group) => sum + group.total, 0);
+const totalConsumption = groupTotals.reduce((sum, group) => sum + group.consumption, 0);
+const domesticShare = 100 * powerConsumerCategories.LT[0].count / groupTotals[0].total;
+
+const colors = ["#1a776b", "#4871bb", "#a86719", "#9a5bb4", "#487c2e", "#b14a64"];
+const sections = [
+  { id: "power-attention", label: "What needs attention" },
+  { id: "power-supply", label: "Monthly supply" },
+  { id: "power-grid", label: "Daily grid and storage" },
+  { id: "power-consumers", label: "Consumers and usage" },
 ];
 
 export default function PowerPage() {
-  const consumers = Object.values(powerConsumerCategories).flat().reduce((sum, row) => sum + row.count, 0);
-
   return (
-    <div className="space-y-5 p-4 sm:p-5">
-      <PageHero
-        title="Power"
-        subtitle="Kerala’s reported electricity demand, supply, local generation and consumer connections. MW measures power and MU measures a million units of electricity."
-        icon="Zap"
-        gradient="linear-gradient(115deg,#102546 0%,#1c4978 52%,#137b76 100%)"
-        statusLabel="Published actuals"
-        provenance={[powerPeakSource, powerGenerationSource, powerStorageSource, currentMonth.peakSource, currentMonth.energySource, powerConsumersSource]}
-        stats={[
-          { label: "Evening peak", value: `${count.format(powerDaily.eveningPeakMw)} MW`, sub: `25 Nov · ${powerDaily.eveningPeakTime}`, icon: "Activity", provenance: powerPeakSource },
-          { label: "Daily consumption", value: `${energy.format(powerDaily.consumptionMu)} MU`, sub: "25 Nov 2026", icon: "Zap", provenance: powerGenerationSource },
-          { label: "Net imports", value: `${energy.format(powerDaily.netImportMu)} MU`, sub: "25 Nov 2026", icon: "ArrowDownToLine", provenance: powerGenerationSource },
-          { label: "Peak demand met", value: `${count.format(currentMonth.peakMetMw)} MW`, sub: "Oct 2026 · CEA", icon: "Gauge", provenance: currentMonth.peakSource },
-          { label: "Energy supplied", value: `${count.format(currentMonth.energySuppliedMu)} MU`, sub: "Oct 2026 · CEA", icon: "BatteryCharging", provenance: currentMonth.energySource },
-          { label: "KSEB consumers", value: count.format(consumers), sub: "Aug 2026", icon: "Users", provenance: powerConsumersSource },
-        ]}
-      />
+    <div className={styles.page}>
+      <PowerHero />
+      <nav aria-label="Power page sections" className={styles.navigation}>
+        {sections.map(({ id, label }) => <a key={id} href={`#${id}`}>{label}</a>)}
+      </nav>
+      <WatchPanel />
+      <MonthlySupply />
+      <DailyGrid />
+      <ConsumerProfile />
+    </div>
+  );
+}
 
-      <div className="grid items-start gap-5 xl:grid-cols-2">
-        <SectionCard title="Peak demand and supply" subtitle="CEA · August to October 2026" icon="Activity" provenance={currentMonth.peakSource} expandable>
-          <div className="mb-4 rounded-xl bg-amber-50 px-3.5 py-3 text-sm text-amber-950">
-            <strong>{count.format(currentMonth.peakUnmetMw)} MW of peak demand was unmet in October</strong>
-            <span className="block text-xs text-amber-900">{currentMonth.peakUnmetPct}% of the {count.format(currentMonth.peakDemandMw)} MW peak demand reported by CEA.</span>
-          </div>
-          <div className="mb-3 flex flex-wrap gap-x-5 gap-y-1 text-xs font-semibold text-slate-600">
-            <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-teal-700" /> Demand met</span>
-            <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-amber-500" /> Demand unmet</span>
-          </div>
-          <ul className="space-y-3">
-            {powerSupplyMonths.map((month) => (
-              <li key={month.label}>
-                <div className="mb-1 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 text-xs">
-                  <a href={month.peakSource.url} target="_blank" rel="noreferrer" className="font-bold text-blue-800 underline decoration-blue-300 underline-offset-2">
-                    {month.label}<span className="sr-only"> peak report PDF</span>
-                  </a>
-                  <span className="tabular-nums text-slate-700"><strong>{count.format(month.peakMetMw)} MW met</strong> · {count.format(month.peakUnmetMw)} MW unmet</span>
-                </div>
-                <div className="flex h-3 overflow-hidden rounded-full bg-slate-100" aria-hidden="true">
-                  <span className="bg-teal-700" style={{ width: `${100 * month.peakMetMw / peakScale}%` }} />
-                  <span className="bg-amber-500" style={{ width: `${100 * month.peakUnmetMw / peakScale}%` }} />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </SectionCard>
-
-        <SectionCard title="Where the day’s electricity came from" subtitle="SLDC · 25 November 2026" icon="PlugZap" provenance={powerGenerationSource} expandable>
-          <p className="mb-2 text-sm text-slate-600">{energy.format(powerDaily.consumptionMu)} MU consumed</p>
-          <div className="flex h-5 overflow-hidden rounded-full" aria-hidden="true">
-            {dailySupply.map((item) => (
-              <span key={item.label} style={{ flexGrow: item.value, backgroundColor: item.color }} />
-            ))}
-          </div>
-          <ul className="mt-2 grid gap-2 sm:grid-cols-2">
-            {dailySupply.map((item) => (
-              <li key={item.label} className="rounded-lg bg-slate-50 p-2.5 text-xs text-slate-600">
-                <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-sm" style={{ backgroundColor: item.color }} />{item.label}</span>
-                <strong className="text-base tabular-nums" style={{ color: item.color }}>{energy.format(item.value)} MU</strong>
-              </li>
-            ))}
-          </ul>
-          <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-3 text-xs text-slate-600">
-            <div><dt>Hydel generation, SLDC subtotal</dt><dd className="font-bold tabular-nums text-slate-900">{energy.format(powerDaily.hydelGenerationMu)} MU</dd></div>
-            <div><dt>November daily average through 25 Nov</dt><dd className="font-bold tabular-nums text-slate-900">{energy.format(powerDaily.monthlyAverageConsumptionMu)} MU</dd></div>
-            <div><dt>November consumption through 25 Nov</dt><dd className="font-bold tabular-nums text-slate-900">{energy.format(powerDaily.monthlyConsumptionMu)} MU</dd></div>
-            <div><dt>Morning peak at {powerDaily.morningPeakTime}</dt><dd className="font-bold tabular-nums text-slate-900"><a href={powerPeakSource.url} target="_blank" rel="noreferrer" className="underline decoration-blue-300 underline-offset-2">{count.format(powerDaily.morningPeakMw)} MW</a></dd></div>
-          </dl>
-        </SectionCard>
-
-        <SectionCard title="Monthly energy supply" subtitle="CEA · Actual power supply position in MU" icon="BatteryCharging" provenance={currentMonth.energySource} expandable>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[380px] text-right text-xs tabular-nums">
-              <thead className="text-slate-500"><tr><th scope="col" className="pb-2 text-left">Report</th><th scope="col">Required</th><th scope="col">Supplied</th><th scope="col">Unserved</th></tr></thead>
-              <tbody>
-                {powerSupplyMonths.map((month) => (
-                  <tr key={month.label} className="border-t border-slate-100">
-                    <th scope="row" className="py-2.5 text-left">
-                      <a href={month.energySource.url} target="_blank" rel="noreferrer" className="text-blue-800 underline decoration-blue-300 underline-offset-2">
-                        {month.label}<span className="sr-only"> energy report PDF</span>
-                      </a>
-                    </th>
-                    <td>{count.format(month.energyRequirementMu)}</td>
-                    <td className="font-semibold text-teal-800">{count.format(month.energySuppliedMu)}</td>
-                    <td className="text-amber-900">{count.format(month.energyUnservedMu)} ({month.energyUnservedPct.toFixed(1)}%)</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </SectionCard>
-
-        <SectionCard title="Hydroelectric reservoir storage" subtitle="SLDC · 25 November 2026" icon="Waves" provenance={powerStorageSource} expandable>
-          <div className="rounded-xl bg-sky-50 p-3.5">
-            <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 text-sky-950">
-              <strong className="text-2xl tabular-nums">{powerDaily.reservoirStoragePct}%</strong>
-              <span className="text-xs">{energy.format(powerDaily.reservoirStorageMu)} / {energy.format(powerDaily.reservoirCapacityMu)} MU</span>
-            </div>
-            <div className="h-3 overflow-hidden rounded-full bg-sky-100" aria-hidden="true"><div className="h-full rounded-full bg-sky-700" style={{ width: `${powerDaily.reservoirStoragePct}%` }} /></div>
-          </div>
-          <dl className="mt-3 grid grid-cols-2 gap-3 text-xs text-slate-600">
-            <div><dt>Storage on 25 Nov 2025</dt><dd className="font-bold tabular-nums text-slate-900">{energy.format(powerDaily.priorYearStorageMu)} MU</dd></div>
-            <div><dt>November inflow through 25 Nov</dt><dd className="font-bold tabular-nums text-slate-900">{energy.format(powerDaily.inflowMonthToDateMu)} MU</dd></div>
-          </dl>
-        </SectionCard>
+function PowerHero() {
+  const metrics = [
+    { label: "Evening peak", value: `${count.format(powerDaily.eveningPeakMw)} MW`, period: `25 Nov · ${powerDaily.eveningPeakTime}`, icon: Activity, source: powerPeakSource },
+    { label: "Electricity consumed", value: `${quantity.format(powerDaily.consumptionMu)} MU`, period: powerGenerationSource.period, icon: Zap, source: powerGenerationSource },
+    { label: "Peak demand met", value: `${count.format(currentMonth.peakMetMw)} MW`, period: `${currentMonth.label} · CEA`, icon: Gauge, source: currentMonth.peakSource },
+    { label: "KSEB consumers", value: count.format(totalConsumers), period: powerConsumersSource.period, icon: House, source: powerConsumersSource },
+  ];
+  return (
+    <header className={styles.hero}>
+      <div className="hero-grid" aria-hidden="true" />
+      <div className={styles.heroHeading}>
+        <span className={styles.heroIcon}><Zap size={27} aria-hidden="true" /></span>
+        <div><h1 className="display">Power Command Dashboard</h1>
+          <p>Kerala’s reported electricity demand, supply, reservoir storage and consumer connections.</p>
+        </div>
+        <CmSourceDetails inverted label="Power dashboard sources" sources={[
+          currentMonth.peakSource, currentMonth.energySource, powerPeakSource, powerGenerationSource,
+          powerStorageSource, powerConsumersSource, powerConsumptionSource,
+        ]} />
       </div>
-
-      <div className="grid items-start gap-5 lg:grid-cols-3">
-        {Object.entries(powerConsumerCategories).map(([group, rows]) => (
-          <SectionCard key={group} title={`${group} consumers`} subtitle={consumerGroups[group as keyof typeof consumerGroups]} icon="Users" provenance={powerConsumersSource} expandable>
-            <table className="w-full text-left text-xs tabular-nums">
-              <caption className="sr-only">{group} KSEB consumer categories in August 2026</caption>
-              <thead className="text-slate-500"><tr><th scope="col" className="pb-2">Category</th><th scope="col" className="pb-2 text-right">Consumers</th></tr></thead>
-              <tbody>{rows.map((row) => (
-                <tr key={row.label} className="border-t border-slate-100">
-                  <th scope="row" className="py-1.5 font-medium text-slate-700">{row.label}</th>
-                  <td className="text-right font-semibold text-slate-900">{count.format(row.count)}</td>
-                </tr>
-              ))}</tbody>
-              <tfoot><tr className="border-t border-slate-200"><th className="pt-2" scope="row">Total</th><td className="pt-2 text-right font-bold">{count.format(rows.reduce((sum, row) => sum + row.count, 0))}</td></tr></tfoot>
-            </table>
-          </SectionCard>
+      <div className={styles.heroMetrics}>
+        {metrics.map(({ label, value, period, icon: Icon, source }) => (
+          <article className={styles.heroMetric} key={label}>
+            <div className={styles.metricHeader}><Icon size={15} aria-hidden="true" /><span>{label}</span>
+              <CmSourceDetails inverted label={`${label} source`} sources={[source]} />
+            </div>
+            <strong>{value}</strong><span>{period}</span>
+          </article>
         ))}
       </div>
+      <p className={styles.heroNote}>MW measures power. MU is one million units (kWh) of electricity.</p>
+    </header>
+  );
+}
+
+function WatchPanel() {
+  return (
+    <section id="power-attention" className={styles.group} aria-labelledby="power-attention-title">
+      <div className={styles.sectionHeading}><TriangleAlert size={20} aria-hidden="true" /><h2 id="power-attention-title">What needs attention</h2></div>
+      <div className={styles.watchGrid}>
+        <article className={styles.watch} data-tone="amber">
+          <header><h3>Peak shortfall widened</h3><CmSourceDetails label="Peak shortfall comparison sources" sources={[previousMonth.peakSource, currentMonth.peakSource, previousMonth.energySource, currentMonth.energySource]} /></header>
+          <div className={styles.watchValue}>{count.format(currentMonth.peakUnmetMw)} MW <span> · {currentMonth.label}</span></div>
+          <p>Up {count.format(peakIncrease)} MW from {previousMonth.label} even as monthly energy unserved fell from {previousMonth.energyUnservedMu} to {currentMonth.energyUnservedMu} MU. Review peak-hour adequacy alongside total energy supplied.</p>
+          <a href="#power-supply">Compare monthly gaps <ArrowUpRight size={13} aria-hidden="true" /></a>
+        </article>
+        <article className={styles.watch} data-tone="blue">
+          <header><h3>Imports supplied most of the day’s energy</h3><CmSourceDetails label="Import share source" sources={[powerGenerationSource]} /></header>
+          <div className={styles.watchValue}>{percent.format(importShare)}% <span> · {powerGenerationSource.period}</span></div>
+          <p>Net imports accounted for {quantity.format(powerDaily.netImportMu)} MU of {quantity.format(powerDaily.consumptionMu)} MU consumed. This is a one-day measure to track alongside evening demand.</p>
+          <a href="#power-grid">Review the supply mix <ArrowUpRight size={13} aria-hidden="true" /></a>
+        </article>
+        <article className={styles.watch} data-tone="violet">
+          <header><h3>Hydro storage lower year on year</h3><CmSourceDetails label="Year-on-year storage source" sources={[powerStorageSource]} /></header>
+          <div className={styles.watchValue}>{percent.format(storageDrop)}% lower <span> · {powerStorageSource.period}</span></div>
+          <p>Stored generation capability was {quantity.format(powerDaily.reservoirStorageMu)} MU versus {quantity.format(powerDaily.priorYearStorageMu)} MU in last year’s comparison. Track inflows and hydro availability in dispatch reviews.</p>
+          <a href="#power-reservoirs">Compare storage by year <ArrowUpRight size={13} aria-hidden="true" /></a>
+        </article>
+      </div>
+    </section>
+  );
+}
+
+function Panel({ title, subtitle, id, icon: Icon, sources, children }: {
+  title: string;
+  subtitle: string;
+  id?: string;
+  icon: LucideIcon;
+  sources: readonly DataProvenance[];
+  children: ReactNode;
+}) {
+  return (
+    <article className={styles.panel} id={id}>
+      <header className={styles.panelHeader}>
+        <span className={styles.panelIcon}><Icon size={19} aria-hidden="true" /></span>
+        <div><h3>{title}</h3><p>{subtitle}</p></div>
+        <CmSourceDetails label={`${title} sources`} sources={sources} />
+      </header>
+      {children}
+    </article>
+  );
+}
+
+function MonthlySupply() {
+  return (
+    <section id="power-supply" className={styles.group} aria-labelledby="power-supply-title">
+      <div className={styles.sectionHeading}><Activity size={20} aria-hidden="true" /><h2 id="power-supply-title">Monthly power supply</h2></div>
+      <div className={styles.chartGrid}>
+        <Panel title="Peak demand and supply" subtitle="CEA revised reports · Aug–Oct 2026" icon={Gauge} sources={powerSupplyMonths.map((row) => row.peakSource)}>
+          <p className={styles.chartLabel}>Peak demand unmet · MW</p>
+          <div className={styles.chartAxis} aria-hidden="true"><span>0</span><span>{peakScale / 2}</span><span>{peakScale} MW</span></div>
+          <ul className={styles.bars}>
+            {powerSupplyMonths.map((row) => (
+              <li key={row.label}>
+                <div><span>{row.label}</span><strong>{count.format(row.peakUnmetMw)} MW <small>· {row.peakUnmetPct.toFixed(1)}%</small></strong></div>
+                <Bar value={row.peakUnmetMw} max={peakScale} color={row === currentMonth ? "#ab540f" : "#d49b48"} />
+              </li>
+            ))}
+          </ul>
+          <details className={styles.tableDetails}>
+            <summary>View demand and supply figures</summary>
+            <div className={styles.tableScroll}>
+              <table className={styles.table}>
+                <caption className="sr-only">CEA revised monthly peak demand and supply in MW</caption>
+                <thead><tr><th scope="col">Month</th><th scope="col">Demand</th><th scope="col">Met</th><th scope="col">Unmet</th></tr></thead>
+                <tbody>{powerSupplyMonths.map((row) => <tr key={row.label}><th scope="row">{row.label}</th><td>{count.format(row.peakDemandMw)}</td><td>{count.format(row.peakMetMw)}</td><td>{count.format(row.peakUnmetMw)}</td></tr>)}</tbody>
+              </table>
+            </div>
+          </details>
+        </Panel>
+
+        <Panel title="Monthly energy supply" subtitle="CEA revised reports · Aug–Oct 2026" icon={BatteryCharging} sources={powerSupplyMonths.map((row) => row.energySource)}>
+          <p className={styles.chartLabel}>Energy unserved · MU</p>
+          <div className={styles.chartAxis} aria-hidden="true"><span>0</span><span>{energyScale / 2}</span><span>{energyScale} MU</span></div>
+          <ul className={styles.bars}>
+            {powerSupplyMonths.map((row) => (
+              <li key={row.label}>
+                <div><span>{row.label}</span><strong>{count.format(row.energyUnservedMu)} MU <small>· {row.energyUnservedPct.toFixed(1)}%</small></strong></div>
+                <Bar value={row.energyUnservedMu} max={energyScale} color={row === currentMonth ? "#147568" : "#6ba296"} />
+              </li>
+            ))}
+          </ul>
+          <details className={styles.tableDetails}>
+            <summary>View requirement and supply figures</summary>
+            <div className={styles.tableScroll}>
+              <table className={styles.table}>
+                <caption className="sr-only">CEA revised monthly energy requirement and supply in MU</caption>
+                <thead><tr><th scope="col">Month</th><th scope="col">Required</th><th scope="col">Supplied</th><th scope="col">Unserved</th></tr></thead>
+                <tbody>{powerSupplyMonths.map((row) => <tr key={row.label}><th scope="row">{row.label}</th><td>{count.format(row.energyRequirementMu)}</td><td>{count.format(row.energySuppliedMu)}</td><td>{count.format(row.energyUnservedMu)}</td></tr>)}</tbody>
+              </table>
+            </div>
+          </details>
+        </Panel>
+      </div>
+    </section>
+  );
+}
+
+function DailyGrid() {
+  const supply = [
+    { label: "Net imports", value: powerDaily.netImportMu, color: "#3156a9" },
+    { label: "Internal generation", value: powerDaily.internalGenerationMu, color: "#168579" },
+  ];
+  return (
+    <section id="power-grid" className={styles.group} aria-labelledby="power-grid-title">
+      <div className={styles.sectionHeading}><Zap size={20} aria-hidden="true" /><h2 id="power-grid-title">Daily grid and storage</h2></div>
+      <div className={styles.chartGrid}>
+        <Panel title="Where electricity came from" subtitle={`Kerala SLDC · ${powerGenerationSource.period}`} icon={Zap} sources={[powerGenerationSource, powerPeakSource]}>
+          <RingChart segments={supply} center={`${quantity.format(powerDaily.consumptionMu)} MU`} centerDetail="Consumed" format={(value) => `${quantity.format(value)} MU`} />
+          <dl className={styles.statGrid}>
+            <div><dt>Morning peak · {powerDaily.morningPeakTime}</dt><dd>{count.format(powerDaily.morningPeakMw)} MW</dd></div>
+            <div><dt>Evening peak · {powerDaily.eveningPeakTime}</dt><dd>{count.format(powerDaily.eveningPeakMw)} MW</dd></div>
+            <div><dt>SLDC hydel subtotal</dt><dd>{quantity.format(powerDaily.hydelGenerationMu)} MU</dd></div>
+            <div><dt>November daily average through 25 Nov</dt><dd>{quantity.format(powerDaily.monthlyAverageConsumptionMu)} MU</dd></div>
+            <div><dt>November consumption through 25 Nov</dt><dd>{quantity.format(powerDaily.monthlyConsumptionMu)} MU</dd></div>
+          </dl>
+        </Panel>
+        <Panel id="power-reservoirs" title="Hydroelectric reservoir storage" subtitle={`Kerala SLDC · ${powerStorageSource.period}`} icon={Waves} sources={[powerStorageSource]}>
+          <div className={styles.storageSummary}>
+            <strong>{powerDaily.reservoirStoragePct}%</strong>
+            <span>of total storage capability · {quantity.format(powerDaily.reservoirStorageMu)} of {quantity.format(powerDaily.reservoirCapacityMu)} MU</span>
+          </div>
+          <p className={styles.chartLabel}>Prior-year comparison · MU of stored generation capability</p>
+          <ul className={styles.bars}>
+            {powerReservoirHistory.map(({ year, storageMu }) => (
+              <li key={year}>
+                <div><span>{year}</span><strong>{quantity.format(storageMu)} MU</strong></div>
+                <Bar value={storageMu} max={powerDaily.reservoirCapacityMu} color={year === 2026 ? "#8553a5" : "#627eaa"} />
+              </li>
+            ))}
+          </ul>
+          <p className={styles.panelNote}>November inflow through 25 Nov was <strong>{quantity.format(powerDaily.inflowMonthToDateMu)} MU</strong>, excluding Sholayar as reported by SLDC.</p>
+        </Panel>
+      </div>
+    </section>
+  );
+}
+
+function ConsumerProfile() {
+  const ltMix = powerConsumerCategories.LT.map((row, index) => ({ label: row.label, value: row.count, color: colors[index] }));
+  return (
+    <section id="power-consumers" className={styles.group} aria-labelledby="power-consumers-title">
+      <div className={styles.sectionHeading}><Factory size={20} aria-hidden="true" /><h2 id="power-consumers-title">Consumers and usage</h2></div>
+      <div className={styles.chartGrid}>
+        <Panel title="LT consumer composition" subtitle={`KSEB consumer counts · ${powerConsumersSource.period}`} icon={House} sources={[powerConsumersSource]}>
+          <RingChart segments={ltMix} center={`${percent.format(domesticShare)}%`} centerDetail="Domestic share" format={(value) => count.format(value)} />
+          <p className={styles.panelNote}>LT accounted for {count.format(groupTotals[0].total)} of {count.format(totalConsumers)} KSEB consumer connections.</p>
+        </Panel>
+        <Panel title="Electricity use by voltage group" subtitle={`KSEB consumption · ${powerConsumptionSource.period}`} icon={Zap} sources={[powerConsumptionSource]}>
+          <div className={styles.storageSummary}><strong>{quantity.format(totalConsumption)} MU</strong><span>total across published voltage groups</span></div>
+          <ul className={styles.bars}>
+            {groupTotals.map(({ label, title, consumption, color }) => (
+              <li key={label}><div><span>{title} ({label})</span><strong>{quantity.format(consumption)} MU</strong></div>
+                <Bar value={consumption} max={totalConsumption} color={color} />
+              </li>
+            ))}
+          </ul>
+          <p className={styles.panelNote}>Bar lengths show each group’s share of the monthly total.</p>
+        </Panel>
+      </div>
+      <div className={styles.consumerGrid}>
+        {groupTotals.map(({ label, title, icon, total }) => (
+          <Panel key={label} title={`${label} consumers`} subtitle={`${title} · ${powerConsumersSource.period}`} icon={icon} sources={[powerConsumersSource]}>
+            <table className={styles.table}>
+              <caption className="sr-only">{label} consumer connections by category</caption>
+              <thead><tr><th scope="col">Category</th><th scope="col">Consumers</th></tr></thead>
+              <tbody>{powerConsumerCategories[label].map((row) => (
+                <tr key={row.label}><th scope="row">{row.label}</th><td>{count.format(row.count)}</td></tr>
+              ))}</tbody>
+              <tfoot><tr><th scope="row">Total</th><td>{count.format(total)}</td></tr></tfoot>
+            </table>
+          </Panel>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Bar({ value, max, color }: { value: number; max: number; color: string }) {
+  return <div className={styles.barTrack} aria-hidden="true"><span style={{ width: `${100 * value / max}%`, backgroundColor: color }} /></div>;
+}
+
+function RingChart({ segments, center, centerDetail, format }: {
+  segments: readonly { label: string; value: number; color: string }[];
+  center: string;
+  centerDetail: string;
+  format: (value: number) => string;
+}) {
+  const total = segments.reduce((sum, segment) => sum + segment.value, 0);
+  let offset = 0;
+  const stops = segments.map(({ value, color }) => {
+    const start = offset;
+    offset += 100 * value / total;
+    return `${color} ${start}% ${offset}%`;
+  });
+  return (
+    <div className={styles.ringChart}>
+      <div className={styles.ring} style={{ backgroundImage: `conic-gradient(${stops.join(", ")})` }}>
+        <div><strong>{center}</strong><span>{centerDetail}</span></div>
+      </div>
+      <ul className={styles.legend}>
+        {segments.map(({ label, value, color }) => (
+          <li key={label}><span><i style={{ backgroundColor: color }} aria-hidden="true" />{label}</span><strong>{format(value)}</strong></li>
+        ))}
+      </ul>
     </div>
   );
 }
