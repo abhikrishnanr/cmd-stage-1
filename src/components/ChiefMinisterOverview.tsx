@@ -1,10 +1,9 @@
 import { CabinetDecisionsCard } from "@/components/CabinetDecisionsCard";
+import { CmDashboardHero } from "@/components/CmDashboardHero";
 import { CmDecisionSignals } from "@/components/CmDecisionSignals";
 import { CmFiscalOverview } from "@/components/CmFiscalOverview";
 import { CmMissionSamudra } from "@/components/CmMissionSamudra";
 import { DistrictEconomyMap } from "@/components/DistrictEconomyMap";
-import { LeaderHero } from "@/components/LeaderHero";
-import { leaderBySlug } from "@/data/leaders";
 
 const dashboardSections = [
   { id: "what-to-watch", label: "What to watch" },
@@ -15,12 +14,9 @@ const dashboardSections = [
 ];
 
 export function ChiefMinisterOverview() {
-  const chiefMinister = leaderBySlug("vd-satheeshan");
-  if (!chiefMinister) return null;
-
   return (
     <div className="mx-auto grid w-full max-w-[1500px] min-w-0 gap-5 p-4 sm:p-5">
-      <LeaderHero leader={chiefMinister} />
+      <CmDashboardHero />
       <nav aria-label="Dashboard sections" className="flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2.5 py-2 shadow-sm">
         {dashboardSections.map((section) => (
           <a key={section.id} href={`#${section.id}`} className="rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#19466c] hover:bg-teal-50 focus-visible:outline-2 focus-visible:outline-teal-700">
