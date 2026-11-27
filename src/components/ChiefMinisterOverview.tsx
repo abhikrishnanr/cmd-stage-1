@@ -14,7 +14,7 @@ const dashboardSections = [
   { id: "state-finances", label: "State finances" },
   { id: "indira-progress", label: "Indira Guarantees" },
   { id: "mission-samudra", label: "Mission Samudra" },
-  { id: "district-economy", label: "District economy" },
+  { id: "district-economy", label: "District Command Map" },
 ];
 
 export function ChiefMinisterOverview() {
@@ -34,7 +34,7 @@ export function ChiefMinisterOverview() {
       <CmFiscalOverview />
       <CmIndiraProgress />
       <div id="mission-samudra" className="min-w-0 scroll-mt-20"><CmMissionSamudra /></div>
-      <div id="district-economy" className="min-w-0 scroll-mt-20"><DistrictEconomyMap /></div>
+      <div id="district-economy" className="min-w-0 scroll-mt-20"><DistrictEconomyMap includeDistrictFindings /></div>
     </div>
   );
 }
