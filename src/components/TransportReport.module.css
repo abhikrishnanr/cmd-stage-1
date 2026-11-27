@@ -9,6 +9,10 @@
   background: radial-gradient(ellipse at 85% 0%, #0e7490, transparent 54%), linear-gradient(114deg, #102449, #113c52 74%, #124f63);
 }
 
+.heroWithSources { overflow: visible; }
+.heroWithSources:has(details[open]) { z-index: 10; }
+.heroSources { position: absolute; inset-block-start: clamp(1.3rem, 4vw, 2.5rem); inset-inline-end: clamp(1.3rem, 4vw, 2.5rem); }
+
 .worksHero {
   background: radial-gradient(ellipse at 85% 7%, #955016, transparent 54%), linear-gradient(114deg, #281f2a, #573618 74%, #76401f);
 }
@@ -20,6 +24,7 @@
   inset: 0 0 0 38%;
   background: repeating-radial-gradient(ellipse at 100% 112%, transparent 0 29px, #ffffff18 30px 31px, transparent 32px 47px);
   mask-image: linear-gradient(to right, transparent, #000);
+  border-radius: inherit;
   content: "";
 }
 
@@ -42,8 +47,8 @@
   letter-spacing: -.035em;
 }
 
-.hero p,
-.worksHero p {
+.hero > p,
+.worksHero > p {
   max-width: 37rem;
   margin-block: .55rem 1rem;
   color: #e2e8f0;
@@ -177,6 +182,11 @@
 
 .metricLabel > span { position: static; }
 
+.metricLabel > details { position: static; }
+.metricLabel > details > div { top: 3.25rem; right: auto; left: .65rem; }
+.metric:nth-child(even) .metricLabel > details > div { right: .65rem; left: auto; }
+.metric:has(.metricLabel > details[open]) { z-index: 10; }
+
 .metricLabel [role="tooltip"] {
   top: 2.7rem;
   right: auto;
@@ -199,7 +209,7 @@
 }
 
 .metricPeriod,
-.sectionHeader p {
+.sectionHeader > div > p {
   color: #475569;
   font-size: .74rem;
 }

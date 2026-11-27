@@ -35,6 +35,15 @@ export const powerDaily = {
   inflowMonthToDateMu: 166.766,
 };
 
+// Storage comparison published in the same 25 November SLDC storage report.
+export const powerReservoirHistory = [
+  { year: 2022, storageMu: 3278.969 },
+  { year: 2023, storageMu: 2752.539 },
+  { year: 2024, storageMu: 2970.704 },
+  { year: 2025, storageMu: powerDaily.priorYearStorageMu },
+  { year: 2026, storageMu: powerDaily.reservoirStorageMu },
+] as const;
+
 function ceaSource(dataset: string, period: string, reportId: string): DataProvenance {
   return {
     source: "Central Electricity Authority",
@@ -81,6 +90,19 @@ export const powerConsumersSource = {
   fetchedAt: checkedOn,
   note: "Choose August 2026 in KSEB’s monthly dashboard.",
 } satisfies DataProvenance;
+
+export const powerConsumptionSource = {
+  ...powerConsumersSource,
+  dataset: "Monthly consumption by voltage category",
+  url: "https://kseb.in/dashboard/view/consumption",
+  basis: "Published monthly KSEB category totals, converted to million units (MU)",
+} satisfies DataProvenance;
+
+export const powerConsumptionByVoltage = {
+  LT: 1751.707087,
+  HT: 476.14374613312,
+  EHT: 236.89344840625,
+} as const;
 
 export const powerConsumerCategories = {
   LT: [

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowUpRight, CalendarDays, ChevronDown } from "lucide-react";
+import { CmSourceDetails } from "@/components/CmSourceDetails";
 import { ProvenanceTooltip } from "@/components/DataProvenance";
 import { Icon } from "@/components/primitives";
 import { transportSourcesCheckedOn, type TransportSource } from "@/data/transportActuals";
@@ -14,17 +15,19 @@ export function formatTransportNumber(value: number) {
 
 type LinkItem = { label: string; href: string };
 
-export function TransportHeader({ title, description, sources, links, publicWorks = false, icon }: {
+export function TransportHeader({ title, description, sources, links, publicWorks = false, icon, sourceIcons = false }: {
   title: string;
   description: string;
   sources: TransportSource[];
   links: LinkItem[];
   publicWorks?: boolean;
   icon?: string;
+  sourceIcons?: boolean;
 }) {
   return (
     <header>
-      <div className={publicWorks ? styles.worksHero : styles.hero}>
+      <div className={`${publicWorks ? styles.worksHero : styles.hero} ${sourceIcons ? styles.heroWithSources : ""}`}>
+        {sourceIcons && <div className={styles.heroSources}><CmSourceDetails label={`${title} sources`} sources={sources.map(checkedSource)} inverted /></div>}
         <span className={styles.heroIcon}><Icon name={icon ?? (publicWorks ? "Construction" : "Bus")} size={24} /></span>
         <h1>{title}</h1>
         <p>{description}</p>
@@ -33,7 +36,7 @@ export function TransportHeader({ title, description, sources, links, publicWork
           {links.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}
         </nav>
       </div>
-      <details className={styles.sources}>
+      {!sourceIcons && <details className={styles.sources}>
         <summary>Original sources and reporting periods <ChevronDown size={15} aria-hidden="true" /></summary>
         <ul className={styles.sourceList}>
           {sources.map((source) => (
@@ -44,13 +47,17 @@ export function TransportHeader({ title, description, sources, links, publicWork
             </li>
           ))}
         </ul>
-      </details>
+      </details>}
     </header>
   );
 }
 
 function TransportSourceLink({ source }: { source: TransportSource }) {
   return <a className={styles.sourceLink} href={source.url} target="_blank" rel="noreferrer">{source.source} <ArrowUpRight size={13} aria-hidden="true" /></a>;
+}
+
+function checkedSource(source: TransportSource) {
+  return { ...source, fetchedAt: source.fetchedAt ?? transportSourcesCheckedOn };
 }
 
 export type TransportMetricData = {
@@ -60,33 +67,43 @@ export type TransportMetricData = {
   color: "network" | "safety" | "service" | "water" | "works";
 };
 
-export function TransportMetrics({ metrics }: { metrics: TransportMetricData[] }) {
+export function TransportMetrics({ metrics, sourceIcons = false }: { metrics: TransportMetricData[]; sourceIcons?: boolean }) {
   return (
     <div className={styles.metrics}>
       {metrics.map((metric) => (
         <article key={metric.label} className={styles.metric} data-color={metric.color}>
           <div className={styles.metricLabel}>
             <h2>{metric.label}</h2>
-            <ProvenanceTooltip provenance={{ ...metric.source, note: "Source checked " + transportSourcesCheckedOn }} />
+            {sourceIcons
+              ? <CmSourceDetails label={`${metric.label} source`} sources={[checkedSource(metric.source)]} />
+              : <ProvenanceTooltip provenance={{ ...metric.source, note: "Source checked " + transportSourcesCheckedOn }} />}
           </div>
           <strong>{metric.value}</strong>
           <span className={styles.metricPeriod}>{metric.source.period}</span>
-          <TransportSourceLink source={metric.source} />
+          {!sourceIcons && <TransportSourceLink source={metric.source} />}
         </article>
       ))}
     </div>
   );
 }
 
-export function TransportSection({ id, title, source, children }: { id?: string; title: string; source: TransportSource; children: ReactNode }) {
+export function TransportSection({ id, title, source, children, sourceIcons = false }: {
+  id?: string;
+  title: string;
+  source: TransportSource;
+  children: ReactNode;
+  sourceIcons?: boolean;
+}) {
   return (
     <section className={styles.section} id={id}>
       <header className={styles.sectionHeader}>
         <div><h2>{title}</h2><p>{source.period}</p></div>
-        <ProvenanceTooltip provenance={{ ...source, note: "Source checked " + transportSourcesCheckedOn }} />
+        {sourceIcons
+          ? <CmSourceDetails label={`${title} source`} sources={[checkedSource(source)]} />
+          : <ProvenanceTooltip provenance={{ ...source, note: "Source checked " + transportSourcesCheckedOn }} />}
       </header>
       {children}
-      <footer className={styles.sectionSource}><TransportSourceLink source={source} /></footer>
+      {!sourceIcons && <footer className={styles.sectionSource}><TransportSourceLink source={source} /></footer>}
     </section>
   );
 }
