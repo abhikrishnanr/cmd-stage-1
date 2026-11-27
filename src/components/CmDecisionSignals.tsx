@@ -1,9 +1,12 @@
 import { Suspense, type ReactNode } from "react";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, ArrowUp, BriefcaseBusiness, ClipboardCheck, Zap, type LucideIcon } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, BriefcaseBusiness, ClipboardCheck, Factory, Zap, type LucideIcon } from "lucide-react";
 import { CmSourceDetails } from "@/components/CmSourceDetails";
 import type { DataProvenance } from "@/components/DataProvenance";
+import { TransportBars } from "@/components/TransportReport";
+import { getDepartmentChart } from "@/data/cmDepartmentFinding";
 import { programmeMonitor, programmeProgress } from "@/data/deliveryActuals";
+import { industriesDashboard, yearOfEnterprisesInvestmentMeasure } from "@/data/departmentDashboards/industries";
 import { unemploymentComparisonSource, youngWomenUnemployment, youthUnemployment } from "@/data/employmentCommand";
 import { powerSupplyMonths } from "@/data/power";
 import { getProgrammeTotals, programmeDashboardApiUrl } from "@/lib/programmeDelivery";
@@ -12,11 +15,12 @@ import styles from "./CmDecisionSignals.module.css";
 const integer = new Intl.NumberFormat("en-IN");
 const decimal = new Intl.NumberFormat("en-IN", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const checkedDate = new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" });
+const enterpriseDistrictInvestment = getDepartmentChart(industriesDashboard, "industry-districts");
 
 function SignalCard({ title, period, tone, icon: Icon, sources, href, linkLabel, children }: {
   title: string;
   period: string;
-  tone: "jobs" | "power" | "delivery";
+  tone: "jobs" | "power" | "delivery" | "investment";
   icon: LucideIcon;
   sources: readonly DataProvenance[];
   href: string;
@@ -114,6 +118,22 @@ async function CurrentProgrammeSignal() {
   return <ProgrammeSignal totals={live?.data ?? programmeProgress} checkedAt={live?.checkedAt ?? null} />;
 }
 
+function EnterpriseInvestmentSignal() {
+  const { label, value, note, source } = yearOfEnterprisesInvestmentMeasure;
+  return (
+    <SignalCard title={label} period={note} tone="investment" icon={Factory} sources={[source]} href={`/industries#${enterpriseDistrictInvestment.id}`} linkLabel="See all districts in Industries">
+      <div className={styles.finding}>
+        <strong>{value}</strong>
+        <span>Reported investment across Kerala</span>
+      </div>
+      <figure className={styles.graph}>
+        <figcaption className={styles.chartTitle}>Top three districts by investment</figcaption>
+        <TransportBars items={enterpriseDistrictInvestment.rows.slice(0, 3)} unit={enterpriseDistrictInvestment.unit} color="var(--accent)" />
+      </figure>
+    </SignalCard>
+  );
+}
+
 export function CmDecisionSignals() {
   return (
     <section id="what-to-watch" className={styles.section} aria-labelledby="what-to-watch-title">
@@ -125,6 +145,7 @@ export function CmDecisionSignals() {
         <YouthSignal />
         <PowerSignal />
         <Suspense fallback={<ProgrammeSignal totals={programmeProgress} checkedAt={null} />}><CurrentProgrammeSignal /></Suspense>
+        <EnterpriseInvestmentSignal />
       </div>
     </section>
   );

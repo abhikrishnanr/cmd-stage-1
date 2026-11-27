@@ -7,6 +7,7 @@
 .jobs { --accent: #8d386c; --line: #ebdce8; --tint: #fbf2f9; }
 .power { --accent: #97501a; --line: #ebdfcb; --tint: #fdf6ea; }
 .delivery { --accent: #146d5c; --line: #d1e9df; --tint: #eaf7f0; }
+.investment { --accent: #245d7d; --line: #d1e2ef; --tint: #eef6fd; }
 .cardHeader { display: grid; align-items: start; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.55rem; }
 .cardHeader h3 { color: #172f4b; font-size: 0.93rem; line-height: 1.2; font-weight: 850; }
 .cardHeader p { margin-top: 0.22rem; color: #4d6075; font-size: 0.69rem; line-height: 1.3; }
@@ -15,6 +16,7 @@
 .finding strong { color: var(--accent); font-size: clamp(1.45rem, 2.75vw, 1.95rem); font-weight: 880; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 .finding span, .context { color: #31465e; font-size: 0.76rem; line-height: 1.42; }
 .graph, .movements { display: grid; gap: 0.45rem; min-height: 58px; align-content: start; }
+.chartTitle { color: #344960; font-size: 0.73rem; font-weight: 800; }
 .rate { display: grid; gap: 0.23rem; }
 .rate div { display: flex; justify-content: space-between; gap: 0.4rem; color: #344960; font-size: 0.72rem; }
 .rate strong { font-variant-numeric: tabular-nums; }

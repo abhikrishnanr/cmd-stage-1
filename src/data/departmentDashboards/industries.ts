@@ -118,13 +118,21 @@ const leadingDistrictsShare = (100 * leadingDistrictsInvestment / currentProgram
 const servicesShare = (100 * currentCategories[0].value / currentProgramme.investment).toFixed(1);
 const number = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 
+export const yearOfEnterprisesInvestmentMeasure = {
+  label: "Year of Enterprises investment",
+  value: `₹${number.format(currentProgramme.investment)} crore`,
+  note: `${currentProgrammeSource.period} · Checked ${checkedAt}`,
+  source: currentProgrammeSource,
+  featured: true,
+};
+
 export const industriesDashboard = {
   title: "Industries",
   description: "Track this financial year’s investment in Kerala’s Year of Enterprises programme, with district and sector breakdowns and the latest industrial production figures.",
   icon: "Factory",
   accent: "#245d7d",
   measures: [
-    { label: "Year of Enterprises investment", value: `₹${number.format(currentProgramme.investment)} crore`, note: `FY 2026–27 to date · Checked ${checkedAt}`, source: currentProgrammeSource, featured: true },
+    yearOfEnterprisesInvestmentMeasure,
     { label: "New enterprises", value: number.format(currentProgramme.starts), note: "FY 2026–27 to date · Year of Enterprises", source: currentProgrammeSource },
     { label: "Reported employment", value: number.format(currentProgramme.employment), note: "FY 2026–27 to date · Year of Enterprises", source: currentProgrammeSource },
     { label: "General industrial production index", value: "84.6", note: "Apr–Jun 2026 · FY 2011–12 = 100", source: iipReport },
