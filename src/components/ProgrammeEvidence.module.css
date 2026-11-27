@@ -1,0 +1,127 @@
+.page {
+  display: grid;
+  gap: 1rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 1rem;
+}
+
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dbe4ee;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 7px 24px #122c4709;
+}
+
+.art {
+  position: relative;
+  min-height: 8.25rem;
+  border-radius: .95rem .95rem 0 0;
+  background: #173951 center 43% / cover;
+}
+
+.emblem {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  left: .9rem;
+  bottom: .85rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid #ffffff76;
+  border-radius: .7rem;
+  background: #102744db;
+  color: #fff;
+}
+
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: .95rem;
+}
+
+.cardContent h2 {
+  margin-top: .6rem;
+  color: #0f2943;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.cardContent p,
+.detail {
+  margin-top: .5rem;
+  margin-bottom: 1rem;
+  color: #334c62;
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.statusLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+.status {
+  display: inline-block;
+  border-radius: .45rem;
+  padding: .25rem .5rem;
+  background: #eff4ff;
+  color: #254a9a;
+  font-size: .74rem;
+  font-weight: 750;
+}
+
+.status[data-status="Operating"],
+.status[data-status="Department established"] {
+  background: #def6e9;
+  color: #176345;
+}
+
+.status[data-status="Early works reported"] {
+  background: #dcf5f8;
+  color: #0a6068;
+}
+
+.status[data-status="Published commitment"],
+.status[data-status="Planning and consultation"] {
+  background: #fff2d8;
+  color: #78400d;
+}
+
+.recordDate {
+  color: #4b6177;
+  font-size: .8rem;
+}
+
+.cardLinks {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .55rem;
+  margin-top: auto;
+  padding-top: .65rem;
+  border-top: 1px solid #e5edf3;
+}
+
+.cardLinks a {
+  display: inline-flex;
+  gap: .3rem;
+  align-items: center;
+  color: #15516b;
+  font-size: .83rem;
+  font-weight: 750;
+}
+
+.cardLinks a:hover { text-decoration: underline; }

@@ -1,0 +1,5417 @@
+{
+  "metadata": {
+    "packName": "Mission Samudra Existing CM Dashboard Page Replacement",
+    "version": "1.0.0",
+    "generatedOn": "2026-06-14",
+    "currencyUnit": "₹ crore",
+    "currentFiscalYear": "FY27",
+    "programmeWindow": "April 2026 to March 2036",
+    "sourceFiles": [
+      "Mission Samudra - Implementation Framework Draft.xlsx",
+      "Mission_Samudra_Phased_Roadmap_2026_2035.pdf",
+      "Scope of Work-for-Abhi.docx"
+    ],
+    "dataNature": "Planning framework",
+    "criticalUsageNote": "The supplied documents contain planned activities, dates and investments. They do not contain actual physical progress, actual expenditure, live RAG status, delay days, risk counts or current completion percentages."
+  },
+  "existingPageIntegration": {
+    "instruction": "Replace only the current Mission Samudra page body inside the existing CM Governance Dashboard.",
+    "preserve": [
+      "existing light left sidebar",
+      "existing light header/top bar",
+      "existing navigation and routes",
+      "existing typography, spacing, radius, shadows and colour tokens",
+      "existing role and authentication context",
+      "existing responsive layout conventions"
+    ],
+    "doNotCreate": [
+      "a new application shell",
+      "a second sidebar",
+      "a duplicate header",
+      "a separate standalone dashboard",
+      "invented operational progress data"
+    ]
+  },
+  "page": {
+    "title": "Mission Samudra",
+    "subtitle": "Kerala Maritime Development Roadmap 2026–2035",
+    "description": "A phased programme covering Vizhinjam, major and minor ports, maritime clusters, policy, governance, social inclusion and green maritime transition.",
+    "defaultTab": "overview",
+    "tabs": [
+      {
+        "id": "overview",
+        "label": "Overview"
+      },
+      {
+        "id": "roadmap",
+        "label": "Roadmap"
+      },
+      {
+        "id": "activities",
+        "label": "Activities"
+      },
+      {
+        "id": "investment",
+        "label": "Investment"
+      },
+      {
+        "id": "clusters",
+        "label": "Ports & Clusters"
+      },
+      {
+        "id": "dependencies",
+        "label": "Dependencies"
+      },
+      {
+        "id": "ecosystem",
+        "label": "Agencies & Schemes"
+      },
+      {
+        "id": "manifesto",
+        "label": "Manifesto"
+      },
+      {
+        "id": "data-quality",
+        "label": "Data Quality"
+      }
+    ],
+    "globalFilters": [
+      "stage",
+      "category",
+      "activityType",
+      "fiscalYear",
+      "GoK agency",
+      "GoI agency",
+      "private entity",
+      "scheme",
+      "funding source",
+      "dependency"
+    ]
+  },
+  "headline": {
+    "activity_count": 33,
+    "stage_activity_counts": {
+      "Stage 1": 12,
+      "Stage 2": 12,
+      "Stage 3": 9
+    },
+    "category_activity_counts": {
+      "Vizhinjam & Major Infra": 12,
+      "Policy / Governance / Social": 10,
+      "Minor Ports & Clusters": 11
+    },
+    "activity_type_counts": {
+      "Augment": 4,
+      "New": 29
+    },
+    "total_investment_cr": 72115,
+    "private_investment_cr": 50500,
+    "gok_investment_cr": 15065,
+    "goi_investment_cr": 6550,
+    "funding_share_percent": {
+      "Private": 70.0,
+      "GoK": 20.9,
+      "GoI": 9.1
+    },
+    "category_investment_cr": {
+      "Vizhinjam & Major Infra": 54650,
+      "Policy / Governance / Social": 3065,
+      "Minor Ports & Clusters": 14400
+    },
+    "top_projects": [
+      {
+        "Activity ID": 29,
+        "Activity": "Phase 3 expansion (10M+ TEUs)",
+        "Total (₹ Cr)": 20000,
+        "Phase": "Stage 3",
+        "Category": "Vizhinjam & Major Infra"
+      },
+      {
+        "Activity ID": 13,
+        "Activity": "Vizhinjam Phase 2 (5.7M TEUs)",
+        "Total (₹ Cr)": 19500,
+        "Phase": "Stage 2",
+        "Category": "Vizhinjam & Major Infra"
+      },
+      {
+        "Activity ID": 30,
+        "Activity": "All 13 minor ports PPP-operated",
+        "Total (₹ Cr)": 5000,
+        "Phase": "Stage 3",
+        "Category": "Minor Ports & Clusters"
+      },
+      {
+        "Activity ID": 14,
+        "Activity": "Balaramapuram rail tunnel",
+        "Total (₹ Cr)": 4500,
+        "Phase": "Stage 2",
+        "Category": "Vizhinjam & Major Infra"
+      },
+      {
+        "Activity ID": 31,
+        "Activity": "Vizhinjam–Beypore–Azhikkal corridor",
+        "Total (₹ Cr)": 4000,
+        "Phase": "Stage 3",
+        "Category": "Minor Ports & Clusters"
+      },
+      {
+        "Activity ID": 16,
+        "Activity": "Pharma / MedDevice anchor tenants",
+        "Total (₹ Cr)": 3000,
+        "Phase": "Stage 2",
+        "Category": "Vizhinjam & Major Infra"
+      },
+      {
+        "Activity ID": 25,
+        "Activity": "Ammonia / H₂ bunkering (IMO 2050)",
+        "Total (₹ Cr)": 2000,
+        "Phase": "Stage 3",
+        "Category": "Vizhinjam & Major Infra"
+      },
+      {
+        "Activity ID": 2,
+        "Activity": "BPCL LNG bunkering FID",
+        "Total (₹ Cr)": 1500,
+        "Phase": "Stage 1",
+        "Category": "Vizhinjam & Major Infra"
+      },
+      {
+        "Activity ID": 19,
+        "Activity": "Azhikkal industrial park Phase 1",
+        "Total (₹ Cr)": 1500,
+        "Phase": "Stage 2",
+        "Category": "Minor Ports & Clusters"
+      },
+      {
+        "Activity ID": 1,
+        "Activity": "EXIM gateway fully operational",
+        "Total (₹ Cr)": 1200,
+        "Phase": "Stage 1",
+        "Category": "Vizhinjam & Major Infra"
+      }
+    ],
+    "programmeWindow": "Apr 2026–Mar 2036",
+    "peakAnnualInvestmentCr": 13200,
+    "peakFiscalYears": [
+      "FY28",
+      "FY29"
+    ]
+  },
+  "stageSummary": [
+    {
+      "stage": "Stage 1",
+      "periodAndTheme": "FY 26–27 Lock in the Wins",
+      "activityCount": 12,
+      "privateCr": 3050,
+      "gokCr": 2965,
+      "goiCr": 550,
+      "totalCr": 6565,
+      "privateSharePercent": 46.5
+    },
+    {
+      "stage": "Stage 2",
+      "periodAndTheme": "FY 28–29 Build the Pull",
+      "activityCount": 12,
+      "privateCr": 21550,
+      "gokCr": 7550,
+      "goiCr": 3650,
+      "totalCr": 32750,
+      "privateSharePercent": 65.8
+    },
+    {
+      "stage": "Stage 3",
+      "periodAndTheme": "FY 30–35 Scale & Decarbonise",
+      "activityCount": 9,
+      "privateCr": 25900,
+      "gokCr": 4550,
+      "goiCr": 2350,
+      "totalCr": 32800,
+      "privateSharePercent": 79.0
+    }
+  ],
+  "categorySummary": [
+    {
+      "category": "Vizhinjam & Major Infra",
+      "activityCount": 12,
+      "totalCr": 54650,
+      "privateCr": 42400,
+      "gokCr": 8050,
+      "goiCr": 4200
+    },
+    {
+      "category": "Minor Ports & Clusters",
+      "activityCount": 11,
+      "totalCr": 14400,
+      "privateCr": 7950,
+      "gokCr": 4250,
+      "goiCr": 2200
+    },
+    {
+      "category": "Policy / Governance / Social",
+      "activityCount": 10,
+      "totalCr": 3065,
+      "privateCr": 150,
+      "gokCr": 2765,
+      "goiCr": 150
+    }
+  ],
+  "annualInvestment": [
+    {
+      "fiscalYear": "FY26",
+      "privateCr": 800,
+      "gokCr": 900,
+      "goiCr": 150,
+      "totalCr": 1850
+    },
+    {
+      "fiscalYear": "FY27",
+      "privateCr": 2250,
+      "gokCr": 2065,
+      "goiCr": 400,
+      "totalCr": 4715
+    },
+    {
+      "fiscalYear": "FY28",
+      "privateCr": 8500,
+      "gokCr": 3200,
+      "goiCr": 1500,
+      "totalCr": 13200
+    },
+    {
+      "fiscalYear": "FY29",
+      "privateCr": 8500,
+      "gokCr": 3200,
+      "goiCr": 1500,
+      "totalCr": 13200
+    },
+    {
+      "fiscalYear": "FY30",
+      "privateCr": 1550,
+      "gokCr": 750,
+      "goiCr": 650,
+      "totalCr": 2950
+    },
+    {
+      "fiscalYear": "FY31",
+      "privateCr": 5000,
+      "gokCr": 1100,
+      "goiCr": 400,
+      "totalCr": 6500
+    },
+    {
+      "fiscalYear": "FY32",
+      "privateCr": 5350,
+      "gokCr": 1100,
+      "goiCr": 550,
+      "totalCr": 7000
+    },
+    {
+      "fiscalYear": "FY33",
+      "privateCr": 5000,
+      "gokCr": 900,
+      "goiCr": 250,
+      "totalCr": 6150
+    },
+    {
+      "fiscalYear": "FY34",
+      "privateCr": 5000,
+      "gokCr": 350,
+      "goiCr": 250,
+      "totalCr": 5600
+    },
+    {
+      "fiscalYear": "FY35",
+      "privateCr": 4000,
+      "gokCr": 350,
+      "goiCr": 250,
+      "totalCr": 4600
+    }
+  ],
+  "topProjects": [
+    {
+      "id": 29,
+      "code": "MS-29",
+      "activity": "Phase 3 expansion (10M+ TEUs)",
+      "stage": "Stage 3",
+      "category": "Vizhinjam & Major Infra",
+      "totalCr": 20000
+    },
+    {
+      "id": 13,
+      "code": "MS-13",
+      "activity": "Vizhinjam Phase 2 (5.7M TEUs)",
+      "stage": "Stage 2",
+      "category": "Vizhinjam & Major Infra",
+      "totalCr": 19500
+    },
+    {
+      "id": 30,
+      "code": "MS-30",
+      "activity": "All 13 minor ports PPP-operated",
+      "stage": "Stage 3",
+      "category": "Minor Ports & Clusters",
+      "totalCr": 5000
+    },
+    {
+      "id": 14,
+      "code": "MS-14",
+      "activity": "Balaramapuram rail tunnel",
+      "stage": "Stage 2",
+      "category": "Vizhinjam & Major Infra",
+      "totalCr": 4500
+    },
+    {
+      "id": 31,
+      "code": "MS-31",
+      "activity": "Vizhinjam–Beypore–Azhikkal corridor",
+      "stage": "Stage 3",
+      "category": "Minor Ports & Clusters",
+      "totalCr": 4000
+    },
+    {
+      "id": 16,
+      "code": "MS-16",
+      "activity": "Pharma / MedDevice anchor tenants",
+      "stage": "Stage 2",
+      "category": "Vizhinjam & Major Infra",
+      "totalCr": 3000
+    },
+    {
+      "id": 25,
+      "code": "MS-25",
+      "activity": "Ammonia / H₂ bunkering (IMO 2050)",
+      "stage": "Stage 3",
+      "category": "Vizhinjam & Major Infra",
+      "totalCr": 2000
+    },
+    {
+      "id": 2,
+      "code": "MS-02",
+      "activity": "BPCL LNG bunkering FID",
+      "stage": "Stage 1",
+      "category": "Vizhinjam & Major Infra",
+      "totalCr": 1500
+    },
+    {
+      "id": 19,
+      "code": "MS-19",
+      "activity": "Azhikkal industrial park Phase 1",
+      "stage": "Stage 2",
+      "category": "Minor Ports & Clusters",
+      "totalCr": 1500
+    },
+    {
+      "id": 1,
+      "code": "MS-01",
+      "activity": "EXIM gateway fully operational",
+      "stage": "Stage 1",
+      "category": "Vizhinjam & Major Infra",
+      "totalCr": 1200
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "code": "MS-01",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "EXIM gateway fully operational",
+      "activityType": "Augment",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "Sagarmala – Port Modernisation",
+          "PM Gati Shakti",
+          "Maritime India Vision 2030"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Kerala PWD / KMB [Dept: Coastal Shipping & Inland Navigation]",
+        "role": "Financier & Coordinator"
+      },
+      "privateSector": {
+        "entity": "Adani Vizhinjam Port Pvt Ltd",
+        "role": "Port Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2027",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 1200,
+        "privateCr": 0,
+        "gokCr": 1000,
+        "goiCr": 200,
+        "financingExpectation": "0 : 83 : 17",
+        "financialInstrument": "State Budget (GoK); Sagarmala Port Modernisation Grant"
+      },
+      "stakeholders": [
+        "Kerala PWD",
+        "KMB",
+        "MoPSW",
+        "Sagarmala PMU",
+        "Adani VPSEZ"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 2,
+      "code": "MS-02",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up.",
+      "activity": "BPCL LNG bunkering FID",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoPNG",
+        "role": "Facilitation & Approvals",
+        "schemes": [
+          "MoPNG – LNG Infrastructure Policy",
+          "National Gas Grid Mission",
+          "OIDB Fund"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Coastal Shipping & Inland Navigation / Industries & Commerce",
+        "role": "—"
+      },
+      "privateSector": {
+        "entity": "BPCL Ltd",
+        "role": "Developer & Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Dec 2027",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 1500,
+        "privateCr": 1500,
+        "gokCr": 0,
+        "goiCr": 0,
+        "financingExpectation": "100 : 0 : 0",
+        "financialInstrument": "Corporate Internal Accruals + Project Finance (BPCL balance-sheet)"
+      },
+      "stakeholders": [
+        "BPCL Ltd",
+        "MoPNG",
+        "MoPSW",
+        "VISL",
+        "LNG terminal engineering firms"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 3,
+      "code": "MS-03",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #8: \"Aviation Development — airport economic zones, free trade godown zones, MRO centres for aircraft maintenance, logistics parks, and a Route Development Fund to support new flight services.\" Mission Samudra rationale: Free trade godown zones at TRV airport = sea-air transshipment hub. High-value cargo arrives by ULCV at Vizhinjam → 20 km → airlifted from TRV to final market. MRO centre supports crew change hub operations.",
+      "activity": "CONCOR ICD commissioned",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoR",
+        "role": "Policy & Facilitation",
+        "schemes": [
+          "Sagarmala – ICD / CFS Development",
+          "PM Gati Shakti",
+          "National Logistics Policy"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Revenue Dept [Dept: Coastal Shipping & Inland Navigation / Transport & Aviation]",
+        "role": "Land Provision"
+      },
+      "privateSector": {
+        "entity": "CONCOR (GoI PSU)",
+        "role": "Developer & Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2027",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 500,
+        "privateCr": 300,
+        "gokCr": 200,
+        "goiCr": 0,
+        "financingExpectation": "60 : 40 : 0",
+        "financialInstrument": "CONCOR equity investment; State budget for land & enabling works"
+      },
+      "stakeholders": [
+        "CONCOR (GoI PSU)",
+        "MoR",
+        "Revenue Dept GoK",
+        "KMB",
+        "Customs/CGST"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 4,
+      "code": "MS-04",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "Shipping line berth agreements",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoPSW",
+        "role": "Regulatory Framework",
+        "schemes": [
+          "Maritime India Vision 2030",
+          "Sagarmala – Port-Led Development"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KMB [Dept: Coastal Shipping & Inland Navigation]",
+        "role": "Facilitation"
+      },
+      "privateSector": {
+        "entity": "Maersk · Hapag-Lloyd · CMA CGM",
+        "role": "Anchor Carrier"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Sep 2026",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 600,
+        "privateCr": 600,
+        "gokCr": 0,
+        "goiCr": 0,
+        "financingExpectation": "100 : 0 : 0",
+        "financialInstrument": "Commercial berth agreements; Shipping line private equity"
+      },
+      "stakeholders": [
+        "Maersk",
+        "Hapag-Lloyd",
+        "CMA CGM",
+        "KMB",
+        "MoPSW",
+        "VISL"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 5,
+      "code": "MS-05",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #670: \"An empowered committee will be formed to ensure the implementation of the manifesto promises.\" Mission Samudra rationale: An inter-departmental empowered committee with Ports, Industries, Fisheries, Tourism, Agriculture, Water Resources, and Finance for the management unit the mission needs. #682: \"A Major Project Review Committee will be formed under the leadership of the Chief Minister to ensure timely completion of major development projects.\" Mission Samudra rationale: Accountability mechanism for Mission Samudra delivery.",
+      "activity": "Mission Samudra Authority constituted",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": []
+      },
+      "governmentOfKerala": {
+        "agency": "CM Office / GoK [Dept: Coastal Shipping & Inland Navigation / Planning & Economic Affairs / PIEMD / PIEMD]",
+        "role": "Policy & Setup"
+      },
+      "privateSector": {
+        "entity": "—",
+        "role": "—"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Sep 2026",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 50,
+        "privateCr": 0,
+        "gokCr": 50,
+        "goiCr": 0,
+        "financingExpectation": "0 : 100 : 0",
+        "financialInstrument": "State Budget Allocation (administrative setup cost)"
+      },
+      "stakeholders": [
+        "CM Office",
+        "Principal Secretary (Ports)",
+        "Finance Dept",
+        "Cabinet Secretariat"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 6,
+      "code": "MS-06",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#346: \"Steps will be taken to attract investors through PPP models. Tourism, Agriculture, IT and Wellness will be the main focus areas.\" Mission Samudra rationale: All four PPP focus sectors have a maritime dimension: tourism (cruise), agriculture (plantation exports), IT (maritime SaaS/BPO), wellness (medical tourism). Zero state expenditure model. #677: \"A single-window clearance system will be implemented to start new ventures.\" Mission Samudra rationale: Faster approvals and execution. #678: \"An investment protection law will be implemented to provide confidence and commitment to private investors.\" Mission Samudra rationale: Investment protection law = the enabling condition that makes the Vizhinjam corridor investable for private capital. Directly addresses Kerala's historical reputation problem on investor-state disputes.",
+      "activity": "KMB PPP concession template",
+      "activityType": "Augment",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "VGF (Viability Gap Funding)",
+          "DPIIT PPP Framework"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KMB [Dept: Industries & Commerce]",
+        "role": "Policy Lead"
+      },
+      "privateSector": {
+        "entity": "Legal consultants",
+        "role": "Advisory"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Sep 2026",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        5
+      ],
+      "funding": {
+        "totalCr": 15,
+        "privateCr": 0,
+        "gokCr": 15,
+        "goiCr": 0,
+        "financingExpectation": "0 : 100 : 0",
+        "financialInstrument": "State Budget; VGF framework design (advisory cost only)"
+      },
+      "stakeholders": [
+        "KMB",
+        "DPIIT",
+        "Finance Dept GoK",
+        "Legal consultants",
+        "NITI Aayog"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 7,
+      "code": "MS-07",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up. #318: \"The government will provide assistance to export Kerala's unique delicacies such as jackfruit, mango, cashew, cocoa, spices etc., using modern packing systems.\" Mission Samudra rationale: Direct Vizhinjam EXIM gateway activation promise. Branded, packaged Kerala products.",
+      "activity": "Kollam FTWZ notified",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoC",
+        "role": "FTWZ Approval",
+        "schemes": [
+          "FTWZ / SEZ Act",
+          "TIES Scheme (DGFT)",
+          "Sagarmala – Port-Linked Industrialisation"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Dept of Industries [Dept: Industries & Commerce]",
+        "role": "Notification & Land"
+      },
+      "privateSector": {
+        "entity": "FTWZ Developer (TBD)",
+        "role": "Developer & Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2028",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        5
+      ],
+      "funding": {
+        "totalCr": 800,
+        "privateCr": 400,
+        "gokCr": 300,
+        "goiCr": 100,
+        "financingExpectation": "50 : 38 : 13",
+        "financialInstrument": "Private equity / project finance (developer); State budget; GoI FTWZ/TIES Scheme"
+      },
+      "stakeholders": [
+        "MoC",
+        "DGFT",
+        "Dept of Industries GoK",
+        "FTWZ developer (TBD)",
+        "KMB",
+        "SEZ Board"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 8,
+      "code": "MS-08",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#610: \"The government will provide assistance to establish deep-freeze units to preserve fish in the fishing sector.\" Mission Samudra rationale: Deep-freeze at landing centres → cold chain corridor → Processing Park. Solves the post-catch deterioration problem that forces Kerala processors to sell domestically at low prices. #588: \"Seafood processing parks and cold chain facilities will be established.\" Mission Samudra rationale: Core industrial output of fisheries cluster. Port-side cold chain + 1,000 reefer plugs at various location that moves frozen shrimp exports from Visakhapatnam back to Kerala.",
+      "activity": "Deep-freeze units (Neendakara/Ponnani)",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MPEDA",
+        "role": "Financier",
+        "schemes": [
+          "PMMSY – Cold Chain & Post-Harvest Infra",
+          "MPEDA Export Promotion Scheme",
+          "FIDF (Fisheries Infra Dev Fund)"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Fisheries Dept [Dept: Fisheries / Industries & Commerce]",
+        "role": "Co-Financier"
+      },
+      "privateSector": {
+        "entity": "Equipment suppliers",
+        "role": "EPC Contractor"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2027",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 200,
+        "privateCr": 100,
+        "gokCr": 100,
+        "goiCr": 0,
+        "financingExpectation": "50 : 50 : 0",
+        "financialInstrument": "PMMSY cold-chain grant (GoK-channelled); Equipment hire-purchase / term loan"
+      },
+      "stakeholders": [
+        "MPEDA",
+        "Fisheries Dept GoK",
+        "Equipment suppliers",
+        "Fisher cooperatives",
+        "NCDC"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 9,
+      "code": "MS-09",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "Alappuzha WCC EDO nodes",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "IWAI – National Waterways Act",
+          "Sagarmala – Waterway Connectivity",
+          "Jal Marg Vikas Project"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KIIFB / GoK [Dept: Coastal Shipping & Inland Navigation]",
+        "role": "Financier"
+      },
+      "privateSector": {
+        "entity": "Construction contractors",
+        "role": "EPC Contractor"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2028",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 400,
+        "privateCr": 0,
+        "gokCr": 400,
+        "goiCr": 0,
+        "financingExpectation": "0 : 100 : 0",
+        "financialInstrument": "KIIFB bonds; State budget; IWAI co-ordination (no GoI cash for this item)"
+      },
+      "stakeholders": [
+        "KIIFB",
+        "GoK PWD",
+        "IWAI",
+        "KMB",
+        "Construction contractors",
+        "Local bodies"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 10,
+      "code": "MS-10",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "Azhikkal dredging + land acquisition",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoPSW / Sagarmala",
+        "role": "Co-Financier",
+        "schemes": [
+          "Sagarmala – Non-Major Port Development",
+          "PM Gati Shakti",
+          "NIP (National Infra Pipeline)"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Kerala Ports Dept [Dept: Coastal Shipping & Inland Navigation]",
+        "role": "Lead Financier"
+      },
+      "privateSector": {
+        "entity": "Dredging agencies",
+        "role": "Contractor"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2028",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 600,
+        "privateCr": 0,
+        "gokCr": 350,
+        "goiCr": 250,
+        "financingExpectation": "0 : 58 : 42",
+        "financialInstrument": "Sagarmala Non-Major Port Development Grant; State budget capex; NIP allocation"
+      },
+      "stakeholders": [
+        "MoPSW",
+        "Sagarmala PMU",
+        "Kerala Ports Dept",
+        "Dredging agencies",
+        "Revenue Dept"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 11,
+      "code": "MS-11",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#594: \"Boat manufacturing facilities will be set up in Poovar and Beypore to meet global needs.\" Mission Samudra rationale: Poovar = 10 km from Vizhinjam, 30m draft → ship repair yard. Beypore = centuries-old Uru boat heritage → electric barges and AUVs for the West Coast Canal freight network. #7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "Beypore electric barge PPP",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "Sagarmala – Coastal Shipping Scheme",
+          "Green Shipping Initiative (MoPSW)",
+          "VGF"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KMB [Dept: Ports / Coastal Shipping & Inland Navigation]",
+        "role": "Concessioner"
+      },
+      "privateSector": {
+        "entity": "Shipyard (TBD)",
+        "role": "PPP Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2028",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        5
+      ],
+      "funding": {
+        "totalCr": 200,
+        "privateCr": 150,
+        "gokCr": 50,
+        "goiCr": 0,
+        "financingExpectation": "75 : 25 : 0",
+        "financialInstrument": "PPP concession (VGF-supported); Green Shipping Initiative incentive"
+      },
+      "stakeholders": [
+        "KMB",
+        "Shipyard (TBD)",
+        "MoPSW",
+        "IREDA (green equipment finance)",
+        "Barge operators"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 12,
+      "code": "MS-12",
+      "stage": "Stage 1",
+      "stageId": "stage-1",
+      "stagePeriod": "FY26–FY27",
+      "stageTheme": "Lock in the Wins",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#576: \"The package announced by the previous UDF government to address the impacts on fishermen due to the Vizhinjam project will be implemented.\" Mission Samudra rationale: Active participation of fisherman community in skilling, employment. #573: \"Steps will be taken to form self-help groups for women in the fishing sector for self-employment and to provide them with necessary guidelines, training and materials.\" Mission Samudra rationale: Women SHGs → IQF processing units → Seafood processing park supply chain. Replicates the MPEDA Andhra Pradesh model in Kerala coastal villages. 3× higher realisation per tonne vs raw fish. #604: \"A special committee including fishermen and experts will be formed to study the impacts of the blue economy and necessary steps will be taken based on the report.\" Mission Samudra rationale: Policy research arm for Mission Samudra's coastal expansion. Ensures port-based development integrates fishermen as beneficiaries, not displaced communities.",
+      "activity": "Fishermen welfare package",
+      "activityType": "Augment",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "PMMSY – Fisher Welfare",
+          "FIDF",
+          "PM Kisan Mandhan (adjacent)"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Fisheries Dept / GoK [Dept: Fisheries]",
+        "role": "Financier & Implementer"
+      },
+      "privateSector": {
+        "entity": "—",
+        "role": "—"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2027",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        5
+      ],
+      "funding": {
+        "totalCr": 500,
+        "privateCr": 0,
+        "gokCr": 500,
+        "goiCr": 0,
+        "financingExpectation": "0 : 100 : 0",
+        "financialInstrument": "State Budget (Fisher Welfare Fund); PMMSY fisher welfare component (GoK draw-down)"
+      },
+      "stakeholders": [
+        "Fisheries Dept GoK",
+        "MSA",
+        "Fisher community associations",
+        "NCDC",
+        "District administrations"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 13,
+      "code": "MS-13",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up.",
+      "activity": "Vizhinjam Phase 2 (5.7M TEUs)",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "Sagarmala – Major Port Capacity",
+          "Maritime India Vision 2030",
+          "VGF / NMP"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KMB / GoK [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+        "role": "Land, Utilities & Facilitation"
+      },
+      "privateSector": {
+        "entity": "Adani Vizhinjam Port Pvt Ltd",
+        "role": "Developer & Operator (50-yr concession)"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2026",
+        "plannedEnd": "Mar 2029",
+        "gantt": {
+          "FY26": null,
+          "FY27": "▶",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        1,
+        4
+      ],
+      "funding": {
+        "totalCr": 19500,
+        "privateCr": 16000,
+        "gokCr": 3500,
+        "goiCr": 0,
+        "financingExpectation": "82 : 18 : 0",
+        "financialInstrument": "Concession extension (Adani equity + project debt); GoK enabling capex; ADB/IFC co-financing"
+      },
+      "stakeholders": [
+        "Adani VPSEZ",
+        "KMB",
+        "GoK",
+        "MoPSW",
+        "ADB",
+        "IFC",
+        "State Bank of India",
+        "Multilateral lenders"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 14,
+      "code": "MS-14",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #8: \"Aviation Development — airport economic zones, free trade godown zones, MRO centres for aircraft maintenance, logistics parks, and a Route Development Fund to support new flight services.\" Mission Samudra rationale: Free trade godown zones at TRV airport = sea-air transshipment hub. High-value cargo arrives by ULCV at Vizhinjam → 20 km → airlifted from TRV to final market. MRO centre supports crew change hub operations.",
+      "activity": "Balaramapuram rail tunnel",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoR / NRVY",
+        "role": "Lead Financier",
+        "schemes": [
+          "NRVY (National Rail Vikas Yojana)",
+          "PM Gati Shakti",
+          "Sagarmala – Rail Connectivity"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Kerala PWD [Dept: Coastal Shipping & Inland Navigation / Transport & Aviation]",
+        "role": "Co-Financier"
+      },
+      "privateSector": {
+        "entity": "RVNL / L&T (TBD)",
+        "role": "EPC Contractor"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2031",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        1,
+        13
+      ],
+      "funding": {
+        "totalCr": 4500,
+        "privateCr": 0,
+        "gokCr": 1500,
+        "goiCr": 3000,
+        "financingExpectation": "0 : 33 : 67",
+        "financialInstrument": "NRVY grant (Central); State budget co-share; RVNL EPC contract"
+      },
+      "stakeholders": [
+        "MoR",
+        "NRVY",
+        "Kerala PWD",
+        "RVNL",
+        "L&T / EPC contractor",
+        "Railway Land Devt Authority"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 15,
+      "code": "MS-15",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up. #677: \"A single-window clearance system will be implemented to start new ventures.\" Mission Samudra rationale: Faster approvals and execution.",
+      "activity": "OAGC SPV (land-acquisition powers)",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "NIP – Industrial Corridor",
+          "DPIIT Industrial Park Rating System"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "CM Office / Industries [Dept: Industries & Commerce / PIEMD]",
+        "role": "Policy & Setup"
+      },
+      "privateSector": {
+        "entity": "—",
+        "role": "—"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2030",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        5,
+        13
+      ],
+      "funding": {
+        "totalCr": 1000,
+        "privateCr": 0,
+        "gokCr": 1000,
+        "goiCr": 0,
+        "financingExpectation": "0 : 100 : 0",
+        "financialInstrument": "State Budget; KIIFB industrial corridor bond; DPIIT NIP allocation"
+      },
+      "stakeholders": [
+        "CM Office",
+        "Industries Dept GoK",
+        "Revenue Dept",
+        "DPIIT",
+        "Legal advisors"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 16,
+      "code": "MS-16",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#327: \"A special economic zone will be established for pharma and vaccine manufacturing companies.\" Mission Samudra rationale: Major medical devices park and export from Kerala. #188: \"Steps will be taken to establish the National Institute of Pharmacy Education and Research (NIPER) in the pharma sector.\" Mission Samudra rationale: Pharma value chain. #306: \"A special incentive package and financial and technical support will be provided for domestic manufacturing of medical devices, surgical instruments, robotics, stents, and artificial heart valves.\" Mission Samudra rationale: Major medical devices park and export from Kerala.",
+      "activity": "Pharma / MedDevice anchor tenants",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "DPIIT",
+        "role": "Investment Facilitation",
+        "schemes": [
+          "PLI – Pharma (₹15,000 Cr)",
+          "PLI – Medical Devices (₹3,420 Cr)",
+          "TIES Scheme"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "OAGC [Dept: Industries & Commerce / Health & Family Welfare]",
+        "role": "Land & Incentives"
+      },
+      "privateSector": {
+        "entity": "Pharma & MedDevice companies",
+        "role": "Anchor Tenant"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2030",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        15,
+        13
+      ],
+      "funding": {
+        "totalCr": 3000,
+        "privateCr": 3000,
+        "gokCr": 0,
+        "goiCr": 0,
+        "financingExpectation": "100 : 0 : 0",
+        "financialInstrument": "PLI scheme capex benefits; Private equity; Industrial park lease (OAGC facilitation)"
+      },
+      "stakeholders": [
+        "DPIIT",
+        "OAGC",
+        "Pharma companies",
+        "Medical device manufacturers",
+        "NITI Aayog"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 17,
+      "code": "MS-17",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #584: \"Training programs will be implemented for fishermen to gain skills in secondary processing.\" Mission Samudra rationale: Value addition training → IQF, breaded, ready-to-cook products → 3× higher export realisation per tonne. Builds workforce for the Seafood processing park. #261: \"A state-wide apprenticeship exchange platform connecting students and companies. Kerala Academy for Skill Excellence (KASE) will be reorganized.\" Mission Samudra rationale: Maritime skills apprenticeship — port operations, customs brokering, cold chain management, ship chandling, vessel tracking — formalised through KASE linked to the maritime university.",
+      "activity": "Maritime Academy (first batch)",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoPSW",
+        "role": "Co-Financier",
+        "schemes": [
+          "Maritime India Vision 2030 – HRD",
+          "Skill India / PMKVY",
+          "NSDC Sector Skill Council"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Higher Education / GoK [Dept: Coastal Shipping & Inland Navigation / Fisheries / Labour & Skill]",
+        "role": "Owner & Operator"
+      },
+      "privateSector": {
+        "entity": "—",
+        "role": "—"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2027",
+        "plannedEnd": "Mar 2029",
+        "gantt": {
+          "FY26": null,
+          "FY27": "…",
+          "FY28": "▶",
+          "FY29": null,
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        5
+      ],
+      "funding": {
+        "totalCr": 400,
+        "privateCr": 0,
+        "gokCr": 300,
+        "goiCr": 100,
+        "financingExpectation": "0 : 75 : 25",
+        "financialInstrument": "State Budget (capex + operating); MoPSW HRD / Maritime Vision 2030 grant; Skill India/PMKVY"
+      },
+      "stakeholders": [
+        "MoPSW",
+        "DG Shipping",
+        "Higher Education Dept GoK",
+        "Skill India Mission",
+        "Industry partners"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 18,
+      "code": "MS-18",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#726: \"Steps will be taken to make Kerala a leading cruise ship destination.\" Mission Samudra rationale: Vizhinjam ICP status gazetted Nov 2025 makes this immediately actionable. Target: 80–150 cruise calls/year. Kovalam + backwater circuit, See Kerala – GoK sponsored tour packages. #721: \"Plans will be implemented to transform Kerala into a destination for adventure, wellness, medical, sports and farm tourism.\" Mission Samudra rationale: More cruises. #349: \"A School of Hospitality will be launched to train professionals to provide better service to tourists.\" Mission Samudra rationale: Crew change at Vizhinjam (ICP live) + cruise tourism + medical tourism = major hospitality workforce demand. School of Hospitality at Kovalam/Trivandrum feeds this pipeline directly.",
+      "activity": "First 5 cruise ship calls",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoPSW",
+        "role": "Regulatory",
+        "schemes": [
+          "Sagarmala – Cruise Circuit",
+          "Swadesh Darshan 2.0",
+          "MDA (Market Dev Assistance)"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Kerala Tourism [Dept: Tourism]",
+        "role": "Facilitation"
+      },
+      "privateSector": {
+        "entity": "MSC / Royal Caribbean",
+        "role": "Cruise Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2029",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        13,
+        1
+      ],
+      "funding": {
+        "totalCr": 250,
+        "privateCr": 100,
+        "gokCr": 150,
+        "goiCr": 0,
+        "financingExpectation": "40 : 60 : 0",
+        "financialInstrument": "Kerala Tourism Development Fund; Sagarmala Cruise Circuit Grant"
+      },
+      "stakeholders": [
+        "MoPSW",
+        "Kerala Tourism",
+        "MSC Cruises",
+        "Royal Caribbean",
+        "KMB",
+        "VISL",
+        "Port Health Authority"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 19,
+      "code": "MS-19",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#324: \"Special economic zones will be set up for green energy, robotics, biotech, toy manufacturing, electronics parts, oil and gas, and aerospace parts industries.\" Mission Samudra rationale: Aerospace components SEZ near VSSC/ISRO + Vizhinjam export gateway = high-value, low land-footprint manufacturing suited to Kerala's ecologically constrained geography. #326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up.",
+      "activity": "Azhikkal industrial park Phase 1",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "Sagarmala / GoI",
+        "role": "Co-Financier",
+        "schemes": [
+          "Sagarmala – Port-Linked Industrialisation",
+          "NIP – Industrial Corridor",
+          "DESH Bill (SEZ successor)"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Dept of Industries [Dept: Industries & Commerce]",
+        "role": "Land & Facilitation"
+      },
+      "privateSector": {
+        "entity": "Industrial park developer (TBD)",
+        "role": "PPP Developer"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2031",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": "…",
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        10
+      ],
+      "funding": {
+        "totalCr": 1500,
+        "privateCr": 900,
+        "gokCr": 400,
+        "goiCr": 200,
+        "financingExpectation": "60 : 27 : 13",
+        "financialInstrument": "PPP developer equity + project finance; Sagarmala NIP grant; State budget land cost"
+      },
+      "stakeholders": [
+        "Sagarmala PMU",
+        "Dept of Industries GoK",
+        "NITI Aayog",
+        "Industrial park developer",
+        "District admin"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 20,
+      "code": "MS-20",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "Munambam coastal terminal",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "Sagarmala – Coastal Shipping",
+          "VGF",
+          "PM Gati Shakti"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KMB [Dept: Coastal Shipping & Inland Navigation]",
+        "role": "Concessioner"
+      },
+      "privateSector": {
+        "entity": "PPP operator (TBD)",
+        "role": "Developer & Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2030",
+        "gantt": {
+          "FY26": null,
+          "FY27": "…",
+          "FY28": "…",
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        6
+      ],
+      "funding": {
+        "totalCr": 700,
+        "privateCr": 500,
+        "gokCr": 200,
+        "goiCr": 0,
+        "financingExpectation": "71 : 29 : 0",
+        "financialInstrument": "PPP concession (VGF-backed); KMB concessioner guarantee; Coastal cargo incentive"
+      },
+      "stakeholders": [
+        "KMB",
+        "PPP operator (TBD)",
+        "MoPSW",
+        "Coastal communities",
+        "Customs/CGST"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 21,
+      "code": "MS-21",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #449: \"Agri-logistics parks will be established near airports to enable smooth export of crops.\" Mission Samudra rationale: Packaging, value additions.",
+      "activity": "NW-3 barge corridor (0.5 MMT)",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "IWAI",
+        "role": "Lead Financier & Operator",
+        "schemes": [
+          "IWAI – National Waterways Act",
+          "Jal Marg Vikas (World Bank)",
+          "Sagarmala – Inland Water Transport"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KWIL / GoK [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+        "role": "Co-Operator"
+      },
+      "privateSector": {
+        "entity": "Barge operators",
+        "role": "Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2030",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": "…",
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        9
+      ],
+      "funding": {
+        "totalCr": 500,
+        "privateCr": 0,
+        "gokCr": 150,
+        "goiCr": 350,
+        "financingExpectation": "0 : 30 : 70",
+        "financialInstrument": "IWAI plan budget; World Bank Jal Marg Vikas co-financing; State co-share"
+      },
+      "stakeholders": [
+        "IWAI",
+        "KWIL",
+        "MoPSW",
+        "World Bank",
+        "Barge operators",
+        "Port users",
+        "CGST authorities"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 22,
+      "code": "MS-22",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#311: \"Policy formulation will be carried out to encourage Global Capability Centers to create more international job opportunities in Kerala.\" Mission Samudra rationale: GCCs in maritime technology, port management systems, vessel tracking, marine insurance, ship finance etc. #7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "Ship management cluster / GCCs",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoPSW",
+        "role": "Policy Support",
+        "schemes": [
+          "Maritime India Vision 2030 – Services",
+          "DPIIT GCC Policy",
+          "SEZ / STPI incentives"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KSIDC [Dept: Electronics & IT / Coastal Shipping & Inland Navigation]",
+        "role": "Facilitation & Incentives"
+      },
+      "privateSector": {
+        "entity": "Anglo-Eastern · V.Ships · BSM",
+        "role": "GCC Developer"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2030",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        13,
+        17
+      ],
+      "funding": {
+        "totalCr": 600,
+        "privateCr": 600,
+        "gokCr": 0,
+        "goiCr": 0,
+        "financingExpectation": "100 : 0 : 0",
+        "financialInstrument": "Private equity (GCC capex); KSIDC fiscal incentives; MoPSW policy support"
+      },
+      "stakeholders": [
+        "MoPSW",
+        "KSIDC",
+        "Anglo-Eastern",
+        "V.Ships",
+        "BSM",
+        "IT/ITeS park developers",
+        "DG Shipping"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 23,
+      "code": "MS-23",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#573: \"Steps will be taken to form self-help groups for women in the fishing sector for self-employment and to provide them with necessary guidelines, training and materials.\" Mission Samudra rationale: Women SHGs → IQF processing units → Seafood processing park supply chain. Replicates the MPEDA Andhra Pradesh model in Kerala coastal villages. 3× higher realisation per tonne vs raw fish. #576: \"The package announced by the previous UDF government to address the impacts on fishermen due to the Vizhinjam project will be implemented.\" Mission Samudra rationale: Active participation of fisherman community in skilling, employment.",
+      "activity": "Women SHG cooperatives",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "DAY-NRLM (Deendayal Antyodaya)",
+          "NCDC – SHG Support",
+          "PMMSY – Women in Fisheries"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Social Welfare Dept [Dept: Fisheries]",
+        "role": "Financier & Facilitator"
+      },
+      "privateSector": {
+        "entity": "SHG networks",
+        "role": "Cooperative Member"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2030",
+        "gantt": {
+          "FY26": null,
+          "FY27": "…",
+          "FY28": "…",
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        8,
+        12
+      ],
+      "funding": {
+        "totalCr": 300,
+        "privateCr": 50,
+        "gokCr": 250,
+        "goiCr": 0,
+        "financingExpectation": "17 : 83 : 0",
+        "financialInstrument": "DAY-NRLM grant; State budget; NCDC cooperative loan"
+      },
+      "stakeholders": [
+        "Social Welfare Dept GoK",
+        "SHG networks",
+        "NCDC",
+        "DAY-NRLM PMU",
+        "Fisheries Dept"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 24,
+      "code": "MS-24",
+      "stage": "Stage 2",
+      "stageId": "stage-2",
+      "stagePeriod": "FY28–FY29",
+      "stageTheme": "Build the Pull",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#594: \"Boat manufacturing facilities will be set up in Poovar and Beypore to meet global needs.\" Mission Samudra rationale: Poovar = 10 km from Vizhinjam, 30m draft → ship repair yard. Beypore = centuries-old Uru boat heritage → electric barges and AUVs for the West Coast Canal freight network. #325: \"A special economic zone for the construction of aerospace components will be established in Thiruvananthapuram.\" Mission Samudra rationale: VSSC / LPSC / IIST ecosystem → aerospace SEZ → Vizhinjam export. Composites, fasteners, satellite sub-assemblies exported via Vizhinjam EXIM gateway.",
+      "activity": "Beypore AUV manufacturing",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoD / DRDO",
+        "role": "Policy Support",
+        "schemes": [
+          "PLI – Defence (₹1,000 Cr)",
+          "iDEX (Innovations for Defence Excellence)",
+          "Make in India – Defence"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KSIDC [Dept: Ports / Electronics & IT]",
+        "role": "Facilitation"
+      },
+      "privateSector": {
+        "entity": "Defence / Marine tech companies",
+        "role": "Manufacturer"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2028",
+        "plannedEnd": "Mar 2030",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": "…",
+          "FY29": "▶",
+          "FY30": null,
+          "FY31": null,
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        11
+      ],
+      "funding": {
+        "totalCr": 500,
+        "privateCr": 400,
+        "gokCr": 100,
+        "goiCr": 0,
+        "financingExpectation": "80 : 20 : 0",
+        "financialInstrument": "PLI – Defence capex benefit; iDEX grant; Private equity; KSIDC facilitation"
+      },
+      "stakeholders": [
+        "MoD",
+        "DRDO",
+        "KSIDC",
+        "Defence / marine tech companies",
+        "iDEX",
+        "DSP (Defence Startup Portal)"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 25,
+      "code": "MS-25",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#324: \"Special economic zones will be set up for green energy, robotics, biotech, toy manufacturing, electronics parts, oil and gas, and aerospace parts industries.\" Mission Samudra rationale: Aerospace components SEZ near VSSC/ISRO + Vizhinjam export gateway = high-value, low land-footprint manufacturing suited to Kerala's ecologically constrained geography. #308: \"Innovative industries will be developed for the scientific and value-added utilization of mineral resources, including ilmenite and monazite.\" Mission Samudra rationale: Kerala's coastal mineral belt, one of India's richest. Port-proximate processing and export of value-added rare earth products.",
+      "activity": "Ammonia / H₂ bunkering (IMO 2050)",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoPNG / MNRE",
+        "role": "Facilitator & Subsidy",
+        "schemes": [
+          "NGHM – National Green Hydrogen Mission",
+          "SIGHT (Strategic Interventions for GH₂)",
+          "Green Shipping Initiative"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Industries & Commerce",
+        "role": "—"
+      },
+      "privateSector": {
+        "entity": "BPCL + Green H₂ companies",
+        "role": "Developer & Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2030",
+        "plannedEnd": "Mar 2035",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": "…",
+          "FY30": "…",
+          "FY31": "▶",
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        2,
+        13
+      ],
+      "funding": {
+        "totalCr": 2000,
+        "privateCr": 1500,
+        "gokCr": 0,
+        "goiCr": 500,
+        "financingExpectation": "75 : 0 : 25",
+        "financialInstrument": "SIGHT scheme viability support; GoI green H₂ subsidy; Private project finance"
+      },
+      "stakeholders": [
+        "MoPNG",
+        "MNRE",
+        "BPCL",
+        "Green H₂ developers",
+        "IMO",
+        "Shipping lines",
+        "Classification societies"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 26,
+      "code": "MS-26",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up.",
+      "activity": "Ship chandling SEZ",
+      "activityType": "Augment",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "DESH Bill / SEZ Act",
+          "Maritime India Vision 2030",
+          "Sagarmala – Port Services"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KMB [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+        "role": "Concessioner"
+      },
+      "privateSector": {
+        "entity": "Ship chandling firms",
+        "role": "SEZ Developer & Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2030",
+        "plannedEnd": "Mar 2033",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": null,
+          "FY30": "…",
+          "FY31": "▶",
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        13,
+        16
+      ],
+      "funding": {
+        "totalCr": 1000,
+        "privateCr": 800,
+        "gokCr": 200,
+        "goiCr": 0,
+        "financingExpectation": "80 : 20 : 0",
+        "financialInstrument": "SEZ/DESH developer equity model; KMB concession fee; Private equity"
+      },
+      "stakeholders": [
+        "KMB",
+        "MoPSW",
+        "DPIIT",
+        "Ship chandling firms",
+        "Customs/DGFT",
+        "SEZ Board"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 27,
+      "code": "MS-27",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#308: \"Innovative industries will be developed for the scientific and value-added utilization of mineral resources, including ilmenite and monazite.\" Mission Samudra rationale: Kerala's coastal mineral belt, one of India's richest. Port-proximate processing and export of value-added rare earth products. #580: \"A plan will be developed to plant mangrove forests to protect coastal areas wherever possible.\" Mission Samudra rationale: Mangrove restoration = GCF grant eligibility + carbon credit revenue + coastal protection. Kerala's mangrove belt is a tradeable asset. Green Climate Fund pays for it; state earns carbon revenue. #7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "Green Maritime Cert. Authority",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "National Blue Economy Policy",
+          "IMO 2050 – Green Shipping",
+          "Maritime India Vision 2030"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "GoK [Dept: Industries & Commerce / Water Resources / Coastal Shipping & Inland Navigation]",
+        "role": "Owner & Regulator"
+      },
+      "privateSector": {
+        "entity": "—",
+        "role": "—"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2030",
+        "plannedEnd": "Mar 2032",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": "…",
+          "FY30": "…",
+          "FY31": "▶",
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        17
+      ],
+      "funding": {
+        "totalCr": 150,
+        "privateCr": 0,
+        "gokCr": 150,
+        "goiCr": 0,
+        "financingExpectation": "0 : 100 : 0",
+        "financialInstrument": "State Budget; Possible GCF technical assistance grant"
+      },
+      "stakeholders": [
+        "GoK",
+        "IMO",
+        "DG Shipping",
+        "MoPSW",
+        "Shipping lines",
+        "Classification societies (DNV, Lloyd's)"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 28,
+      "code": "MS-28",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #678: \"An investment protection law will be implemented to provide confidence and commitment to private investors.\" Mission Samudra rationale: Investment protection law = the enabling condition that makes the Vizhinjam corridor investable for private capital. Directly addresses Kerala's historical reputation problem on investor-state disputes.",
+      "activity": "Maritime Arbitration Court",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "Ministry of Law",
+        "role": "Facilitation & Setup",
+        "schemes": [
+          "MoPSW – Maritime Arbitration Initiative",
+          "National Arbitration Policy 2023",
+          "IBBI / ADR Framework"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Law Dept / GoK [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+        "role": "Co-Setup"
+      },
+      "privateSector": {
+        "entity": "Legal institutions",
+        "role": "Advisory"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2030",
+        "plannedEnd": "Mar 2033",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": null,
+          "FY30": "…",
+          "FY31": "▶",
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        5,
+        22
+      ],
+      "funding": {
+        "totalCr": 250,
+        "privateCr": 0,
+        "gokCr": 200,
+        "goiCr": 50,
+        "financingExpectation": "0 : 80 : 20",
+        "financialInstrument": "State Budget; Ministry of Law establishment grant; Court fee revenue (self-financing in time)"
+      },
+      "stakeholders": [
+        "Ministry of Law",
+        "MoPSW",
+        "Law Dept GoK",
+        "Kerala High Court",
+        "Legal institutions",
+        "MLAAI"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 29,
+      "code": "MS-29",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Vizhinjam & Major Infra",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activity": "Phase 3 expansion (10M+ TEUs)",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "Sagarmala – Major Port Capacity Expansion",
+          "NMP (National Monetisation Pipeline)",
+          "Maritime India Vision 2030"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KMB [Dept: Coastal Shipping & Inland Navigation]",
+        "role": "Facilitation"
+      },
+      "privateSector": {
+        "entity": "Adani Vizhinjam Port Pvt Ltd",
+        "role": "Phase 3 Concession Developer"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2032",
+        "plannedEnd": "Mar 2036",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": "…",
+          "FY32": "…",
+          "FY33": "▶",
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        13,
+        14,
+        15
+      ],
+      "funding": {
+        "totalCr": 20000,
+        "privateCr": 18000,
+        "gokCr": 1500,
+        "goiCr": 500,
+        "financingExpectation": "90 : 8 : 2",
+        "financialInstrument": "Phase 3 concession (Adani equity + bonds + syndicated debt); Sagarmala major port expansion"
+      },
+      "stakeholders": [
+        "Adani VPSEZ",
+        "KMB",
+        "MoPSW",
+        "ADB",
+        "IFC",
+        "Multilateral lenders",
+        "Global shipping alliances"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 30,
+      "code": "MS-30",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #346: \"Steps will be taken to attract investors through PPP models. Tourism, Agriculture, IT and Wellness will be the main focus areas.\" Mission Samudra rationale: All four PPP focus sectors have a maritime dimension: tourism (cruise), agriculture (plantation exports), IT (maritime SaaS/BPO), wellness (medical tourism). Zero state expenditure model.",
+      "activity": "All 13 minor ports PPP-operated",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoPSW",
+        "role": "Policy Framework",
+        "schemes": [
+          "Sagarmala – Non-Major Ports",
+          "NMP – Port Monetisation",
+          "VGF"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KMB [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+        "role": "Concessioner"
+      },
+      "privateSector": {
+        "entity": "DP World · PSA International",
+        "role": "PPP Operator"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2030",
+        "plannedEnd": "Mar 2035",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": null,
+          "FY30": "…",
+          "FY31": "▶",
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        6,
+        7,
+        20
+      ],
+      "funding": {
+        "totalCr": 5000,
+        "privateCr": 3500,
+        "gokCr": 1000,
+        "goiCr": 500,
+        "financingExpectation": "70 : 20 : 10",
+        "financialInstrument": "Port monetisation receipts; VGF; KMB concession; PPP developer equity + project finance"
+      },
+      "stakeholders": [
+        "KMB",
+        "MoPSW",
+        "DP World",
+        "PSA International",
+        "NITI Aayog",
+        "Minor port communities"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 31,
+      "code": "MS-31",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Minor Ports & Clusters",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up. #324: \"Special economic zones will be set up for green energy, robotics, biotech, toy manufacturing, electronics parts, oil and gas, and aerospace parts industries.\" Mission Samudra rationale: Aerospace components SEZ near VSSC/ISRO + Vizhinjam export gateway = high-value, low land-footprint manufacturing suited to Kerala's ecologically constrained geography.",
+      "activity": "Vizhinjam–Beypore–Azhikkal corridor",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "Sagarmala / NITI Aayog",
+        "role": "Co-Financier",
+        "schemes": [
+          "Sagarmala – Industrial Cluster",
+          "PM Gati Shakti",
+          "NIP – Industrial Corridor"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "Kerala PWD / Industries [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+        "role": "Infrastructure Lead"
+      },
+      "privateSector": {
+        "entity": "Industrial developers",
+        "role": "Industrial Developer"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2030",
+        "plannedEnd": "Mar 2035",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": "▶",
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        19,
+        14
+      ],
+      "funding": {
+        "totalCr": 4000,
+        "privateCr": 2000,
+        "gokCr": 1200,
+        "goiCr": 800,
+        "financingExpectation": "50 : 30 : 20",
+        "financialInstrument": "Sagarmala industrial cluster grant; NIP; PM Gati Shakti node funding; State budget"
+      },
+      "stakeholders": [
+        "Sagarmala PMU",
+        "NITI Aayog",
+        "Kerala PWD",
+        "Industries Dept",
+        "Industrial developers",
+        "DPIIT"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 32,
+      "code": "MS-32",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#580: \"A plan will be developed to plant mangrove forests to protect coastal areas wherever possible.\" Mission Samudra rationale: Mangrove restoration = GCF grant eligibility + carbon credit revenue + coastal protection. Kerala's mangrove belt is a tradeable asset. Green Climate Fund pays for it; state earns carbon revenue. #593: \"A coastal management program will be implemented to control and monitor coastal erosion and improve the coastal area.\" Mission Samudra rationale: Dredging + erosion control + coastal management.",
+      "activity": "Mangrove blue carbon bonds (GCF)",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "MoEFCC",
+        "role": "Policy Support",
+        "schemes": [
+          "National Blue Economy Policy",
+          "MoEFCC CAMPA Fund",
+          "GCF – Green Climate Fund"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "KCZMA / GoK [Dept: Water Resources]",
+        "role": "Bond Issuer"
+      },
+      "privateSector": {
+        "entity": "GCF / Carbon traders",
+        "role": "Carbon Buyer"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2030",
+        "plannedEnd": "Mar 2035",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": "▶",
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [],
+      "funding": {
+        "totalCr": 300,
+        "privateCr": 100,
+        "gokCr": 200,
+        "goiCr": 0,
+        "financingExpectation": "33 : 67 : 0",
+        "financialInstrument": "GCF Blue Carbon Bonds; CAMPA fund; State budget co-financing"
+      },
+      "stakeholders": [
+        "MoEFCC",
+        "KCZMA",
+        "GCF",
+        "Carbon traders",
+        "Kerala Forest Dept",
+        "UNDP",
+        "Fisher communities"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    },
+    {
+      "id": 33,
+      "code": "MS-33",
+      "stage": "Stage 3",
+      "stageId": "stage-3",
+      "stagePeriod": "FY30–FY35",
+      "stageTheme": "Scale & Decarbonise",
+      "category": "Policy / Governance / Social",
+      "manifestoDeclaration": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #670: \"An empowered committee will be formed to ensure the implementation of the manifesto promises.\" Mission Samudra rationale: An inter-departmental empowered committee with Ports, Industries, Fisheries, Tourism, Agriculture, Water Resources, and Finance for the management unit the mission needs.",
+      "activity": "Kerala declared premier maritime state",
+      "activityType": "New",
+      "governmentOfIndia": {
+        "agency": "—",
+        "role": "—",
+        "schemes": [
+          "Maritime India Vision 2030",
+          "Sagarmala – State Maritime Boards"
+        ]
+      },
+      "governmentOfKerala": {
+        "agency": "CM Office / GoK [Dept: Coastal Shipping & Inland Navigation / Planning & Economic Affairs / PIEMD]",
+        "role": "Policy Declaration"
+      },
+      "privateSector": {
+        "entity": "—",
+        "role": "—"
+      },
+      "timeline": {
+        "plannedStart": "Apr 2030",
+        "plannedEnd": "Mar 2032",
+        "gantt": {
+          "FY26": null,
+          "FY27": "│",
+          "FY28": null,
+          "FY29": null,
+          "FY30": null,
+          "FY31": "▶",
+          "FY32": null,
+          "FY33": null,
+          "FY34": null,
+          "FY35": null,
+          "FY36": null
+        }
+      },
+      "dependencies": [
+        13,
+        25,
+        29
+      ],
+      "funding": {
+        "totalCr": 100,
+        "privateCr": 0,
+        "gokCr": 100,
+        "goiCr": 0,
+        "financingExpectation": "0 : 100 : 0",
+        "financialInstrument": "State Budget (administrative; minimal direct capex)"
+      },
+      "stakeholders": [
+        "CM Office",
+        "GoK",
+        "MoPSW",
+        "NITI Aayog",
+        "Maritime State Development Council",
+        "Cabinet Secretariat"
+      ],
+      "operationalMetrics": {
+        "physicalProgressPercent": null,
+        "financialProgressPercent": null,
+        "committedCr": null,
+        "releasedCr": null,
+        "spentCr": null,
+        "ragStatus": null,
+        "delayDays": null,
+        "riskCount": null,
+        "lastUpdated": null,
+        "note": "Not available in the supplied planning documents. Do not fabricate."
+      }
+    }
+  ],
+  "dependencies": {
+    "edges": [
+      {
+        "fromActivityId": 5,
+        "toActivityId": 6,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 5,
+        "toActivityId": 7,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 5,
+        "toActivityId": 11,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 5,
+        "toActivityId": 12,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 1,
+        "toActivityId": 13,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 4,
+        "toActivityId": 13,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 1,
+        "toActivityId": 14,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 14,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 5,
+        "toActivityId": 15,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 15,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 15,
+        "toActivityId": 16,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 16,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 5,
+        "toActivityId": 17,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 18,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 1,
+        "toActivityId": 18,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 10,
+        "toActivityId": 19,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 6,
+        "toActivityId": 20,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 9,
+        "toActivityId": 21,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 22,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 17,
+        "toActivityId": 22,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 8,
+        "toActivityId": 23,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 12,
+        "toActivityId": 23,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 11,
+        "toActivityId": 24,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 2,
+        "toActivityId": 25,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 25,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 26,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 16,
+        "toActivityId": 26,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 17,
+        "toActivityId": 27,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 5,
+        "toActivityId": 28,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 22,
+        "toActivityId": 28,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 29,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 14,
+        "toActivityId": 29,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 15,
+        "toActivityId": 29,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 6,
+        "toActivityId": 30,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 7,
+        "toActivityId": 30,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 20,
+        "toActivityId": 30,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 19,
+        "toActivityId": 31,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 14,
+        "toActivityId": 31,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 13,
+        "toActivityId": 33,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 25,
+        "toActivityId": 33,
+        "relationship": "predecessor"
+      },
+      {
+        "fromActivityId": 29,
+        "toActivityId": 33,
+        "relationship": "predecessor"
+      }
+    ],
+    "edgeCount": 41,
+    "rootActivityIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      8,
+      9,
+      10,
+      32
+    ]
+  },
+  "agencies": [
+    {
+      "level": "Private",
+      "name": "Adani Vizhinjam Port Pvt Ltd",
+      "roles": [
+        "Developer & Operator (50-yr concession)",
+        "Phase 3 Concession Developer",
+        "Port Operator"
+      ],
+      "activityIds": [
+        1,
+        13,
+        29
+      ],
+      "plannedInvestmentExposureCr": 40700,
+      "activityCount": 3
+    },
+    {
+      "level": "GoK",
+      "name": "KMB [Dept: Coastal Shipping & Inland Navigation]",
+      "roles": [
+        "Concessioner",
+        "Facilitation"
+      ],
+      "activityIds": [
+        4,
+        20,
+        29
+      ],
+      "plannedInvestmentExposureCr": 21300,
+      "activityCount": 3
+    },
+    {
+      "level": "GoK",
+      "name": "KMB / GoK [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+      "roles": [
+        "Land, Utilities & Facilitation"
+      ],
+      "activityIds": [
+        13
+      ],
+      "plannedInvestmentExposureCr": 19500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoPSW",
+      "roles": [
+        "Co-Financier",
+        "Policy Framework",
+        "Policy Support",
+        "Regulatory",
+        "Regulatory Framework"
+      ],
+      "activityIds": [
+        4,
+        17,
+        18,
+        22,
+        30
+      ],
+      "plannedInvestmentExposureCr": 6850,
+      "activityCount": 5
+    },
+    {
+      "level": "GoK",
+      "name": "KMB [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+      "roles": [
+        "Concessioner"
+      ],
+      "activityIds": [
+        26,
+        30
+      ],
+      "plannedInvestmentExposureCr": 6000,
+      "activityCount": 2
+    },
+    {
+      "level": "Private",
+      "name": "DP World · PSA International",
+      "roles": [
+        "PPP Operator"
+      ],
+      "activityIds": [
+        30
+      ],
+      "plannedInvestmentExposureCr": 5000,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Kerala PWD [Dept: Coastal Shipping & Inland Navigation / Transport & Aviation]",
+      "roles": [
+        "Co-Financier"
+      ],
+      "activityIds": [
+        14
+      ],
+      "plannedInvestmentExposureCr": 4500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoR / NRVY",
+      "roles": [
+        "Lead Financier"
+      ],
+      "activityIds": [
+        14
+      ],
+      "plannedInvestmentExposureCr": 4500,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "RVNL / L&T (TBD)",
+      "roles": [
+        "EPC Contractor"
+      ],
+      "activityIds": [
+        14
+      ],
+      "plannedInvestmentExposureCr": 4500,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Industrial developers",
+      "roles": [
+        "Industrial Developer"
+      ],
+      "activityIds": [
+        31
+      ],
+      "plannedInvestmentExposureCr": 4000,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Kerala PWD / Industries [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+      "roles": [
+        "Infrastructure Lead"
+      ],
+      "activityIds": [
+        31
+      ],
+      "plannedInvestmentExposureCr": 4000,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "Sagarmala / NITI Aayog",
+      "roles": [
+        "Co-Financier"
+      ],
+      "activityIds": [
+        31
+      ],
+      "plannedInvestmentExposureCr": 4000,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "DPIIT",
+      "roles": [
+        "Investment Facilitation"
+      ],
+      "activityIds": [
+        16
+      ],
+      "plannedInvestmentExposureCr": 3000,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "OAGC [Dept: Industries & Commerce / Health & Family Welfare]",
+      "roles": [
+        "Land & Incentives"
+      ],
+      "activityIds": [
+        16
+      ],
+      "plannedInvestmentExposureCr": 3000,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Pharma & MedDevice companies",
+      "roles": [
+        "Anchor Tenant"
+      ],
+      "activityIds": [
+        16
+      ],
+      "plannedInvestmentExposureCr": 3000,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Dept of Industries [Dept: Industries & Commerce]",
+      "roles": [
+        "Land & Facilitation",
+        "Notification & Land"
+      ],
+      "activityIds": [
+        7,
+        19
+      ],
+      "plannedInvestmentExposureCr": 2300,
+      "activityCount": 2
+    },
+    {
+      "level": "Private",
+      "name": "BPCL + Green H₂ companies",
+      "roles": [
+        "Developer & Operator"
+      ],
+      "activityIds": [
+        25
+      ],
+      "plannedInvestmentExposureCr": 2000,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Industries & Commerce",
+      "roles": [],
+      "activityIds": [
+        25
+      ],
+      "plannedInvestmentExposureCr": 2000,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoPNG / MNRE",
+      "roles": [
+        "Facilitator & Subsidy"
+      ],
+      "activityIds": [
+        25
+      ],
+      "plannedInvestmentExposureCr": 2000,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "BPCL Ltd",
+      "roles": [
+        "Developer & Operator"
+      ],
+      "activityIds": [
+        2
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Coastal Shipping & Inland Navigation / Industries & Commerce",
+      "roles": [],
+      "activityIds": [
+        2
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Industrial park developer (TBD)",
+      "roles": [
+        "PPP Developer"
+      ],
+      "activityIds": [
+        19
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoPNG",
+      "roles": [
+        "Facilitation & Approvals"
+      ],
+      "activityIds": [
+        2
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "Sagarmala / GoI",
+      "roles": [
+        "Co-Financier"
+      ],
+      "activityIds": [
+        19
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Kerala PWD / KMB [Dept: Coastal Shipping & Inland Navigation]",
+      "roles": [
+        "Financier & Coordinator"
+      ],
+      "activityIds": [
+        1
+      ],
+      "plannedInvestmentExposureCr": 1200,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "CM Office / Industries [Dept: Industries & Commerce / PIEMD]",
+      "roles": [
+        "Policy & Setup"
+      ],
+      "activityIds": [
+        15
+      ],
+      "plannedInvestmentExposureCr": 1000,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Ship chandling firms",
+      "roles": [
+        "SEZ Developer & Operator"
+      ],
+      "activityIds": [
+        26
+      ],
+      "plannedInvestmentExposureCr": 1000,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "FTWZ Developer (TBD)",
+      "roles": [
+        "Developer & Operator"
+      ],
+      "activityIds": [
+        7
+      ],
+      "plannedInvestmentExposureCr": 800,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoC",
+      "roles": [
+        "FTWZ Approval"
+      ],
+      "activityIds": [
+        7
+      ],
+      "plannedInvestmentExposureCr": 800,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "PPP operator (TBD)",
+      "roles": [
+        "Developer & Operator"
+      ],
+      "activityIds": [
+        20
+      ],
+      "plannedInvestmentExposureCr": 700,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Anglo-Eastern · V.Ships · BSM",
+      "roles": [
+        "GCC Developer"
+      ],
+      "activityIds": [
+        22
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Dredging agencies",
+      "roles": [
+        "Contractor"
+      ],
+      "activityIds": [
+        10
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "KSIDC [Dept: Electronics & IT / Coastal Shipping & Inland Navigation]",
+      "roles": [
+        "Facilitation & Incentives"
+      ],
+      "activityIds": [
+        22
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Kerala Ports Dept [Dept: Coastal Shipping & Inland Navigation]",
+      "roles": [
+        "Lead Financier"
+      ],
+      "activityIds": [
+        10
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Maersk · Hapag-Lloyd · CMA CGM",
+      "roles": [
+        "Anchor Carrier"
+      ],
+      "activityIds": [
+        4
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoPSW / Sagarmala",
+      "roles": [
+        "Co-Financier"
+      ],
+      "activityIds": [
+        10
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Barge operators",
+      "roles": [
+        "Operator"
+      ],
+      "activityIds": [
+        21
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "CONCOR (GoI PSU)",
+      "roles": [
+        "Developer & Operator"
+      ],
+      "activityIds": [
+        3
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Defence / Marine tech companies",
+      "roles": [
+        "Manufacturer"
+      ],
+      "activityIds": [
+        24
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Fisheries Dept / GoK [Dept: Fisheries]",
+      "roles": [
+        "Financier & Implementer"
+      ],
+      "activityIds": [
+        12
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "IWAI",
+      "roles": [
+        "Lead Financier & Operator"
+      ],
+      "activityIds": [
+        21
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "KSIDC [Dept: Ports / Electronics & IT]",
+      "roles": [
+        "Facilitation"
+      ],
+      "activityIds": [
+        24
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "KWIL / GoK [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+      "roles": [
+        "Co-Operator"
+      ],
+      "activityIds": [
+        21
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoD / DRDO",
+      "roles": [
+        "Policy Support"
+      ],
+      "activityIds": [
+        24
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoR",
+      "roles": [
+        "Policy & Facilitation"
+      ],
+      "activityIds": [
+        3
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Revenue Dept [Dept: Coastal Shipping & Inland Navigation / Transport & Aviation]",
+      "roles": [
+        "Land Provision"
+      ],
+      "activityIds": [
+        3
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Construction contractors",
+      "roles": [
+        "EPC Contractor"
+      ],
+      "activityIds": [
+        9
+      ],
+      "plannedInvestmentExposureCr": 400,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Higher Education / GoK [Dept: Coastal Shipping & Inland Navigation / Fisheries / Labour & Skill]",
+      "roles": [
+        "Owner & Operator"
+      ],
+      "activityIds": [
+        17
+      ],
+      "plannedInvestmentExposureCr": 400,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "KIIFB / GoK [Dept: Coastal Shipping & Inland Navigation]",
+      "roles": [
+        "Financier"
+      ],
+      "activityIds": [
+        9
+      ],
+      "plannedInvestmentExposureCr": 400,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "GCF / Carbon traders",
+      "roles": [
+        "Carbon Buyer"
+      ],
+      "activityIds": [
+        32
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "KCZMA / GoK [Dept: Water Resources]",
+      "roles": [
+        "Bond Issuer"
+      ],
+      "activityIds": [
+        32
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MoEFCC",
+      "roles": [
+        "Policy Support"
+      ],
+      "activityIds": [
+        32
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "SHG networks",
+      "roles": [
+        "Cooperative Member"
+      ],
+      "activityIds": [
+        23
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Social Welfare Dept [Dept: Fisheries]",
+      "roles": [
+        "Financier & Facilitator"
+      ],
+      "activityIds": [
+        23
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Kerala Tourism [Dept: Tourism]",
+      "roles": [
+        "Facilitation"
+      ],
+      "activityIds": [
+        18
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Law Dept / GoK [Dept: Coastal Shipping & Inland Navigation / Industries & Commerce]",
+      "roles": [
+        "Co-Setup"
+      ],
+      "activityIds": [
+        28
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Legal institutions",
+      "roles": [
+        "Advisory"
+      ],
+      "activityIds": [
+        28
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "MSC / Royal Caribbean",
+      "roles": [
+        "Cruise Operator"
+      ],
+      "activityIds": [
+        18
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "Ministry of Law",
+      "roles": [
+        "Facilitation & Setup"
+      ],
+      "activityIds": [
+        28
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Equipment suppliers",
+      "roles": [
+        "EPC Contractor"
+      ],
+      "activityIds": [
+        8
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "Fisheries Dept [Dept: Fisheries / Industries & Commerce]",
+      "roles": [
+        "Co-Financier"
+      ],
+      "activityIds": [
+        8
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "KMB [Dept: Ports / Coastal Shipping & Inland Navigation]",
+      "roles": [
+        "Concessioner"
+      ],
+      "activityIds": [
+        11
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "activityCount": 1
+    },
+    {
+      "level": "GoI",
+      "name": "MPEDA",
+      "roles": [
+        "Financier"
+      ],
+      "activityIds": [
+        8
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Shipyard (TBD)",
+      "roles": [
+        "PPP Operator"
+      ],
+      "activityIds": [
+        11
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "GoK [Dept: Industries & Commerce / Water Resources / Coastal Shipping & Inland Navigation]",
+      "roles": [
+        "Owner & Regulator"
+      ],
+      "activityIds": [
+        27
+      ],
+      "plannedInvestmentExposureCr": 150,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "CM Office / GoK [Dept: Coastal Shipping & Inland Navigation / Planning & Economic Affairs / PIEMD]",
+      "roles": [
+        "Policy Declaration"
+      ],
+      "activityIds": [
+        33
+      ],
+      "plannedInvestmentExposureCr": 100,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "CM Office / GoK [Dept: Coastal Shipping & Inland Navigation / Planning & Economic Affairs / PIEMD / PIEMD]",
+      "roles": [
+        "Policy & Setup"
+      ],
+      "activityIds": [
+        5
+      ],
+      "plannedInvestmentExposureCr": 50,
+      "activityCount": 1
+    },
+    {
+      "level": "GoK",
+      "name": "KMB [Dept: Industries & Commerce]",
+      "roles": [
+        "Policy Lead"
+      ],
+      "activityIds": [
+        6
+      ],
+      "plannedInvestmentExposureCr": 15,
+      "activityCount": 1
+    },
+    {
+      "level": "Private",
+      "name": "Legal consultants",
+      "roles": [
+        "Advisory"
+      ],
+      "activityIds": [
+        6
+      ],
+      "plannedInvestmentExposureCr": 15,
+      "activityCount": 1
+    }
+  ],
+  "schemes": [
+    {
+      "name": "Maritime India Vision 2030",
+      "activityIds": [
+        1,
+        4,
+        13,
+        26,
+        27,
+        29,
+        33
+      ],
+      "plannedInvestmentExposureCr": 42550,
+      "stages": [
+        "Stage 1",
+        "Stage 2",
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social",
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 7
+    },
+    {
+      "name": "PM Gati Shakti",
+      "activityIds": [
+        1,
+        3,
+        10,
+        14,
+        20,
+        31
+      ],
+      "plannedInvestmentExposureCr": 11500,
+      "stages": [
+        "Stage 1",
+        "Stage 2",
+        "Stage 3"
+      ],
+      "categories": [
+        "Minor Ports & Clusters",
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 6
+    },
+    {
+      "name": "NIP – Industrial Corridor",
+      "activityIds": [
+        15,
+        19,
+        31
+      ],
+      "plannedInvestmentExposureCr": 6500,
+      "stages": [
+        "Stage 2",
+        "Stage 3"
+      ],
+      "categories": [
+        "Minor Ports & Clusters",
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 3
+    },
+    {
+      "name": "VGF",
+      "activityIds": [
+        11,
+        20,
+        30
+      ],
+      "plannedInvestmentExposureCr": 5900,
+      "stages": [
+        "Stage 1",
+        "Stage 2",
+        "Stage 3"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 3
+    },
+    {
+      "name": "IWAI – National Waterways Act",
+      "activityIds": [
+        9,
+        21
+      ],
+      "plannedInvestmentExposureCr": 900,
+      "stages": [
+        "Stage 1",
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 2
+    },
+    {
+      "name": "National Blue Economy Policy",
+      "activityIds": [
+        27,
+        32
+      ],
+      "plannedInvestmentExposureCr": 450,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 2
+    },
+    {
+      "name": "Sagarmala – Port-Linked Industrialisation",
+      "activityIds": [
+        7,
+        19
+      ],
+      "plannedInvestmentExposureCr": 2300,
+      "stages": [
+        "Stage 1",
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 2
+    },
+    {
+      "name": "DAY-NRLM (Deendayal Antyodaya)",
+      "activityIds": [
+        23
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "DESH Bill (SEZ successor)",
+      "activityIds": [
+        19
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "DESH Bill / SEZ Act",
+      "activityIds": [
+        26
+      ],
+      "plannedInvestmentExposureCr": 1000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "DPIIT GCC Policy",
+      "activityIds": [
+        22
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "DPIIT Industrial Park Rating System",
+      "activityIds": [
+        15
+      ],
+      "plannedInvestmentExposureCr": 1000,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "DPIIT PPP Framework",
+      "activityIds": [
+        6
+      ],
+      "plannedInvestmentExposureCr": 15,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "FIDF",
+      "activityIds": [
+        12
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "FIDF (Fisheries Infra Dev Fund)",
+      "activityIds": [
+        8
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "FTWZ / SEZ Act",
+      "activityIds": [
+        7
+      ],
+      "plannedInvestmentExposureCr": 800,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "GCF – Green Climate Fund",
+      "activityIds": [
+        32
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Green Shipping Initiative",
+      "activityIds": [
+        25
+      ],
+      "plannedInvestmentExposureCr": 2000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Green Shipping Initiative (MoPSW)",
+      "activityIds": [
+        11
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "IBBI / ADR Framework",
+      "activityIds": [
+        28
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "IMO 2050 – Green Shipping",
+      "activityIds": [
+        27
+      ],
+      "plannedInvestmentExposureCr": 150,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Jal Marg Vikas (World Bank)",
+      "activityIds": [
+        21
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Jal Marg Vikas Project",
+      "activityIds": [
+        9
+      ],
+      "plannedInvestmentExposureCr": 400,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "MDA (Market Dev Assistance)",
+      "activityIds": [
+        18
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "MPEDA Export Promotion Scheme",
+      "activityIds": [
+        8
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Make in India – Defence",
+      "activityIds": [
+        24
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Maritime India Vision 2030 – HRD",
+      "activityIds": [
+        17
+      ],
+      "plannedInvestmentExposureCr": 400,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Maritime India Vision 2030 – Services",
+      "activityIds": [
+        22
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "MoEFCC CAMPA Fund",
+      "activityIds": [
+        32
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "MoPNG – LNG Infrastructure Policy",
+      "activityIds": [
+        2
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "MoPSW – Maritime Arbitration Initiative",
+      "activityIds": [
+        28
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "NCDC – SHG Support",
+      "activityIds": [
+        23
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "NGHM – National Green Hydrogen Mission",
+      "activityIds": [
+        25
+      ],
+      "plannedInvestmentExposureCr": 2000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "NIP (National Infra Pipeline)",
+      "activityIds": [
+        10
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "NMP (National Monetisation Pipeline)",
+      "activityIds": [
+        29
+      ],
+      "plannedInvestmentExposureCr": 20000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "NMP – Port Monetisation",
+      "activityIds": [
+        30
+      ],
+      "plannedInvestmentExposureCr": 5000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "NRVY (National Rail Vikas Yojana)",
+      "activityIds": [
+        14
+      ],
+      "plannedInvestmentExposureCr": 4500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "NSDC Sector Skill Council",
+      "activityIds": [
+        17
+      ],
+      "plannedInvestmentExposureCr": 400,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "National Arbitration Policy 2023",
+      "activityIds": [
+        28
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "National Gas Grid Mission",
+      "activityIds": [
+        2
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "National Logistics Policy",
+      "activityIds": [
+        3
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "OIDB Fund",
+      "activityIds": [
+        2
+      ],
+      "plannedInvestmentExposureCr": 1500,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "PLI – Defence (₹1,000 Cr)",
+      "activityIds": [
+        24
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "PLI – Medical Devices (₹3,420 Cr)",
+      "activityIds": [
+        16
+      ],
+      "plannedInvestmentExposureCr": 3000,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "PLI – Pharma (₹15,000 Cr)",
+      "activityIds": [
+        16
+      ],
+      "plannedInvestmentExposureCr": 3000,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "PM Kisan Mandhan (adjacent)",
+      "activityIds": [
+        12
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "PMMSY – Cold Chain & Post-Harvest Infra",
+      "activityIds": [
+        8
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "PMMSY – Fisher Welfare",
+      "activityIds": [
+        12
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "PMMSY – Women in Fisheries",
+      "activityIds": [
+        23
+      ],
+      "plannedInvestmentExposureCr": 300,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "SEZ / STPI incentives",
+      "activityIds": [
+        22
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "SIGHT (Strategic Interventions for GH₂)",
+      "activityIds": [
+        25
+      ],
+      "plannedInvestmentExposureCr": 2000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Coastal Shipping",
+      "activityIds": [
+        20
+      ],
+      "plannedInvestmentExposureCr": 700,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Coastal Shipping Scheme",
+      "activityIds": [
+        11
+      ],
+      "plannedInvestmentExposureCr": 200,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Cruise Circuit",
+      "activityIds": [
+        18
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – ICD / CFS Development",
+      "activityIds": [
+        3
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Industrial Cluster",
+      "activityIds": [
+        31
+      ],
+      "plannedInvestmentExposureCr": 4000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Inland Water Transport",
+      "activityIds": [
+        21
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Major Port Capacity",
+      "activityIds": [
+        13
+      ],
+      "plannedInvestmentExposureCr": 19500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Major Port Capacity Expansion",
+      "activityIds": [
+        29
+      ],
+      "plannedInvestmentExposureCr": 20000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Non-Major Port Development",
+      "activityIds": [
+        10
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Non-Major Ports",
+      "activityIds": [
+        30
+      ],
+      "plannedInvestmentExposureCr": 5000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Port Modernisation",
+      "activityIds": [
+        1
+      ],
+      "plannedInvestmentExposureCr": 1200,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Port Services",
+      "activityIds": [
+        26
+      ],
+      "plannedInvestmentExposureCr": 1000,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Port-Led Development",
+      "activityIds": [
+        4
+      ],
+      "plannedInvestmentExposureCr": 600,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Rail Connectivity",
+      "activityIds": [
+        14
+      ],
+      "plannedInvestmentExposureCr": 4500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – State Maritime Boards",
+      "activityIds": [
+        33
+      ],
+      "plannedInvestmentExposureCr": 100,
+      "stages": [
+        "Stage 3"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Sagarmala – Waterway Connectivity",
+      "activityIds": [
+        9
+      ],
+      "plannedInvestmentExposureCr": 400,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Skill India / PMKVY",
+      "activityIds": [
+        17
+      ],
+      "plannedInvestmentExposureCr": 400,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "Swadesh Darshan 2.0",
+      "activityIds": [
+        18
+      ],
+      "plannedInvestmentExposureCr": 250,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "TIES Scheme",
+      "activityIds": [
+        16
+      ],
+      "plannedInvestmentExposureCr": 3000,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "TIES Scheme (DGFT)",
+      "activityIds": [
+        7
+      ],
+      "plannedInvestmentExposureCr": 800,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "VGF (Viability Gap Funding)",
+      "activityIds": [
+        6
+      ],
+      "plannedInvestmentExposureCr": 15,
+      "stages": [
+        "Stage 1"
+      ],
+      "categories": [
+        "Policy / Governance / Social"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "VGF / NMP",
+      "activityIds": [
+        13
+      ],
+      "plannedInvestmentExposureCr": 19500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Vizhinjam & Major Infra"
+      ],
+      "activityCount": 1
+    },
+    {
+      "name": "iDEX (Innovations for Defence Excellence)",
+      "activityIds": [
+        24
+      ],
+      "plannedInvestmentExposureCr": 500,
+      "stages": [
+        "Stage 2"
+      ],
+      "categories": [
+        "Minor Ports & Clusters"
+      ],
+      "activityCount": 1
+    }
+  ],
+  "manifestoDeclarations": [
+    {
+      "declarationNumbers": [
+        7
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activityIds": [
+        1,
+        4,
+        9,
+        10,
+        20,
+        29
+      ],
+      "plannedInvestmentCr": 23500
+    },
+    {
+      "declarationNumbers": [
+        7,
+        8
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #8: \"Aviation Development — airport economic zones, free trade godown zones, MRO centres for aircraft maintenance, logistics parks, and a Route Development Fund to support new flight services.\" Mission Samudra rationale: Free trade godown zones at TRV airport = sea-air transshipment hub. High-value cargo arrives by ULCV at Vizhinjam → 20 km → airlifted from TRV to final market. MRO centre supports crew change hub operations.",
+      "activityIds": [
+        3,
+        14
+      ],
+      "plannedInvestmentCr": 5000
+    },
+    {
+      "declarationNumbers": [
+        7,
+        326
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up.",
+      "activityIds": [
+        2,
+        13,
+        26
+      ],
+      "plannedInvestmentCr": 22000
+    },
+    {
+      "declarationNumbers": [
+        7,
+        326,
+        324
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up. #324: \"Special economic zones will be set up for green energy, robotics, biotech, toy manufacturing, electronics parts, oil and gas, and aerospace parts industries.\" Mission Samudra rationale: Aerospace components SEZ near VSSC/ISRO + Vizhinjam export gateway = high-value, low land-footprint manufacturing suited to Kerala's ecologically constrained geography.",
+      "activityIds": [
+        31
+      ],
+      "plannedInvestmentCr": 4000
+    },
+    {
+      "declarationNumbers": [
+        7,
+        346
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #346: \"Steps will be taken to attract investors through PPP models. Tourism, Agriculture, IT and Wellness will be the main focus areas.\" Mission Samudra rationale: All four PPP focus sectors have a maritime dimension: tourism (cruise), agriculture (plantation exports), IT (maritime SaaS/BPO), wellness (medical tourism). Zero state expenditure model.",
+      "activityIds": [
+        30
+      ],
+      "plannedInvestmentCr": 5000
+    },
+    {
+      "declarationNumbers": [
+        7,
+        449
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #449: \"Agri-logistics parks will be established near airports to enable smooth export of crops.\" Mission Samudra rationale: Packaging, value additions.",
+      "activityIds": [
+        21
+      ],
+      "plannedInvestmentCr": 500
+    },
+    {
+      "declarationNumbers": [
+        7,
+        584,
+        261
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #584: \"Training programs will be implemented for fishermen to gain skills in secondary processing.\" Mission Samudra rationale: Value addition training → IQF, breaded, ready-to-cook products → 3× higher export realisation per tonne. Builds workforce for the Seafood processing park. #261: \"A state-wide apprenticeship exchange platform connecting students and companies. Kerala Academy for Skill Excellence (KASE) will be reorganized.\" Mission Samudra rationale: Maritime skills apprenticeship — port operations, customs brokering, cold chain management, ship chandling, vessel tracking — formalised through KASE linked to the maritime university.",
+      "activityIds": [
+        17
+      ],
+      "plannedInvestmentCr": 400
+    },
+    {
+      "declarationNumbers": [
+        7,
+        670
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #670: \"An empowered committee will be formed to ensure the implementation of the manifesto promises.\" Mission Samudra rationale: An inter-departmental empowered committee with Ports, Industries, Fisheries, Tourism, Agriculture, Water Resources, and Finance for the management unit the mission needs.",
+      "activityIds": [
+        33
+      ],
+      "plannedInvestmentCr": 100
+    },
+    {
+      "declarationNumbers": [
+        7,
+        670,
+        682
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #670: \"An empowered committee will be formed to ensure the implementation of the manifesto promises.\" Mission Samudra rationale: An inter-departmental empowered committee with Ports, Industries, Fisheries, Tourism, Agriculture, Water Resources, and Finance for the management unit the mission needs. #682: \"A Major Project Review Committee will be formed under the leadership of the Chief Minister to ensure timely completion of major development projects.\" Mission Samudra rationale: Accountability mechanism for Mission Samudra delivery.",
+      "activityIds": [
+        5
+      ],
+      "plannedInvestmentCr": 50
+    },
+    {
+      "declarationNumbers": [
+        7,
+        678
+      ],
+      "text": "#7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\" #678: \"An investment protection law will be implemented to provide confidence and commitment to private investors.\" Mission Samudra rationale: Investment protection law = the enabling condition that makes the Vizhinjam corridor investable for private capital. Directly addresses Kerala's historical reputation problem on investor-state disputes.",
+      "activityIds": [
+        28
+      ],
+      "plannedInvestmentCr": 250
+    },
+    {
+      "declarationNumbers": [
+        308,
+        580,
+        7
+      ],
+      "text": "#308: \"Innovative industries will be developed for the scientific and value-added utilization of mineral resources, including ilmenite and monazite.\" Mission Samudra rationale: Kerala's coastal mineral belt, one of India's richest. Port-proximate processing and export of value-added rare earth products. #580: \"A plan will be developed to plant mangrove forests to protect coastal areas wherever possible.\" Mission Samudra rationale: Mangrove restoration = GCF grant eligibility + carbon credit revenue + coastal protection. Kerala's mangrove belt is a tradeable asset. Green Climate Fund pays for it; state earns carbon revenue. #7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activityIds": [
+        27
+      ],
+      "plannedInvestmentCr": 150
+    },
+    {
+      "declarationNumbers": [
+        311,
+        7
+      ],
+      "text": "#311: \"Policy formulation will be carried out to encourage Global Capability Centers to create more international job opportunities in Kerala.\" Mission Samudra rationale: GCCs in maritime technology, port management systems, vessel tracking, marine insurance, ship finance etc. #7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activityIds": [
+        22
+      ],
+      "plannedInvestmentCr": 600
+    },
+    {
+      "declarationNumbers": [
+        324,
+        308
+      ],
+      "text": "#324: \"Special economic zones will be set up for green energy, robotics, biotech, toy manufacturing, electronics parts, oil and gas, and aerospace parts industries.\" Mission Samudra rationale: Aerospace components SEZ near VSSC/ISRO + Vizhinjam export gateway = high-value, low land-footprint manufacturing suited to Kerala's ecologically constrained geography. #308: \"Innovative industries will be developed for the scientific and value-added utilization of mineral resources, including ilmenite and monazite.\" Mission Samudra rationale: Kerala's coastal mineral belt, one of India's richest. Port-proximate processing and export of value-added rare earth products.",
+      "activityIds": [
+        25
+      ],
+      "plannedInvestmentCr": 2000
+    },
+    {
+      "declarationNumbers": [
+        324,
+        326
+      ],
+      "text": "#324: \"Special economic zones will be set up for green energy, robotics, biotech, toy manufacturing, electronics parts, oil and gas, and aerospace parts industries.\" Mission Samudra rationale: Aerospace components SEZ near VSSC/ISRO + Vizhinjam export gateway = high-value, low land-footprint manufacturing suited to Kerala's ecologically constrained geography. #326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up.",
+      "activityIds": [
+        19
+      ],
+      "plannedInvestmentCr": 1500
+    },
+    {
+      "declarationNumbers": [
+        326,
+        318
+      ],
+      "text": "#326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up. #318: \"The government will provide assistance to export Kerala's unique delicacies such as jackfruit, mango, cashew, cocoa, spices etc., using modern packing systems.\" Mission Samudra rationale: Direct Vizhinjam EXIM gateway activation promise. Branded, packaged Kerala products.",
+      "activityIds": [
+        7
+      ],
+      "plannedInvestmentCr": 800
+    },
+    {
+      "declarationNumbers": [
+        326,
+        677
+      ],
+      "text": "#326: \"Special economic zones will be set up for export-oriented units around the ports of Vizhinjam, Kochi and Beypore.\" Mission Samudra rationale: Industrial hinterland promise. Vizhinjam SEZ = OAGC activation. Kochi SEZ = Vallarpadam ICTT industrial cluster. Beypore SEZ = north Kerala maritime manufacturing and new port city setting up. #677: \"A single-window clearance system will be implemented to start new ventures.\" Mission Samudra rationale: Faster approvals and execution.",
+      "activityIds": [
+        15
+      ],
+      "plannedInvestmentCr": 1000
+    },
+    {
+      "declarationNumbers": [
+        327,
+        188,
+        306
+      ],
+      "text": "#327: \"A special economic zone will be established for pharma and vaccine manufacturing companies.\" Mission Samudra rationale: Major medical devices park and export from Kerala. #188: \"Steps will be taken to establish the National Institute of Pharmacy Education and Research (NIPER) in the pharma sector.\" Mission Samudra rationale: Pharma value chain. #306: \"A special incentive package and financial and technical support will be provided for domestic manufacturing of medical devices, surgical instruments, robotics, stents, and artificial heart valves.\" Mission Samudra rationale: Major medical devices park and export from Kerala.",
+      "activityIds": [
+        16
+      ],
+      "plannedInvestmentCr": 3000
+    },
+    {
+      "declarationNumbers": [
+        346,
+        677,
+        678
+      ],
+      "text": "#346: \"Steps will be taken to attract investors through PPP models. Tourism, Agriculture, IT and Wellness will be the main focus areas.\" Mission Samudra rationale: All four PPP focus sectors have a maritime dimension: tourism (cruise), agriculture (plantation exports), IT (maritime SaaS/BPO), wellness (medical tourism). Zero state expenditure model. #677: \"A single-window clearance system will be implemented to start new ventures.\" Mission Samudra rationale: Faster approvals and execution. #678: \"An investment protection law will be implemented to provide confidence and commitment to private investors.\" Mission Samudra rationale: Investment protection law = the enabling condition that makes the Vizhinjam corridor investable for private capital. Directly addresses Kerala's historical reputation problem on investor-state disputes.",
+      "activityIds": [
+        6
+      ],
+      "plannedInvestmentCr": 15
+    },
+    {
+      "declarationNumbers": [
+        573,
+        576
+      ],
+      "text": "#573: \"Steps will be taken to form self-help groups for women in the fishing sector for self-employment and to provide them with necessary guidelines, training and materials.\" Mission Samudra rationale: Women SHGs → IQF processing units → Seafood processing park supply chain. Replicates the MPEDA Andhra Pradesh model in Kerala coastal villages. 3× higher realisation per tonne vs raw fish. #576: \"The package announced by the previous UDF government to address the impacts on fishermen due to the Vizhinjam project will be implemented.\" Mission Samudra rationale: Active participation of fisherman community in skilling, employment.",
+      "activityIds": [
+        23
+      ],
+      "plannedInvestmentCr": 300
+    },
+    {
+      "declarationNumbers": [
+        576,
+        573,
+        604
+      ],
+      "text": "#576: \"The package announced by the previous UDF government to address the impacts on fishermen due to the Vizhinjam project will be implemented.\" Mission Samudra rationale: Active participation of fisherman community in skilling, employment. #573: \"Steps will be taken to form self-help groups for women in the fishing sector for self-employment and to provide them with necessary guidelines, training and materials.\" Mission Samudra rationale: Women SHGs → IQF processing units → Seafood processing park supply chain. Replicates the MPEDA Andhra Pradesh model in Kerala coastal villages. 3× higher realisation per tonne vs raw fish. #604: \"A special committee including fishermen and experts will be formed to study the impacts of the blue economy and necessary steps will be taken based on the report.\" Mission Samudra rationale: Policy research arm for Mission Samudra's coastal expansion. Ensures port-based development integrates fishermen as beneficiaries, not displaced communities.",
+      "activityIds": [
+        12
+      ],
+      "plannedInvestmentCr": 500
+    },
+    {
+      "declarationNumbers": [
+        580,
+        593
+      ],
+      "text": "#580: \"A plan will be developed to plant mangrove forests to protect coastal areas wherever possible.\" Mission Samudra rationale: Mangrove restoration = GCF grant eligibility + carbon credit revenue + coastal protection. Kerala's mangrove belt is a tradeable asset. Green Climate Fund pays for it; state earns carbon revenue. #593: \"A coastal management program will be implemented to control and monitor coastal erosion and improve the coastal area.\" Mission Samudra rationale: Dredging + erosion control + coastal management.",
+      "activityIds": [
+        32
+      ],
+      "plannedInvestmentCr": 300
+    },
+    {
+      "declarationNumbers": [
+        594,
+        7
+      ],
+      "text": "#594: \"Boat manufacturing facilities will be set up in Poovar and Beypore to meet global needs.\" Mission Samudra rationale: Poovar = 10 km from Vizhinjam, 30m draft → ship repair yard. Beypore = centuries-old Uru boat heritage → electric barges and AUVs for the West Coast Canal freight network. #7: \"Mission Samudra — 600 km coastline, 44 rivers, 34 lakes, four international airports combined to make Kerala a strong presence on the world maritime map within five years.\"",
+      "activityIds": [
+        11
+      ],
+      "plannedInvestmentCr": 200
+    },
+    {
+      "declarationNumbers": [
+        594,
+        325
+      ],
+      "text": "#594: \"Boat manufacturing facilities will be set up in Poovar and Beypore to meet global needs.\" Mission Samudra rationale: Poovar = 10 km from Vizhinjam, 30m draft → ship repair yard. Beypore = centuries-old Uru boat heritage → electric barges and AUVs for the West Coast Canal freight network. #325: \"A special economic zone for the construction of aerospace components will be established in Thiruvananthapuram.\" Mission Samudra rationale: VSSC / LPSC / IIST ecosystem → aerospace SEZ → Vizhinjam export. Composites, fasteners, satellite sub-assemblies exported via Vizhinjam EXIM gateway.",
+      "activityIds": [
+        24
+      ],
+      "plannedInvestmentCr": 500
+    },
+    {
+      "declarationNumbers": [
+        610,
+        588
+      ],
+      "text": "#610: \"The government will provide assistance to establish deep-freeze units to preserve fish in the fishing sector.\" Mission Samudra rationale: Deep-freeze at landing centres → cold chain corridor → Processing Park. Solves the post-catch deterioration problem that forces Kerala processors to sell domestically at low prices. #588: \"Seafood processing parks and cold chain facilities will be established.\" Mission Samudra rationale: Core industrial output of fisheries cluster. Port-side cold chain + 1,000 reefer plugs at various location that moves frozen shrimp exports from Visakhapatnam back to Kerala.",
+      "activityIds": [
+        8
+      ],
+      "plannedInvestmentCr": 200
+    },
+    {
+      "declarationNumbers": [
+        726,
+        721,
+        349
+      ],
+      "text": "#726: \"Steps will be taken to make Kerala a leading cruise ship destination.\" Mission Samudra rationale: Vizhinjam ICP status gazetted Nov 2025 makes this immediately actionable. Target: 80–150 cruise calls/year. Kovalam + backwater circuit, See Kerala – GoK sponsored tour packages. #721: \"Plans will be implemented to transform Kerala into a destination for adventure, wellness, medical, sports and farm tourism.\" Mission Samudra rationale: More cruises. #349: \"A School of Hospitality will be launched to train professionals to provide better service to tourists.\" Mission Samudra rationale: Crew change at Vizhinjam (ICP live) + cruise tourism + medical tourism = major hospitality workforce demand. School of Hospitality at Kovalam/Trivandrum feeds this pipeline directly.",
+      "activityIds": [
+        18
+      ],
+      "plannedInvestmentCr": 250
+    }
+  ],
+  "sourceSystems": [
+    {
+      "Source System": "Vizhinjam / Vallarpadam ICT",
+      "Data Domain": "Port & Trade Data",
+      "Method": "REST API",
+      "Frequency": "Weekly",
+      "Feeds Module": "Mission Samudra"
+    }
+  ],
+  "widerDashboardRequirements": {
+    "roles": [
+      "Public",
+      "District Officer",
+      "Department Secretary",
+      "PMU Admin",
+      "Super Admin"
+    ],
+    "featuresToReuse": [
+      "export to PDF, Excel and CSV",
+      "scheduled reports",
+      "audit trail",
+      "alerts and notifications",
+      "English and Malayalam",
+      "responsive tablet and mobile interface"
+    ]
+  },
+  "dataQualityWarnings": [
+    "The Scope of Work text says 19 modules, but the module table lists M-01 through M-25, which is 25 modules.",
+    "FR-01 also refers to 19 modules and should be updated if all 25 are in Phase 1.",
+    "Stage 3 is labelled FY30-FY35, but Phase 3 expansion runs to Mar 2036 and the Gantt includes FY36.",
+    "The annual investment summary stops at FY35, so FY36 funding should be confirmed as zero, already recognised earlier, or omitted by mistake.",
+    "The source inventory row for Municipal Corporation/Panchayats says CV/REST API; confirm whether this should be CSV/REST API.",
+    "The Transportation feed module says RTC; confirm whether it should be KSRTC.",
+    "Compute financing percentages from numeric amounts rather than relying on rounded ratio text."
+  ],
+  "validation": {
+    "expectedActivityCount": 33,
+    "expectedTotalsCr": {
+      "total": 72115,
+      "private": 50500,
+      "gok": 15065,
+      "goi": 6550
+    },
+    "expectedStageTotalsCr": {
+      "Stage 1": 6565,
+      "Stage 2": 32750,
+      "Stage 3": 32800
+    },
+    "expectedCategoryTotalsCr": {
+      "Vizhinjam & Major Infra": 54650,
+      "Minor Ports & Clusters": 14400,
+      "Policy / Governance / Social": 3065
+    }
+  }
+}
