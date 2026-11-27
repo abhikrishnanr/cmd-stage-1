@@ -12,10 +12,9 @@
 .metric h2 { padding-top: .22rem; font-size: .75rem; font-weight: 750; }
 .metric > strong { color: white; font-size: clamp(1.12rem, 2.5vw, 1.57rem); font-weight: 820; letter-spacing: -.018em; font-variant-numeric: tabular-nums; }
 .metric > p { margin-top: .08rem; color: #e7f0f9; font-size: .68rem; }
-.metric > header > details, .signal > header > details { position: static; }
-.metric > header > details > div, .signal > header > details > div { top: 3rem; right: auto; left: .65rem; }
-.metric:nth-child(even) > header > details > div, .metric:last-child > header > details > div, .signal:last-child > header > details > div { right: .65rem; left: auto; }
-.metric:has(details[open]), .signal:has(details[open]) { z-index: 10; }
+.metric > header > details, .signal > header > details, .card > header > details { position: static; }
+.metric > header > details > div, .signal > header > details > div, .card > header > details > div { top: 3rem; right: .65rem; max-width: calc(100% - 1.3rem); }
+.metric:has(details[open]), .signal:has(details[open]), .card:has(> header > details[open]) { z-index: 10; }
 .links { display: flex; flex-wrap: wrap; gap: .35rem .6rem; padding: .55rem .75rem; border: 1px solid #dfe7ef; border-radius: .8rem; background: white; }
 .links a, .signal > a { display: inline-flex; align-items: center; gap: .25rem; padding: .18rem; color: #1c4d73; font-size: .72rem; font-weight: 780; }
 .links a:hover, .signal > a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -29,7 +28,7 @@
 .signal > p, .card > header > div > p, .note { color: #445970; font-size: .75rem; line-height: 1.45; }
 .signal > a { align-self: flex-start; margin-top: auto; padding-left: 0; }
 .charts { display: grid; gap: .9rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr)); align-items: start; }
-.card { display: grid; min-width: 0; gap: .68rem; padding: .9rem; border: 1px solid #dce6ea; border-radius: .9rem; background: white; }
+.card { position: relative; display: grid; min-width: 0; gap: .68rem; padding: .9rem; border: 1px solid #dce6ea; border-radius: .9rem; background: white; }
 .card h2 { font-size: 1rem; }
 .card > header > div > p { margin-top: .22rem; }
 .details { padding: .47rem .6rem; border: 1px solid #dce6ed; border-radius: .65rem; }
@@ -53,7 +52,6 @@
 .legend strong { font-variant-numeric: tabular-nums; }
 
 @media (max-width: 560px) {
-  .signal > header > details > div { right: .65rem; left: auto; }
   .heading { gap: .47rem; }
   .badge { width: 2rem; height: 2rem; }
   .badge svg { width: 18px; height: 18px; }
