@@ -22,6 +22,7 @@ export default function GuaranteeDashboard({ g }: { g: Guarantee }) {
   const maxD = Math.max(...g.districtTable.map((d) => d.value));
   const isTravel = g.slug === "free-ksrtc-travel";
   const showJourney = !isTravel;
+  const source = isTravel ? "Original dashboard demo" : g.source;
 
   return (
     <div className="w-full max-w-none space-y-4 p-4 sm:p-5">
@@ -29,16 +30,21 @@ export default function GuaranteeDashboard({ g }: { g: Guarantee }) {
       <div className="card flex flex-wrap items-center gap-2.5 p-3">
         <Link href="/indira" className="flex items-center gap-1 text-[12px] font-bold" style={{ color: NAVY }}><Icon name="ArrowLeft" size={15} /> Indira Command</Link>
         <span className="h-4 w-px bg-slate-200" />
-        <span className="display text-[14px] font-bold" style={{ color: NAVY }}>{g.short}</span>
+        <h1 className="display text-[14px] font-bold" style={{ color: NAVY }}>{isTravel ? "Priyadarshini" : g.short}</h1>
         <RagBadge rag={g.rag} />
         <Chip icon="UserCog" text={`Owner: ${g.owner}`} />
-        <Chip icon="Database" text={g.source} />
+        {isTravel ? (
+          <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-bold text-amber-900">
+            Illustrative snapshot · {g.updated}
+          </span>
+        ) : <Chip icon="Database" text={source} />}
         <Chip icon="IndianRupee" text={`${g.released} / ${g.allocated}`} />
         <Chip icon={isTravel ? "Bus" : "Hourglass"} text={isTravel ? "78.4 Cr free trips" : `${g.pending} pending`} />
         <div className="ml-auto flex gap-2">
-          <button onClick={() => openDrawer({ title: g.title, rag: g.rag, source: g.source, updated: g.updated, confidence: 92, target: g.target, achieved: g.achieved, beneficiaries: g.beneficiaries, allocated: g.allocated, released: g.released, districtTable: g.districtTable, trend: g.trendBeneficiaries, metricUnit: g.metricUnit, fullPage: `/indira/${g.slug}`, action: isTravel ? `Review district-wise ridership and occupancy with ${g.owner}.` : `Assign ${g.owner} to clear ${g.pending} and review at-risk districts.`, alerts: [`${g.districtsAtRisk} districts at risk`, `${g.grievances} open grievances`], tickets: ["No open tickets"] })}
+          {isTravel && <Link href="/indira#priyadarshini-usage" className="self-center text-[12px] font-bold text-blue-800 underline underline-offset-2">Published ridership</Link>}
+          <button onClick={() => openDrawer({ title: g.title, rag: g.rag, source, updated: g.updated, confidence: 92, target: g.target, achieved: g.achieved, beneficiaries: g.beneficiaries, allocated: g.allocated, released: g.released, districtTable: g.districtTable, trend: g.trendBeneficiaries, metricUnit: g.metricUnit, fullPage: `/indira/${g.slug}`, action: isTravel ? `Review district-wise ridership and occupancy with ${g.owner}.` : `Assign ${g.owner} to clear ${g.pending} and review at-risk districts.`, alerts: [`${g.districtsAtRisk} districts at risk`, `${g.grievances} open grievances`], tickets: ["No open tickets"] })}
             className="rounded-lg border border-slate-200 px-3 py-1.5 text-[12px] font-bold text-slate-600 hover:bg-slate-50">Drill-down</button>
-          <button onClick={() => openTicket({ itemType: "Indira Guarantee", itemName: g.title, rag: g.rag, secretary: g.owner })}
+          <button onClick={() => openTicket({ itemType: "Indira Guarantee", itemName: isTravel ? `${g.title} · Illustrative snapshot` : g.title, rag: g.rag, secretary: g.owner })}
             className="rounded-lg px-3 py-1.5 text-[12px] font-bold text-white hover:opacity-90" style={{ background: "var(--color-ribbon)" }}>Send for Review</button>
         </div>
       </div>
@@ -46,7 +52,7 @@ export default function GuaranteeDashboard({ g }: { g: Guarantee }) {
       {/* HERO BANNER — image only (drop your designed banner at /public/img/heroes/<slug>.jpg) */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
         className="overflow-hidden rounded-2xl shadow-lg">
-        <img src={`/img/heroes/${g.slug}.jpg`} alt={g.title} className="h-52 w-full object-cover sm:h-72 lg:h-[22rem]" />
+        <img src={`/img/heroes/${g.slug}.jpg`} alt={g.title} className={isTravel ? "h-auto w-full" : "h-52 w-full object-cover sm:h-72 lg:h-[22rem]"} />
       </motion.div>
 
       {/* KPI STRIP */}
@@ -79,7 +85,7 @@ export default function GuaranteeDashboard({ g }: { g: Guarantee }) {
         </div>
       )}
 
-      {isTravel && g.travelAnalytics && <TravelFinancials data={g.travelAnalytics.financials} />}
+      {isTravel && g.travelAnalytics && <TravelFinancials data={g.travelAnalytics.financials} snapshotDate={g.updated} />}
 
       {/* SCHEME AT A GLANCE — two clearly separated, animated parts */}
       <motion.section initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
@@ -156,7 +162,7 @@ export default function GuaranteeDashboard({ g }: { g: Guarantee }) {
           <div className="flex flex-col">
             <KeralaMap values={mapValues} height={420} unit={g.metricUnit} onSelect={(d) => {
               const v = mapValues[d];
-              openDrawer({ title: `${g.short} · ${d}`, rag: g.rag, source: g.source, updated: g.updated, confidence: 91, achieved: `${v} ${g.metricUnit}`, districtTable: g.districtTable, action: "Compare against state average and flag if lagging." });
+              openDrawer({ title: `${g.short} · ${d}`, rag: g.rag, source, updated: g.updated, confidence: 91, achieved: `${v} ${g.metricUnit}`, districtTable: g.districtTable, action: "Compare against state average and flag if lagging." });
             }} />
             <div className="mt-2 flex items-center gap-2 text-[10px] text-slate-500">
               <span>Low</span>
@@ -185,7 +191,7 @@ export default function GuaranteeDashboard({ g }: { g: Guarantee }) {
       </ExpandablePanel>
 
       {/* CHART ROW 1 */}
-      <div className={`grid gap-4 md:grid-cols-2 ${isTravel ? "xl:grid-cols-3" : "xl:grid-cols-4"}`}>
+      <div id={isTravel ? "priyadarshini-usage" : undefined} className={`grid scroll-mt-20 gap-4 md:grid-cols-2 ${isTravel ? "xl:grid-cols-3" : "xl:grid-cols-4"}`}>
         <ExpandablePanel title={isTravel ? "Average Daily Free Trips · 24-Month Trend" : "Monthly Trend"}><TrendLine data={g.trendBeneficiaries} color={g.theme} height={190} /></ExpandablePanel>
         <ExpandablePanel title={isTravel ? "Travel Purpose" : "Category Split"}>
           <Donut data={g.purposeSplit} height={150} />
@@ -495,7 +501,7 @@ function OccupancyScale({ reverse = false }: { reverse?: boolean }) {
   return <span className="flex justify-between">{values.map((value) => <span key={value}>{value}</span>)}</span>;
 }
 
-function TravelFinancials({ data }: { data: NonNullable<Guarantee["travelAnalytics"]>["financials"] }) {
+function TravelFinancials({ data, snapshotDate }: { data: NonNullable<Guarantee["travelAnalytics"]>["financials"]; snapshotDate: string }) {
   const [periodId, setPeriodId] = useState<"day" | "week" | "month" | "year">("month");
   const period = data.revenuePeriods.find((item) => item.id === periodId) || data.revenuePeriods[0];
   const freeShare = period.freeTicketAmountCr / period.totalRevenueCr * 100;
@@ -516,7 +522,7 @@ function TravelFinancials({ data }: { data: NonNullable<Guarantee["travelAnalyti
               <p className="mt-0.5 text-[11px] text-slate-500">Paid-ticket receipts plus the certified value of free tickets issued to women</p>
             </div>
           </div>
-          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] font-bold text-emerald-700">Updated 14 May 2028</span>
+          <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[10px] font-bold text-amber-900">Illustrative snapshot · {snapshotDate}</span>
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4" role="group" aria-label="Revenue reporting period">

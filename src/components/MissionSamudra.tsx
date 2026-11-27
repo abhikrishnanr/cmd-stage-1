@@ -16,6 +16,7 @@ import { msLocations, districtIntensity } from "@/config/mission-samudra-locatio
 const NAVY = "var(--color-navy)";
 const TABS = MS.page.tabs as { id: string; label: string }[];
 const CURRENT_FY: string = MS.metadata.currentFiscalYear;
+const PLANNING_SNAPSHOT = new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeZone: "UTC" }).format(new Date(MS.metadata.generatedOn));
 const acts = MS.activities as any[];
 const byId = (id: number) => acts.find((a) => a.id === id);
 const TAB_ICONS: Record<string, string> = {
@@ -55,7 +56,8 @@ export default function MissionSamudra() {
   // URL sync (tab + filters) without useSearchParams Suspense requirement
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    setTab(q.get("tab") || "overview");
+    const requestedTab = q.get("tab");
+    setTab(requestedTab && TABS.some(({ id }) => id === requestedTab) ? requestedTab : "overview");
     setF({ stage: q.get("stage") || undefined, category: q.get("category") || undefined, type: q.get("type") || undefined, fy: q.get("fy") || undefined, scheme: q.get("scheme") || undefined, agency: q.get("agency") || undefined, fund: q.get("fund") || undefined, q: q.get("q") || undefined });
   }, []);
   const sync = (nextTab: string, nf: Filters) => {
@@ -73,9 +75,14 @@ export default function MissionSamudra() {
 
   return (
     <div className="mission-samudra-page space-y-5 p-4 sm:p-5">
-      <div className="flex items-center gap-1 text-[12px] font-semibold text-slate-400">
-        <Link href="/dream-projects" className="flex items-center gap-1 text-[color:var(--color-navy)]"><Icon name="ArrowLeft" size={14} /> Dream Projects</Link>
-        <Icon name="ChevronRight" size={13} /> <span>Mission Samudra</span>
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[12px] font-semibold">
+        <div className="flex items-center gap-1 text-slate-500">
+          <Link href="/dream-projects" className="flex items-center gap-1 text-[color:var(--color-navy)]"><Icon name="ArrowLeft" size={14} /> Dream Projects</Link>
+          <Icon name="ChevronRight" size={13} /> <span>Mission Samudra</span>
+        </div>
+        <Link href="/dashboard-cm#mission-samudra" className="inline-flex items-center gap-1 text-teal-800 underline-offset-2 hover:underline">
+          Verified updates on CM Dashboard <Icon name="ArrowUpRight" size={13} />
+        </Link>
       </div>
 
       {/* HERO */}
@@ -91,8 +98,8 @@ export default function MissionSamudra() {
               <p className="mt-2 max-w-2xl text-[15px] font-medium leading-relaxed text-white/84 sm:text-base">{MS.page.subtitle}</p>
               <div className="mt-4 flex flex-wrap items-center gap-2 text-[12px]">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/15 px-3 py-1.5 font-bold"><Icon name="CalendarRange" size={14} /> {MS.metadata.programmeWindow}</span>
-                <span className="rounded-full bg-white px-3 py-1.5 font-black text-[color:var(--color-navy)]">Current: {CURRENT_FY}</span>
-                <span className="rounded-full bg-amber-300 px-3 py-1.5 font-black text-amber-950">Planning Framework</span>
+                <span className="rounded-full bg-white px-3 py-1.5 font-black text-[color:var(--color-navy)]">Framework reference · {CURRENT_FY}</span>
+                <span className="rounded-full bg-amber-300 px-3 py-1.5 font-black text-amber-950">Planning Framework · <time dateTime={MS.metadata.generatedOn}>{PLANNING_SNAPSHOT}</time></span>
               </div>
             </div>
             <div className="flex flex-wrap justify-end gap-2">
@@ -122,7 +129,7 @@ export default function MissionSamudra() {
               const on = tab === t.id;
               const accent = TAB_ACCENT[t.id] || NAVY;
               return (
-                <button key={t.id} onClick={() => setTabU(t.id)}
+                <button key={t.id} type="button" aria-pressed={on} onClick={() => setTabU(t.id)}
                   className={`group relative flex shrink-0 items-center gap-2.5 rounded-xl px-3.5 py-2 text-[12.5px] font-black transition ${on ? "text-[color:var(--color-ink)]" : "text-slate-500 hover:bg-slate-50 hover:text-[color:var(--color-ink)]"}`}>
                   {on && <motion.span layoutId="ms-tab" className="absolute inset-0 rounded-xl border" style={{ background: `${accent}12`, borderColor: `${accent}55`, boxShadow: `0 10px 22px -14px ${accent}` }} transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
                   <motion.span
@@ -347,10 +354,10 @@ function Roadmap({ filtered, setSel }: any) {
   }, {});
 
   return (
-    <SectionCard title="Implementation Roadmap Gantt (FY26-FY36)" subtitle="planned duration, FY28 progress shading and current-year marker · click an activity" icon="GanttChartSquare" expandable>
+    <SectionCard title="Implementation Roadmap Gantt (FY26-FY36)" subtitle="planned duration and elapsed schedule through FY28 · click an activity" icon="GanttChartSquare" expandable>
       <div className="mb-4 grid gap-2 sm:grid-cols-4">
         {[
-          ["Active in FY28", counts.active || 0, "#f59e0b", "LoaderCircle"],
+          ["Planned active in FY28", counts.active || 0, "#f59e0b", "LoaderCircle"],
           ["Due in FY28", counts.due || 0, "#1aa6c9", "AlarmClock"],
           ["Planned Complete", counts.elapsed || 0, "#16a34a", "CircleCheck"],
           ["Upcoming", counts.upcoming || 0, "#64748b", "Clock"],
@@ -372,7 +379,7 @@ function Roadmap({ filtered, setSel }: any) {
               <div className="absolute bottom-0 top-0 w-[2px] rounded-full bg-amber-500" style={{ left: `${currentLineLeft}%` }} />
               {FY_LIST.map((fy, i) => <div key={fy} className={`px-1 text-center ${i === curIdx ? "rounded bg-amber-100 text-amber-700" : ""}`}>{fy}</div>)}
             </div>
-            <div className="w-[190px] shrink-0 px-3 text-right">Progress / Status</div>
+            <div className="w-[190px] shrink-0 px-3 text-right">Scheduled elapsed / Status</div>
           </div>
           {stages.map((st) => {
             const rows = filtered.filter((a: any) => a.stage === st);
@@ -420,7 +427,7 @@ function Roadmap({ filtered, setSel }: any) {
           <div className="mt-3 space-y-1.5 px-2 text-[11px]">
             <div className="flex flex-wrap items-center gap-3"><span className="font-bold text-slate-400">Category:</span>{Object.entries(CAT_COLOR).map(([k, c]) => <span key={k} className="flex items-center gap-1.5 text-slate-600"><span className="h-2.5 w-4 rounded-full" style={{ background: c }} />{k}</span>)}</div>
             <div className="flex flex-wrap items-center gap-3"><span className="font-bold text-slate-400">Status vs plan:</span>{SCHED_LEGEND.map((l) => <span key={l.label} className="flex items-center gap-1.5 text-slate-600"><span className="h-2.5 w-2.5 rounded-full" style={{ background: l.color }} />{l.label === "Due this FY" ? "Due in FY28" : l.label}</span>)}</div>
-            <p className="text-slate-400">Roadmap assumes the current year is 2028 ({ROADMAP_CURRENT_FY}). Shading indicates planned elapsed progress by FY28; operational progress/delays are not connected.</p>
+            <p className="text-slate-500">The FY28 marker shows how much of each planned activity window would have elapsed by that point.</p>
           </div>
         </div>
       </div>
