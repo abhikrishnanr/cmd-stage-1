@@ -47,7 +47,7 @@
 .reviewHead h3 { flex: 1; min-width: 0; color: #243b55; font-size: .82rem; font-weight: 750; }
 .reviewIcon { display: grid; flex: none; place-items: center; width: 1.85rem; height: 1.85rem; border-radius: .52rem; background: var(--tint); color: var(--accent); }
 .reviewValue { color: var(--accent); font-size: clamp(1.04rem, 2.4vw, 1.42rem); font-weight: 820; line-height: 1.2; }
-.reviewCard p,
+.reviewCard > p,
 .caption { color: #425872; font-size: .79rem; line-height: 1.55; }
 .reviewCard > a { display: inline-flex; align-items: center; justify-self: start; gap: .3rem; font-size: .72rem; font-weight: 750; color: #225181; text-underline-offset: .2em; }
 .reviewCard > a:hover { text-decoration: underline; }

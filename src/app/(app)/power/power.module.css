@@ -20,7 +20,7 @@
 .heroHeading { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: 12px; }
 .heroIcon { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid #fff5; border-radius: 13px; background: #ffcb641f; color: #ffdf8e; }
 .heroHeading h1 { font-size: clamp(1.7rem, 4vw, 2.72rem); font-weight: 850; letter-spacing: -.036em; line-height: 1.06; }
-.heroHeading p { margin-top: 6px; color: #fff2dd; font-size: .81rem; line-height: 1.42; }
+.heroHeading > div > p { margin-top: 6px; color: #fff2dd; font-size: .81rem; line-height: 1.42; }
 .heroMetrics { position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 162px), 1fr)); gap: 8px; margin-top: 19px; }
 .heroMetric { min-width: 0; padding: 6px 10px 9px; border: 1px solid #ffffff3b; border-radius: 11px; background: #ffffff16; }
 .metricHeader { display: flex; align-items: center; gap: 5px; font-weight: 700; font-size: .71rem; }
@@ -48,7 +48,7 @@
 .watch header h3 { padding-top: 4px; font-weight: 850; font-size: .87rem; line-height: 1.3; }
 .watchValue { color: var(--accent); font-family: var(--font-display, inherit); font-size: 1.22rem; font-weight: 850; line-height: 1.22; font-variant-numeric: tabular-nums; }
 .watchValue span { color: #42536a; font-size: .67rem; font-weight: 700; }
-.watch p, .panelNote { color: #42566c; font-size: .76rem; line-height: 1.45; }
+.watch > p, .panelNote { color: #42566c; font-size: .76rem; line-height: 1.45; }
 .watch a { display: inline-flex; width: fit-content; align-items: center; gap: 4px; min-height: 24px; color: var(--accent); font-size: .72rem; font-weight: 820; }
 .watch a:hover, .watch a:focus-visible { text-decoration: underline; }
 
@@ -57,7 +57,7 @@
 .panelHeader { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: 8px; margin-bottom: 14px; }
 .panelIcon { display: inline-grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; color: #925117; background: #fff1db; }
 .panelHeader h3 { color: #1a334d; font-size: .98rem; font-weight: 850; line-height: 1.25; }
-.panelHeader p { margin-top: 2px; color: #586a7e; font-size: .72rem; }
+.panelHeader > div > p { margin-top: 2px; color: #586a7e; font-size: .72rem; }
 .chartLabel { margin-bottom: 7px; color: #354c65; font-size: .74rem; font-weight: 800; }
 .chartAxis { display: flex; justify-content: space-between; margin-bottom: 3px; color: #576b7f; font-size: .62rem; font-variant-numeric: tabular-nums; }
 .bars { display: grid; gap: 9px; }

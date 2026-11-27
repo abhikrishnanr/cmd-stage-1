@@ -5,7 +5,7 @@
 .heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
 .heroIcon { display: inline-grid; width: 2.8rem; height: 2.8rem; margin-bottom: .6rem; place-items: center; border: 1px solid #ffffff61; border-radius: .8rem; background: #ffffff16; }
 .heading h1 { margin: 0; font-weight: 830; font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.12; letter-spacing: -.035em; }
-.heading p { margin-top: .45rem; color: #e4f5f8; font-size: .91rem; line-height: 1.45; }
+.heading > div > p { margin-top: .45rem; color: #e4f5f8; font-size: .91rem; line-height: 1.45; }
 .nav { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.15rem; }
 .nav a { border: 1px solid #ffffff56; border-radius: .55rem; padding: .4rem .68rem; background: #ffffff14; color: #fff; font-size: .75rem; font-weight: 730; }
 .nav a:hover, .nav a:focus-visible { background: #ffffff29; }
