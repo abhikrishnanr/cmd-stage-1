@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
-import { indiraProgrammePage, ProgrammeDetail } from "@/components/ProgrammeEvidence";
-import { indiraProgrammeRecords } from "@/data/programmeEvidence";
+import { IndiraGuaranteeDetail } from "@/components/IndiraGuarantees";
+import { indiraGuarantees } from "@/data/indiraTracker";
 
 export function generateStaticParams() {
-  return indiraProgrammeRecords.map(({ slug }) => ({ slug }));
+  return indiraGuarantees.map(({ slug }) => ({ slug }));
 }
 
 export default async function GuaranteePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const program = indiraProgrammeRecords.find((record) => record.slug === slug);
-  if (!program) notFound();
-  return <ProgrammeDetail config={indiraProgrammePage} program={program} />;
+  const guarantee = indiraGuarantees.find((record) => record.slug === slug);
+  if (!guarantee) notFound();
+  return <IndiraGuaranteeDetail guarantee={guarantee} />;
 }

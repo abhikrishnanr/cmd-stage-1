@@ -1,6 +1,5 @@
-import { indiraProgrammePage, ProgrammeIndex } from "@/components/ProgrammeEvidence";
-import { indiraApproachSource, indiraProgrammeRecords } from "@/data/programmeEvidence";
+import { IndiraGuaranteesOverview } from "@/components/IndiraGuarantees";
 
 export default function IndiraPage() {
-  return <ProgrammeIndex config={indiraProgrammePage} programs={indiraProgrammeRecords} featuredSource={indiraApproachSource} />;
+  return <IndiraGuaranteesOverview />;
 }
