@@ -1,0 +1,302 @@
+import { efocRevised } from "./rbm-new-efoc";
+import { missionSamudraRevised } from "./rbm-new-mission";
+import type { FormField, RevisedScheme } from "./rbm-new-types";
+
+const STATUS_OPTIONS = ["Not started", "Mobilisation", "In progress", "Substantially complete", "Completed", "On hold"] as const;
+const YES_NO_OPTIONS = ["Yes", "No"] as const;
+const VERIFICATION_OPTIONS = ["Draft", "Submitted", "Verified", "Returned"] as const;
+
+const INDICATOR_ACTIVITY_CODES: Record<string, readonly string[]> = {
+  "EF-1": ["EF-01", "EF-02", "EF-04", "EF-05"],
+  "EF-2": ["EF-09"],
+  "EF-3": ["EF-03", "EF-05", "EF-07", "EF-09", "EF-10"],
+  "EF-4": ["EF-10"],
+  "EF-5": ["EF-07", "EF-09"],
+  "EF-6": ["EF-09", "EF-14", "EF-17"],
+  "MS-1": ["MS-21", "MS-24", "MS-25"],
+  "MS-2": ["MS-22", "MS-25"],
+  "MS-3": ["MS-02", "MS-03"],
+  "MS-4": ["MS-01", "MS-04", "MS-05", "MS-06", "MS-07"],
+  "MS-5": ["MS-08", "MS-09", "MS-10", "MS-11"],
+  "MS-6": ["MS-12", "MS-13", "MS-14", "MS-15", "MS-16", "MS-17", "MS-18"],
+  "MS-7": ["MS-19"],
+  "MS-8": ["MS-23", "MS-29"],
+  "MS-9": ["MS-01", "MS-02", "MS-04", "MS-06", "MS-07", "MS-08", "MS-09", "MS-10", "MS-11", "MS-12", "MS-19", "MS-20", "MS-21"],
+  "MS-10": ["MS-23", "MS-29", "MS-30"],
+  "MS-11": ["MS-01", "MS-02", "MS-03", "MS-04", "MS-05", "MS-06", "MS-07", "MS-08", "MS-09", "MS-10", "MS-11", "MS-12", "MS-13", "MS-14", "MS-15", "MS-16", "MS-17", "MS-18", "MS-19", "MS-20"],
+  "MS-12": ["MS-12", "MS-13", "MS-14", "MS-15", "MS-16", "MS-17", "MS-18"],
+  "MS-13": ["MS-01", "MS-02", "MS-03", "MS-04", "MS-05", "MS-06", "MS-07", "MS-08", "MS-09", "MS-10", "MS-11", "MS-12", "MS-13", "MS-14", "MS-15", "MS-16", "MS-17", "MS-18"],
+};
+
+function field(key: string, label: string, type: FormField["type"] = "text", options?: readonly string[], min?: number, max?: number): FormField {
+  return { key, label, type, options, min, max };
+}
+
+const missionActivityFields: FormField[] = [
+  field("reportingMonth", "Reporting month"),
+  field("currentStatus", "Current status", "select", STATUS_OPTIONS),
+  field("physicalProgress", "Physical progress (%)", "number", undefined, 0, 100),
+  field("committedToDate", "Committed/deployed to date (₹ Cr)", "number", undefined, 0),
+  field("spentToDate", "Spent to date (₹ Cr)", "number", undefined, 0),
+  field("importantMilestoneReached", "Important milestone reached?", "select", YES_NO_OPTIONS),
+  field("achievementThisPeriod", "What was achieved this period?", "textarea"),
+  field("jobsEnabled", "Jobs enabled to date (people)", "number", undefined, 0),
+  field("womenJobs", "Women among those jobs", "number", undefined, 0),
+  field("fisherHouseholds", "Fisher households supported", "number", undefined, 0),
+  field("inclusiveGreenMilestone", "Inclusive/green milestone reached?", "select", YES_NO_OPTIONS),
+  field("mainIssue", "Main issue or delay", "textarea"),
+  field("nextAction", "Next action", "textarea"),
+  field("nextActionDueDate", "Next action due date", "date"),
+  field("evidenceReference", "Evidence/document reference"),
+  field("reportingOfficer", "Reporting officer"),
+  field("verifiedBy", "Verified by"),
+];
+
+const efocActivityFields: FormField[] = [
+  field("reportingMonth", "Reporting month"),
+  field("currentStatus", "Current status", "select", STATUS_OPTIONS),
+  field("physicalProgress", "Physical progress (%)", "number", undefined, 0, 100),
+  field("committedToDate", "Committed/deployed to date (₹ lakh)", "number", undefined, 0),
+  field("spentToDate", "Spent to date (₹ lakh)", "number", undefined, 0),
+  field("importantMilestoneReached", "Important milestone reached?", "select", YES_NO_OPTIONS),
+  field("achievementThisPeriod", "What was achieved this period?", "textarea"),
+  field("officesAudited", "Offices audited to date", "number", undefined, 0),
+  field("officesCertified", "Offices certified to date", "number", undefined, 0),
+  field("goldOrSilver", "Of which Gold or Silver", "number", undefined, 0),
+  field("surpriseCheck", "Surprise check / re-audit done?", "select", YES_NO_OPTIONS),
+  field("mainIssue", "Main issue or delay", "textarea"),
+  field("nextAction", "Next action", "textarea"),
+  field("nextActionDueDate", "Next action due date", "date"),
+  field("evidenceReference", "Evidence/document reference"),
+  field("reportingOfficer", "Reporting officer"),
+  field("verifiedBy", "Verified by"),
+];
+
+const missionEvidenceFields: FormField[] = [
+  field("reportingPeriod", "Reporting period"),
+  field("relatedActivityCode", "Related activity code", "select", missionSamudraRevised.forms.outcomeEvidence.activityCodeOptions),
+  field("districtLocation", "District/location"),
+  field("resultType", "Result type", "select", missionSamudraRevised.forms.outcomeEvidence.resultTypeOptions),
+  field("whatChanged", "What happened or changed?", "textarea"),
+  field("unit", "Unit", "select", missionSamudraRevised.forms.outcomeEvidence.unitOptions),
+  field("target", "Target for this item"),
+  field("achievedThisPeriod", "Achieved this period"),
+  field("cumulativeAchieved", "Cumulative achieved"),
+  field("womenCount", "Women count", "number", undefined, 0),
+  field("evidenceDate", "Evidence date", "date"),
+  field("evidenceReference", "Evidence/certificate reference"),
+  field("reportingOffice", "Reporting office"),
+  field("verifiedBy", "Verified by"),
+  field("verificationStatus", "Verification status", "select", VERIFICATION_OPTIONS),
+];
+
+const efocEvidenceFields: FormField[] = [
+  field("reportingPeriod", "Reporting period"),
+  field("relatedActivityCode", "Related activity code"),
+  field("districtLocation", "District/location"),
+  field("resultType", "Result type"),
+  field("whatChanged", "What happened or changed?", "textarea"),
+  field("unit", "Unit"),
+  field("target", "Target for this item"),
+  field("achievedThisPeriod", "Achieved this period"),
+  field("cumulativeAchieved", "Cumulative achieved"),
+  field("womenCount", "Women count", "number", undefined, 0),
+  field("evidenceDate", "Evidence date", "date"),
+  field("evidenceReference", "Evidence/certificate reference"),
+  field("reportingOffice", "Reporting office"),
+  field("verifiedBy", "Verified by"),
+  field("verificationStatus", "Verification status", "select", VERIFICATION_OPTIONS),
+];
+
+const missionScheme: RevisedScheme = {
+  slug: "mission-samudra",
+  shortTitle: "Mission Samudra",
+  title: missionSamudraRevised.programme.title,
+  purpose: "Kerala established as an integrated maritime economy ('Port City-State') with low-carbon maritime transport",
+  icon: "Anchor",
+  color: "#087a70",
+  period: missionSamudraRevised.programme.period,
+  department: String(missionSamudraRevised.programmeFacts[1].value),
+  status: missionSamudraRevised.evidenceSources[0].status,
+  sourceFile: missionSamudraRevised.sourceWorkbook,
+  sourceHref: "/rbm-new/mission-samudra-revised.xlsx",
+  publicSource: { label: "Kerala Government budget roadmap", url: "https://kerala.gov.in/articledetail/MTA2ODUxMTUzOC4xNg%3D%3D/1?lan=en" },
+  fundingUnit: "₹ crore",
+  sourceInstructions: [missionSamudraRevised.instructions.indicatorForm, missionSamudraRevised.instructions.indicatorCompletion],
+  activityInstruction: missionSamudraRevised.instructions.activityForm,
+  evidenceInstruction: missionSamudraRevised.instructions.outcomeForm,
+  referenceInstruction: missionSamudraRevised.instructions.reference,
+  score: missionSamudraRevised.programme.compositeScore,
+  rating: missionSamudraRevised.programme.rating,
+  statusNote: "The administrative-sanction proposal and Plan Write-up set the programme scope and targets. The workbook documents proposed monitoring weights. The first verified progress return is pending.",
+  facts: missionSamudraRevised.programmeFacts.map((row) => ({ label: row.fact, value: row.value, unit: row.unitNote, source: row.sourceStatus })),
+  indicators: missionSamudraRevised.indicators.map((row) => {
+    const code = row.indicator.match(/^MS-\d+/)?.[0] || String(row.no);
+    return {
+      no: row.no,
+      code,
+      name: row.indicator,
+      definition: row.definition,
+      level: row.level,
+      unit: row.unit,
+      baseline: row.baseline,
+      target: row.target,
+      current: row.currentRbm,
+      weight: row.weight,
+      cadence: row.cadence,
+      source: row.source,
+      activityCodes: INDICATOR_ACTIVITY_CODES[code] || [],
+    };
+  }),
+  activities: missionSamudraRevised.activities.map((row) => ({
+    code: row.code,
+    name: row.description,
+    phase: row.stage,
+    phaseTheme: row.stageTheme,
+    category: row.category,
+    type: row.type,
+    plannedStart: row.plannedStart,
+    plannedFinish: row.plannedFinish,
+    total: row.totalCr,
+    privateFunding: row.privateCr,
+    stateFunding: row.gokCr,
+    centralFunding: row.goiCr,
+    responsibleOffice: row.keralaResponsibleOffice,
+    governmentPartner: row.goiAgency,
+    otherPartner: row.privateOtherPartner,
+    dependencies: row.dependencies,
+  })),
+  resultChain: missionSamudraRevised.resultChain,
+  outcomeSummary: missionSamudraRevised.outcomeSummaries.map((row) => ({ indicator: row.indicator, target: row.target, current: row.currentRbm, unit: row.unit, support: row.evidenceRequirement, cadence: row.reportingCycle, status: row.status })),
+  evidenceSources: missionSamudraRevised.evidenceSources,
+  references: [
+    {
+      title: "Scoring formulas",
+      columns: ["Measure", "Calculation", "Current result"],
+      rows: [
+        ["Composite score", missionSamudraRevised.scoring.compositeFormula, "Awaiting verified returns"],
+      ],
+    },
+    {
+      title: "Stage summary",
+      columns: ["Stage", "Period / theme", "Activities", "Private", "GoK", "GoI", "Total"],
+      rows: missionSamudraRevised.stageReference.map((row) => [row.stage, row.periodTheme, row.activities, row.privateCr, row.gokCr, row.goiCr, row.totalCr]),
+    },
+    {
+      title: "Category summary",
+      columns: ["Category", "Activities", "Private", "GoK", "GoI", "Total"],
+      rows: missionSamudraRevised.categoryReference.map((row) => [row.category, row.activities, row.privateCr, row.gokCr, row.goiCr, row.totalCr]),
+    },
+    {
+      title: "Financial year summary",
+      columns: ["Financial year", "Private", "GoK", "GoI", "Total"],
+      rows: missionSamudraRevised.financialYearReference.map((row) => [row.financialYear, row.privateCr, row.gokCr, row.goiCr, row.totalCr]),
+    },
+  ],
+  caveats: missionSamudraRevised.sourceCaveats.map((row) => `${row.sheet} ${row.cell}: ${row.text}`),
+  activityUpdateFields: missionActivityFields,
+  evidenceFields: missionEvidenceFields,
+};
+
+const efocScheme: RevisedScheme = {
+  slug: "elder-friendly-office-certification",
+  shortTitle: "EFOC",
+  title: efocRevised.programme.title,
+  purpose: "Senior citizens transact with public offices independently and with dignity",
+  icon: "Accessibility",
+  color: "#a24414",
+  period: efocRevised.programme.period,
+  department: efocRevised.programme.department,
+  status: "Approved proposal",
+  sourceFile: efocRevised.source.workbookFilename,
+  sourceHref: "/rbm-new/efoc-indicator-form.xlsx",
+  publicSource: { label: "Elder-Friendly Office Certification announcement", url: "https://prd.kerala.gov.in/ml/node/358967" },
+  fundingUnit: "₹ lakh",
+  sourceInstructions: [efocRevised.guidance.indicatorForm, efocRevised.guidance.indicatorCompletion],
+  activityInstruction: efocRevised.guidance.activityForm,
+  evidenceInstruction: efocRevised.guidance.outcomeEvidence,
+  referenceInstruction: efocRevised.guidance.reference,
+  score: efocRevised.scoring.compositeCached,
+  rating: efocRevised.scoring.ratingCached,
+  statusNote: "The workbook identifies January 2027 as the planned start. The proposal provides targets for EF-1, EF-2, EF-3 and EF-5. The EF-4 target and monitoring weights are proposed. The department is to set the EF-6 target.",
+  facts: efocRevised.reference.programmeFacts.map((row) => ({ label: row.fact, value: row.value, unit: row.unitNote, source: row.sourceStatus })),
+  indicators: efocRevised.indicators.map((row) => ({
+    no: row.no,
+    code: row.code,
+    name: row.keyIndicator,
+    definition: row.meaning,
+    level: row.level,
+    unit: row.unit,
+    baseline: row.startingPoint,
+    target: row.target,
+    current: row.currentValueInRbm === 0 && !row.evidenceReference ? null : row.currentValueInRbm,
+    weight: row.weight,
+    cadence: row.howOften,
+    source: row.numberSource,
+    activityCodes: INDICATOR_ACTIVITY_CODES[row.code] || [],
+  })),
+  activities: efocRevised.activities.map((row) => ({
+    code: row.code,
+    name: row.activity,
+    phase: row.phase,
+    phaseTheme: row.phaseTheme,
+    category: row.category,
+    type: row.type,
+    plannedStart: row.plannedStart,
+    plannedFinish: row.plannedFinish,
+    total: row.plannedTotalCached,
+    privateFunding: row.privateLakh,
+    stateFunding: row.gokLakh,
+    centralFunding: row.goiLakh,
+    responsibleOffice: row.responsibleOffice,
+    governmentPartner: row.partnerDepartmentOffice,
+    otherPartner: row.empanelledAgencyOtherPartner,
+    dependencies: row.dependencies,
+  })),
+  resultChain: efocRevised.reference.resultsChain,
+  outcomeSummary: efocRevised.outcomeEvidence.summaries.map((row) => ({ indicator: row.indicator, target: row.target, current: row.currentRbmValue === 0 && row.status === "Not started" ? null : row.currentRbmValue, unit: row.unit, support: row.support, cadence: row.reportingCycle, status: row.status })),
+  evidenceSources: efocRevised.reference.evidenceSources.map((row) => ({ source: row.evidenceSource, cadence: row.cadence, status: row.status, coverage: row.coverage })),
+  references: [
+    {
+      title: "Scoring formulas",
+      columns: ["Measure", "Calculation", "Current result"],
+      rows: [
+        ["Composite score", efocRevised.scoring.compositeFormula, "Awaiting verified returns"],
+      ],
+    },
+    {
+      title: "Phase summary",
+      columns: ["Phase", "Period / theme", "Activities", "Private", "GoK", "GoI", "Total"],
+      rows: efocRevised.reference.phaseSummaries.map((row) => [row.phase, row.periodAndTheme, row.activities, row.privateLakh, row.gokLakh, row.goiLakh, row.totalLakh]),
+    },
+    {
+      title: "Category summary",
+      columns: ["Category", "Activities", "Private", "GoK", "GoI", "Total"],
+      rows: efocRevised.reference.categorySummaries.map((row) => [row.category, row.activities, row.privateLakh, row.gokLakh, row.goiLakh, row.totalLakh]),
+    },
+    {
+      title: "Financial year summary",
+      columns: ["Financial year", "Private", "GoK", "GoI", "Total"],
+      rows: efocRevised.reference.financialYears.map((row) => [row.financialYear, row.privateLakh, row.gokLakh, row.goiLakh, row.totalLakh]),
+    },
+    {
+      title: "Certification levels",
+      columns: ["Level", "Aggregate score", "Domain floor", "Validity"],
+      rows: efocRevised.reference.certificationLevels.map((row) => [row.certificationLevel, row.aggregateScore, row.domainFloor, row.validity]),
+    },
+    {
+      title: "Assessment domains",
+      columns: ["Domain", "Weight", "Criteria", "Maximum raw score"],
+      rows: efocRevised.reference.assessmentDomains.map((row) => [row.assessmentDomain, `${row.weight * 100}%`, row.criteria, row.maxRawScore]),
+    },
+  ],
+  caveats: efocRevised.caveats,
+  activityUpdateFields: efocActivityFields,
+  evidenceFields: efocEvidenceFields,
+};
+
+export const rbmNewSchemes: RevisedScheme[] = [missionScheme, efocScheme];
+
+export function rbmNewSchemeBySlug(slug: string) {
+  return rbmNewSchemes.find((scheme) => scheme.slug === slug);
+}
