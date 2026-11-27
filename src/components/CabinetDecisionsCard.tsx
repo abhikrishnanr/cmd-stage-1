@@ -1,15 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowUpRight, CalendarDays, Files, Landmark } from "lucide-react";
+import { useEffect, useId, useState } from "react";
+import { ArrowUpRight, Landmark } from "lucide-react";
+import { CmSourceDetails } from "@/components/CmSourceDetails";
+import type { DataProvenance } from "@/components/DataProvenance";
 import { cabinetArchiveCheckedOn, cabinetOfficialMeetings } from "@/data/cabinetOfficialArchive";
 import {
-  cabinetArchiveUrl, cabinetDocumentPortalUrl, cabinetMeetingLink, cabinetMinistryStart, cabinetRegisterUrl,
-  formatCabinetDate, type CabinetFeed,
+  cabinetArchiveUrl, cabinetDecisionLink, cabinetMinistryStart, cabinetPublicArchiveUrl,
+  cabinetRegisterUrl, formatCabinetDate, keralamCabinetFeedUrl, type CabinetFeed,
 } from "@/data/cabinetFeed";
 import styles from "./CabinetDecisionsCard.module.css";
 
-const month = new Intl.DateTimeFormat("en-IN", { month: "short", year: "numeric", timeZone: "UTC" });
+const month = new Intl.DateTimeFormat("en-IN", { month: "short", timeZone: "UTC" });
+const chartMonth = new Intl.DateTimeFormat("en-IN", { month: "long", year: "numeric", timeZone: "UTC" });
+const shortDay = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", timeZone: "UTC" });
+
 const initialFeed: CabinetFeed = {
   mode: "official-snapshot",
   schemaVersion: 1,
@@ -18,27 +23,76 @@ const initialFeed: CabinetFeed = {
   meetings: [...cabinetOfficialMeetings].sort((a, b) => b.date.localeCompare(a.date)),
 };
 
+const summonsSource: DataProvenance = {
+  source: "Keralam Legislature Secretariat",
+  dataset: "Gazette No. 3043 · Summons for the Assembly’s third session",
+  period: "13 Nov 2026",
+  url: "https://www.niyamasabha.org/codes/16kla/session_3/summoning.pdf",
+  sourceUpdatedAt: "13 Nov 2026",
+};
+
+type Milestone = { date: string; label: string; source?: DataProvenance; scheduled?: boolean };
+type DecisionStatus = {
+  label: string;
+  tone: "announced" | "approved" | "notified";
+  event: string;
+  milestones?: Milestone[];
+};
+
+const publishedStatus: Record<string, Record<string, DecisionStatus>> = {
+  "2026-11-25": {
+    "Legislative agenda announced": {
+      label: "Agenda announced",
+      tone: "announced",
+      event: "Chief Minister outlined bills",
+      milestones: [
+        { date: "2026-11-30", label: "Assembly opening scheduled", source: summonsSource, scheduled: true },
+      ],
+    },
+  },
+  "2026-11-11": {
+    "Kasaragod–Wayanad power line package": {
+      label: "Package approved",
+      tone: "approved",
+      event: "Cabinet approved the package",
+    },
+    "Assembly session recommended": {
+      label: "Assembly summoned",
+      tone: "notified",
+      event: "Cabinet recommended the session",
+      milestones: [
+        { date: "2026-11-13", label: "Gazette summons issued", source: summonsSource },
+        { date: "2026-11-30", label: "Assembly opening scheduled", scheduled: true },
+      ],
+    },
+  },
+};
+
 function monthCounts(feed: CabinetFeed) {
+  const end = feed.meetings[0]?.date.slice(0, 7);
+  if (!end) return [];
+
   const counts = new Map<string, number>();
   for (const meeting of feed.meetings) {
     const key = meeting.date.slice(0, 7);
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
-  const current = new Date(`${feed.ministryStart.slice(0, 7)}-01T00:00:00Z`);
-  const end = feed.meetings[0]?.date.slice(0, 7);
-  const months: { key: string; label: string; count: number }[] = [];
-  if (!end) return months;
 
+  const current = new Date(`${feed.ministryStart.slice(0, 7)}-01T00:00:00Z`);
+  const months: { key: string; label: string; fullLabel: string; count: number }[] = [];
   while (current.toISOString().slice(0, 7) <= end) {
     const key = current.toISOString().slice(0, 7);
-    months.push({ key, label: month.format(current), count: counts.get(key) ?? 0 });
+    months.push({ key, label: month.format(current), fullLabel: chartMonth.format(current), count: counts.get(key) ?? 0 });
     current.setUTCMonth(current.getUTCMonth() + 1);
   }
-  return months;
+  return months.slice(-12);
 }
 
 export function CabinetDecisionsCard() {
   const [feed, setFeed] = useState<CabinetFeed>(initialFeed);
+  const [selectedKey, setSelectedKey] = useState<string>();
+  const titleId = useId();
+  const detailId = useId();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -53,85 +107,131 @@ export function CabinetDecisionsCard() {
   const latest = feed.meetings[0];
   const months = monthCounts(feed);
   const maxCount = Math.max(1, ...months.map((entry) => entry.count));
-  const opening = feed.meetings.find((meeting) => meeting.date === feed.ministryStart && meeting.decisions.length > 0);
-  const latestHighlights = feed.meetings.filter((meeting) => meeting !== opening && meeting.decisions.length > 0).slice(0, 2);
-  const highlights = opening ? [...latestHighlights, opening] : latestHighlights;
+  const recent = feed.meetings.flatMap((meeting) => meeting.decisions.map((decision, index) => ({
+    meeting,
+    decision,
+    index,
+    key: `${meeting.id}:${decision.title}`,
+    status: publishedStatus[meeting.date]?.[decision.title],
+  }))).slice(0, 3);
+  const selected = recent.find((item) => item.key === selectedKey) ?? recent[0];
   const viaKeralam = feed.mode === "keralam-on-track";
-  const detailUrl = latest && viaKeralam ? cabinetMeetingLink(latest, feed) : cabinetRegisterUrl;
+  const verifiedOn = formatCabinetDate(feed.archiveCheckedOn);
+  const sourcePeriod = latest ? `${formatCabinetDate(feed.ministryStart)} to ${formatCabinetDate(latest.date)}` : undefined;
+  const timeline: Milestone[] = selected ? [
+    { date: selected.meeting.date, label: selected.status?.event ?? "Published in Cabinet briefing" },
+    ...(selected.status?.milestones ?? []),
+  ] : [];
+  const followUpSources = timeline.flatMap((event) => event.source ? [event.source] : []);
+  const archiveSources: DataProvenance[] = [
+    {
+      source: "Chief Minister’s Office, Government of Kerala",
+      dataset: "Cabinet briefing archive",
+      url: cabinetArchiveUrl,
+      period: sourcePeriod,
+      fetchedAt: verifiedOn,
+      basis: "Count of published briefings since the ministry began",
+    },
+    {
+      source: "Keralam on Track",
+      dataset: "English briefing summaries",
+      url: viaKeralam ? keralamCabinetFeedUrl : cabinetPublicArchiveUrl,
+      period: sourcePeriod,
+      fetchedAt: verifiedOn,
+    },
+  ];
 
   return (
-    <section className={styles.card} aria-labelledby="cm-cabinet-title">
+    <section className={styles.card} aria-labelledby={titleId}>
       <header className={styles.banner}>
-        <div className={styles.bannerCopy}>
-          <p className={styles.kicker}><Landmark size={15} aria-hidden="true" /> V. D. Satheesan Ministry</p>
-          <h2 id="cm-cabinet-title"><a href={detailUrl}>Cabinet Decisions</a></h2>
-          <p className={styles.period}>
-            Published briefings from <time dateTime={feed.ministryStart}>{formatCabinetDate(feed.ministryStart)}</time>
-            {latest && <> to <time dateTime={latest.date}>{formatCabinetDate(latest.date)}</time></>}
-          </p>
-          <div className={styles.actions}>
-            {viaKeralam && latest && <a className={styles.primaryLink} href={detailUrl}>Open latest briefing <ArrowUpRight size={15} aria-hidden="true" /></a>}
-            <a className={viaKeralam ? styles.secondaryLink : styles.primaryLink} href={cabinetRegisterUrl}>View all on Keralam on Track <ArrowUpRight size={15} aria-hidden="true" /></a>
-          </div>
+        <span className={styles.icon}><Landmark size={21} aria-hidden="true" /></span>
+        <div>
+          <h2 id={titleId}>Cabinet Decisions</h2>
+          <p>V. D. Satheesan Ministry · Since <time dateTime={feed.ministryStart}>{formatCabinetDate(feed.ministryStart)}</time></p>
         </div>
-        <div className={styles.countPanel}>
-          <Files size={20} aria-hidden="true" />
-          <strong>{feed.meetings.length}</strong>
-          <span>Published briefings<br />since the ministry began</span>
-        </div>
+        <CmSourceDetails sources={archiveSources} label="Cabinet sources" inverted />
       </header>
 
       <div className={styles.body}>
-        <div className={styles.timeline}>
-          <h3>Briefings by month</h3>
-          <ul aria-label="Published briefings per month">
+        <figure className={styles.figure} aria-label="Cabinet briefing totals and monthly counts">
+          <div className={styles.figureTop}>
+            <div>
+              <strong className={styles.total}>{feed.meetings.length}</strong>
+              <span className={styles.caption}>Published briefings</span>
+            </div>
+            {latest && (
+              <div className={styles.latest}>
+                <time dateTime={latest.date}>{formatCabinetDate(latest.date)}</time>
+                <span>Latest briefing</span>
+              </div>
+            )}
+          </div>
+          <ul className={styles.chart} aria-label="Count of published Cabinet briefings per month">
             {months.map((entry) => (
-              <li key={entry.key}>
-                <time dateTime={entry.key}>{entry.label}</time>
-                <span className={styles.track} aria-hidden="true"><span style={{ width: `${100 * entry.count / maxCount}%` }} /></span>
-                <strong>{entry.count}</strong>
+              <li key={entry.key} className={styles.column} title={`${entry.fullLabel} · ${entry.count} briefings`}>
+                <span className={styles.columnValue} aria-hidden="true">{entry.count}</span>
+                <span className={styles.bar} aria-hidden="true"><span style={{ height: `${entry.count * 100 / maxCount}%` }} /></span>
+                <span className={styles.columnLabel} aria-hidden="true">{entry.label}</span>
+                <span className="sr-only">{entry.fullLabel}, {entry.count} briefings</span>
               </li>
             ))}
           </ul>
-          <p>Counted from the official archive.</p>
-        </div>
+        </figure>
 
-        <div className={styles.highlights}>
-          <h3>Briefing highlights</h3>
-          <p>Selected English summaries of published briefings.</p>
-          <div className={styles.meetings}>
-            {highlights.map((meeting) => (
-              <article className={styles.meeting} key={meeting.id}>
-                <div className={styles.meetingMeta}>
-                  <span><CalendarDays size={14} aria-hidden="true" /> <time dateTime={meeting.date}>{formatCabinetDate(meeting.date)}</time>{meeting === opening && " · First briefing"}</span>
-                  <a href={cabinetMeetingLink(meeting, feed)}>
-                    {viaKeralam ? "Briefing details" : "Official PDF"} <ArrowUpRight size={13} aria-hidden="true" />
-                  </a>
-                </div>
-                <ul>
-                  {meeting.decisions.slice(0, 2).map((decision) => (
-                    <li key={decision.title}><strong>{decision.title}</strong><span>{decision.summary}</span></li>
-                  ))}
-                </ul>
-              </article>
-            ))}
+        {selected && (
+          <div className={styles.statusPanel}>
+            <h3>Recent decision status</h3>
+            <div className={styles.choices} role="group" aria-label="Recent Cabinet decisions">
+              {recent.map((item) => (
+                <button
+                  key={item.key}
+                  className={styles.choice}
+                  type="button"
+                  aria-pressed={item === selected}
+                  aria-controls={detailId}
+                  onClick={() => setSelectedKey(item.key)}
+                >
+                  <span className={styles.status} data-tone={item.status?.tone ?? "announced"}>{item.status?.label ?? "Briefing published"}</span>
+                  <span className={styles.choiceTitle}>{item.decision.title}</span>
+                </button>
+              ))}
+            </div>
+            <div className={styles.detail} id={detailId}>
+              <p aria-live="polite">{selected.decision.summary}</p>
+              <div className={styles.evidence}>
+                <a href={cabinetDecisionLink(selected.meeting, feed, selected.index)} aria-label={`Decision details for ${selected.decision.title} on Keralam on Track`}>
+                  Decision details <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+                <CmSourceDetails
+                  label="Decision sources"
+                  sources={[
+                    {
+                      source: "Chief Minister’s Office, Government of Kerala",
+                      dataset: selected.decision.title,
+                      url: selected.meeting.sourceUrl,
+                      period: formatCabinetDate(selected.meeting.date),
+                    },
+                    ...followUpSources,
+                  ]}
+                />
+              </div>
+              <ol className={styles.milestones} aria-label="Published decision milestones">
+                {timeline.map((event) => (
+                  <li key={event.date} data-scheduled={event.scheduled || undefined}>
+                    <time dateTime={event.date}>{shortDay.format(new Date(`${event.date}T00:00:00Z`))}</time>
+                    <span>{event.label}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-
-      <details className={styles.orders}>
-        <summary>Related Revenue Department orders</summary>
-        <ul>
-          <li><a href={cabinetDocumentPortalUrl}>G.O. (M/S) 198/2026/RD</a> · 25 Jun 2026 · Extended 21 posts in the Nemom railway doubling project’s land acquisition unit for one year. The order cites the 24 June Cabinet meeting.</li>
-          <li><a href="https://document.kerala.gov.in/documents/governmentorders/eofficeorder_85_2806202602%3A01%3A31.pdf">G.O. (M/S) 195/2026/RD</a> · 25 Jun 2026 · Sanctioned ₹5 lakh for each of two bereaved families and full treatment costs for three injured Kudumbashree workers after the Bengaluru wall collapse. The order cites the 24 June Cabinet meeting.</li>
-        </ul>
-      </details>
-
-      <footer className={styles.sources}>
-        <span>{viaKeralam ? "Keralam on Track feed" : "Verified official archive snapshot"} · Checked <time dateTime={feed.archiveCheckedOn}>{formatCabinetDate(feed.archiveCheckedOn)}</time></span>
-        <a href={cabinetArchiveUrl}>CM’s official archive <ArrowUpRight size={12} aria-hidden="true" /></a>
-        <a href={cabinetDocumentPortalUrl}>Revenue Department orders <ArrowUpRight size={12} aria-hidden="true" /></a>
-        <a href="https://eoffice.kerala.gov.in/EofficePortal/godetails">Official GO lookup <ArrowUpRight size={12} aria-hidden="true" /></a>
+      <footer className={styles.footer}>
+        <p>Archive checked <time dateTime={feed.archiveCheckedOn}>{verifiedOn}</time> · Status from published records</p>
+        <a href={cabinetRegisterUrl} title="Sign in to Keralam on Track to access the Chief Secretary’s register">
+          Chief Secretary’s Cabinet register <ArrowUpRight size={14} aria-hidden="true" />
+        </a>
       </footer>
     </section>
   );

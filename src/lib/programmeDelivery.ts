@@ -33,11 +33,15 @@ interface SourceResult<T> {
 
 export async function getProgrammeDelivery() {
   const [totals, departments] = await Promise.all([
-    readTotals().catch(() => null),
+    getProgrammeTotals(),
     readDepartments().catch(() => null),
   ]);
 
   return { totals: totals?.data ?? programmeProgress, totalsCheckedAt: totals?.checkedAt ?? null, departments };
+}
+
+export async function getProgrammeTotals() {
+  return readTotals().catch(() => null);
 }
 
 const readTotals = unstable_cache(async (): Promise<SourceResult<ProgrammeTotals>> => {
