@@ -1,8 +1,11 @@
 "use client";
 
 import { useId, useState, type KeyboardEvent } from "react";
+import Link from "next/link";
+import { CmSourceDetails } from "@/components/CmSourceDetails";
 import KeralaMap from "@/components/KeralaMap";
 import { SectionCard } from "@/components/primitives";
+import { slugify } from "@/data/districts";
 import {
   districtEconomy, districtEconomyChecked, districtEconomyPeriod, districtOutputSource, districtPerCapitaSource,
 } from "@/data/districtEconomy";
@@ -41,12 +44,15 @@ function DistrictEconomyBody() {
 
   return (
     <>
-      <div role="tablist" aria-label="District economic indicators" className="flex flex-wrap gap-1 rounded-xl bg-slate-100 p-1">
-        {indicators.map((entry, index) => (
-          <button key={entry.id} id={`${id}-${entry.id}`} type="button" role="tab" aria-selected={tab === index} aria-controls={`${id}-panel`} tabIndex={tab === index ? 0 : -1} onClick={() => setTab(index)} onKeyDown={(event) => moveTab(event, index)} className={`rounded-lg px-2.5 py-2 text-xs font-bold focus-visible:outline-2 focus-visible:outline-blue-700 ${tab === index ? "bg-white text-[#17366e] shadow-sm" : "text-slate-600 hover:bg-white/80"}`}>
-            {entry.name}
-          </button>
-        ))}
+      <div className="flex items-start justify-between gap-2">
+        <div role="tablist" aria-label="District economic indicators" className="flex flex-wrap gap-1 rounded-xl bg-slate-100 p-1">
+          {indicators.map((entry, index) => (
+            <button key={entry.id} id={`${id}-${entry.id}`} type="button" role="tab" aria-selected={tab === index} aria-controls={`${id}-panel`} tabIndex={tab === index ? 0 : -1} onClick={() => setTab(index)} onKeyDown={(event) => moveTab(event, index)} className={`rounded-lg px-2.5 py-2 text-xs font-bold focus-visible:outline-2 focus-visible:outline-blue-700 ${tab === index ? "bg-white text-[#17366e] shadow-sm" : "text-slate-600 hover:bg-white/80"}`}>
+              {entry.name}
+            </button>
+          ))}
+        </div>
+        <CmSourceDetails label="District economy source" sources={[{ source: indicator.source.publisher, dataset: indicator.source.title, url: indicator.source.url, period: districtEconomyPeriod, fetchedAt: districtEconomyChecked, basis: indicator.description }]} />
       </div>
 
       <div role="tabpanel" id={`${id}-panel`} aria-labelledby={`${id}-${indicator.id}`}>
@@ -81,13 +87,10 @@ function DistrictEconomyBody() {
             </ol>
           </div>
         </div>
-        <p className="mt-3 rounded-lg bg-slate-50 px-2.5 py-2 text-xs font-semibold text-[#172956]" aria-live="polite">
-          {selectedValue === undefined ? "Select a district on the map or in the ranking." : `${selected} · ${indicator.format(selectedValue)}`}
-        </p>
-        <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-          <a className="font-semibold text-[#225487] underline underline-offset-2" href={indicator.source.url} target="_blank" rel="noreferrer" title={`${indicator.source.publisher} · ${indicator.source.title} · ${districtEconomyPeriod} · Checked ${districtEconomyChecked}`}>{indicator.source.title}</a>
-          {" · Checked "}{districtEconomyChecked}
-        </p>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg bg-slate-50 px-2.5 py-2 text-xs font-semibold text-[#172956]">
+          <p aria-live="polite">{selectedValue === undefined ? "Select a district on the map or in the ranking." : `${selected} · ${indicator.format(selectedValue)}`}</p>
+          {selected && <Link className="text-[#225487] underline underline-offset-2" href={`/districts/${slugify(selected)}`}>Open {selected} district profile</Link>}
+        </div>
       </div>
     </>
   );
