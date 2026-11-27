@@ -21,8 +21,8 @@ export default function MajorProjectRegister() {
   const [stage, setStage] = useState("");
   const term = search.trim().toLowerCase();
   const records = majorProjects.filter((record) =>
-    (!sector || record.sector === sector) && (!stage || record.stage === stage) &&
-    (!term || `${record.name} ${record.location} ${record.summary}`.toLowerCase().includes(term)),
+    (!sector || record.sector === sector) && (!stage || (record.stage === stage && !record.historical)) &&
+    (!term || `${record.name} ${record.location} ${record.districts?.join(" ") ?? ""} ${record.summary}`.toLowerCase().includes(term)),
   ).sort((a, b) => stageOrder.indexOf(a.stage) - stageOrder.indexOf(b.stage));
 
   return (
@@ -50,9 +50,9 @@ export default function MajorProjectRegister() {
       </div>
       <div className="grid gap-3 xl:grid-cols-2 2xl:grid-cols-3">
         {records.map((record) => (
-          <TransportSection key={record.id} id={"project-" + record.id} title={record.name} source={{ ...record.source, basis: record.stage }}>
+          <TransportSection key={record.id} id={"project-" + record.id} title={record.name} source={{ ...record.source, basis: record.source.basis ?? record.stage }} sourceIcons>
             <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
-              <span className={`rounded-full px-2.5 py-1 ${stages[record.stage]}`}>{record.stage}</span>
+              <span className={`rounded-full px-2.5 py-1 ${stages[record.stage]}`}>{record.historical ? "Earlier progress report" : record.stage}</span>
               <span>{record.location}</span>
             </div>
             <p className="text-sm leading-relaxed text-slate-700">{record.summary}</p>

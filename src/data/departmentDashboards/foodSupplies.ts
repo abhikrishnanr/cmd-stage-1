@@ -22,7 +22,7 @@ const dailySource = {
   basis: "Select 26 November 2026 in the source report. Counts are cards marked availed on that date, across the four schemes listed.",
 } satisfies DepartmentSource;
 
-const ekycSource = {
+export const ekycSource = {
   source: civilSupplies,
   dataset: "AePDS · District eKYC details",
   url: "https://epos.kerala.gov.in/eKYC_Dist.jsp",
@@ -61,7 +61,7 @@ const dailyDistricts = [
   { label: "Wayanad", aay: 1606, phh: 2866, npns: 2223, nps: 2159, value: 8854 },
 ].sort((a, b) => b.value - a.value);
 
-const ekycDistricts = [
+export const ekycDistricts = [
   { label: "Alappuzha", total: 1119688, updated: 1087733, coverage: 97.14 },
   { label: "Ernakulam", total: 1112065, updated: 1073607, coverage: 96.54 },
   { label: "Idukki", total: 537978, updated: 527956, coverage: 98.13 },
@@ -88,7 +88,7 @@ const grainHistory = [
 
 const number = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 const remainingCards = month.totalCards - month.availedCards;
-const statewideEkyc = { total: 15281335, updated: 14826072, coverage: 97.02 };
+export const statewideEkyc = { total: 15281335, updated: 14826072, coverage: 97.02 };
 const pendingEkyc = statewideEkyc.total - statewideEkyc.updated;
 
 export const foodSuppliesDashboard = {

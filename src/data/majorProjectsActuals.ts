@@ -1,9 +1,11 @@
 import type { TransportSource } from "./transportActuals";
+import { districtProjectsNorth } from "./districtProjectsNorth";
+import { districtProjectsSouth } from "./districtProjectsSouth";
 
-export const majorProjectSectors = ["Roads", "Rail and metro", "Ports and waterways", "Aviation", "Water and sanitation"] as const;
+export const majorProjectSectors = ["Roads", "Rail and metro", "Ports and waterways", "Aviation", "Water and sanitation", "Energy", "Sports infrastructure", "Public buildings", "Housing and rehabilitation"] as const;
 export type MajorProjectStage = "Works in progress" | "Contract awarded" | "Sanctioned" | "Operational" | "Completed";
 
-type MajorProject = {
+export type MajorProject = {
   id: string;
   name: string;
   sector: (typeof majorProjectSectors)[number];
@@ -12,6 +14,8 @@ type MajorProject = {
   stage: MajorProjectStage;
   summary: string;
   measure?: { label: string; value: string };
+  progress?: { label: string; percent: number }[];
+  historical?: boolean;
   source: TransportSource;
 };
 
@@ -33,8 +37,9 @@ const sources = {
     url: "https://vizhinjamport.in/", period: "August 2026",
   },
   vizhinjamExpansion: {
-    source: "Adani Ports and Special Economic Zone", dataset: "FY 2025–26 integrated annual report · Vizhinjam operations",
-    url: "https://www.adaniports.com/digital-reports/ports/2026/operational-performance-ports.html", period: "FY 2025–26",
+    source: "Adani Ports and Special Economic Zone", dataset: "Concessionaire update · Vizhinjam expansion",
+    url: "https://www.adaniports.com/newsroom/media-releases/apsez-and-msc-group-deepen-long-term-partnership-mscs-terminal-arm-til-to-invest-in-4-share", period: "30 Jun 2026",
+    sourceUpdatedAt: "30 Jun 2026 (operator release)", fetchedAt: "27 Nov 2026",
   },
   highwayDrainage: {
     source: "National Highways Authority of India · PIB", dataset: "NH-66 drainage works sanction",
@@ -70,12 +75,11 @@ const sources = {
   },
 } satisfies Record<string, TransportSource>;
 
-export const majorProjectSources = Object.values(sources);
-
-export const majorProjects: MajorProject[] = [
+const previousRecords: MajorProject[] = [
   {
     id: "koyilandy-water", name: "Koyilandy municipal water supply scheme", sector: "Water and sanitation", location: "Kozhikode", districts: ["Kozhikode"], stage: "Works in progress",
-    summary: "KWA reported that 90 km of the distribution network was activated and water supply had started on that part of the network.", measure: { label: "Pipeline laid out of 360 km", value: "330.8 km" }, source: sources.kozhikodeWater,
+    summary: "KWA reported that 90 km of the distribution network was activated and water supply had started on that part of the network.", measure: { label: "of 360 km of planned pipeline laid", value: "330.8 km" }, source: sources.kozhikodeWater,
+    progress: [{ label: "Pipeline laid", percent: 330.8 / 360 * 100 }, { label: "Network activated", percent: 90 / 360 * 100 }],
   },
   {
     id: "solid-waste", name: "Kerala Solid Waste Management Project", sector: "Water and sanitation", location: "Kerala · urban local bodies", stage: "Works in progress",
@@ -107,7 +111,7 @@ export const majorProjects: MajorProject[] = [
   },
   {
     id: "vizhinjam-expansion", name: "Vizhinjam capacity expansion", sector: "Ports and waterways", location: "Thiruvananthapuram", districts: ["Thiruvananthapuram"], stage: "Works in progress",
-    summary: "The concessionaire reported that construction for the expansion had commenced during FY 2025–26.", source: sources.vizhinjamExpansion,
+    summary: "The concessionaire confirmed that expansion was under way and reported 1.6 million TEU of existing annual capacity.", source: sources.vizhinjamExpansion,
   },
   {
     id: "cochin-cargo", name: "Cochin airport export cargo warehouse expansion", sector: "Aviation", location: "Ernakulam", districts: ["Ernakulam"], stage: "Operational",
@@ -127,13 +131,27 @@ export const majorProjects: MajorProject[] = [
   },
   {
     id: "thrikunnapuzha-lock", name: "Thrikunnapuzha navigation lock and bridge", sector: "Ports and waterways", location: "Alappuzha", districts: ["Alappuzha"], stage: "Works in progress",
-    summary: "The ministry reported reconstruction under way on National Waterway 3.", measure: { label: "Reported physical progress", value: "52%" }, source: sources.waterwayWorks,
+    summary: "In its February reply, the ministry reported reconstruction under way on National Waterway 3.", measure: { label: "Reported physical progress", value: "52%" }, source: sources.waterwayWorks, historical: true,
   },
   {
     id: "kovilthottam-bridge", name: "Kovilthottam bridge, Chavara", sector: "Ports and waterways", location: "Kollam", districts: ["Kollam"], stage: "Works in progress",
-    summary: "The ministry reported construction progress on the single-lane bridge over National Waterway 3.", measure: { label: "Reported physical progress", value: "80%" }, source: sources.waterwayWorks,
+    summary: "In its February reply, the ministry reported construction progress on the single-lane bridge over National Waterway 3.", measure: { label: "Reported physical progress", value: "80%" }, source: sources.waterwayWorks, historical: true,
   },
 ];
+
+const districtUpdates = [...districtProjectsNorth, ...districtProjectsSouth];
+const updatedIds = new Set(districtUpdates.map(({ id }) => id));
+
+export const majorProjects = [...districtUpdates, ...previousRecords.filter(({ id }) => !updatedIds.has(id))];
+export const majorProjectSources = Array.from(new Map(majorProjects.map(({ source }) => [source.url, source])).values());
+
+export function districtProjectRecords(name: string) {
+  return majorProjects.filter(({ districts }) => districts?.includes(name));
+}
+
+export function isOngoingDistrictProject(project: MajorProject) {
+  return project.stage === "Works in progress" && !project.historical;
+}
 
 export const majorProjectPortfolio = {
   highways: {

@@ -7,7 +7,7 @@ export const districtDirectorySource = {
   source: "Chief Electoral Officer, Kerala",
   dataset: "District Election Officers and District Collectors",
   url: "https://www.ceo.kerala.gov.in/telephone-numbers",
-  basis: "Current officer listings checked against district portals",
+  basis: "Election directory used to cross-check the collectors named on the district portals.",
   sourceUpdatedAt: null,
   fetchedAt: checked,
 } satisfies DataProvenance;
@@ -34,6 +34,7 @@ interface DistrictAdministration {
   name: string;
   collector: string;
   profile: string;
+  collectorSource: DataProvenance;
   contact: string;
   office: string;
   phone: string;
@@ -45,10 +46,11 @@ interface DistrictAdministration {
   corporations: number;
 }
 
-export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
+const directory: ReadonlyArray<Omit<DistrictAdministration, "collectorSource"> & { profileUpdatedOn: string }> = [
   {
     name: "Thiruvananthapuram", collector: "Anju K. S. IAS",
     profile: "https://trivandrum.nic.in/en/district-collector-district-magistrate/",
+    profileUpdatedOn: "3 Oct 2026",
     contact: "https://trivandrum.nic.in/en/about-district/whos-who/",
     office: "District Collectorate, Civil Station, Kudappanakkunnu, Thiruvananthapuram 695043",
     phone: "0471-2731177", email: "dctvm.ker@nic.in",
@@ -57,6 +59,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Kollam", collector: "Anie Jula Thomas IAS",
     profile: "https://kollam.nic.in/en/district-collector/",
+    profileUpdatedOn: "7 Oct 2026",
     contact: "https://kollam.nic.in/en/whoswho/aniejulathomas-ias/",
     office: "District Collectorate, Kollam 691013",
     phone: "0474-2794900", email: "dcklm.ker@nic.in",
@@ -65,6 +68,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Pathanamthitta", collector: "Nizamudeen A. IAS",
     profile: "https://pathanamthitta.nic.in/en/district-collector/",
+    profileUpdatedOn: "29 May 2026",
     contact: "https://pathanamthitta.nic.in/en/contact-us/",
     office: "Second floor, District Collectorate, Pathanamthitta",
     phone: "0468-2222505", email: "dcpta.ker@nic.in",
@@ -73,6 +77,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Alappuzha", collector: "Shaji V. Nair IAS",
     profile: "https://alappuzha.nic.in/en/district-collector/",
+    profileUpdatedOn: "28 Sep 2026",
     contact: "https://alappuzha.nic.in/en/district-collector/",
     office: "First floor, Collectorate, Alappuzha 688001",
     phone: "0477-2251720", email: "dc-alz@gov.in",
@@ -81,6 +86,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Kottayam", collector: "Chetan Kumar Meena IAS",
     profile: "https://kottayam.nic.in/en/contact-details/",
+    profileUpdatedOn: "16 Dec 2025",
     contact: "https://kottayam.nic.in/en/contact-details/",
     office: "District Collectorate, Kottayam 686002",
     phone: "0481-2562001", email: "dc-ktm@gov.in",
@@ -89,6 +95,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Idukki", collector: "Dr. Dinesan Cheruvat IAS",
     profile: "https://idukki.nic.in/en/about-district/collectorsprofile/",
+    profileUpdatedOn: "14 Aug 2025",
     contact: "https://idukki.nic.in/en/about-district/collectorsprofile/",
     office: "Collectorate, Kuyilimala, Painavu P.O., Idukki 685603",
     phone: "04862-233103", email: "dcidk.ker@nic.in",
@@ -97,7 +104,8 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Ernakulam", collector: "Priyanka G. IAS",
     profile: "https://ernakulam.nic.in/en/divisions/collectorate/",
-    contact: "https://ernakulam.nic.in/en/contact/",
+    profileUpdatedOn: "17 Nov 2026",
+    contact: "https://ernakulam.nic.in/en/divisions/collectorate/",
     office: "Collectorate, Kakkanad, Ernakulam 682030",
     phone: "0484-2423001", email: "dcekm.ker@nic.in",
     population: 3282388, gramaPanchayats: 82, blockPanchayats: 14, municipalities: 13, corporations: 1,
@@ -105,6 +113,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Thrissur", collector: "Sikha Surendran IAS",
     profile: "https://thrissur.nic.in/en/whoswho/shri-sikha-surendran-ias-2/",
+    profileUpdatedOn: "3 Mar 2026",
     contact: "https://thrissur.nic.in/en/divisions/revenue/",
     office: "Civil Station, Ayyanthole, Thrissur 680003",
     phone: "0487-2361020", email: "tsrcoll.ker@nic.in",
@@ -113,6 +122,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Palakkad", collector: "Sudhir K. IAS",
     profile: "https://palakkad.nic.in/en/district-collector-profiles/",
+    profileUpdatedOn: "26 May 2026",
     contact: "https://palakkad.nic.in/en/whoswho/district-collector-district-magistrate/",
     office: "Civil Station, Palakkad 678001",
     phone: "0491-2505309", email: "dcpkd.ker@nic.in",
@@ -120,7 +130,8 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   },
   {
     name: "Malappuram", collector: "Dr. Vinay Goyal IAS",
-    profile: "https://malappuram.nic.in/en/whoswho/v-r-vinod-ias/",
+    profile: "https://malappuram.nic.in/en/district-collector/",
+    profileUpdatedOn: "15 Jun 2026",
     contact: "https://malappuram.nic.in/en/about-district/whos-who/",
     office: "Collectorate, Civil Station, Malappuram",
     phone: "0483-2734355", email: "dcmlp.ker@nic.in",
@@ -129,6 +140,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Kozhikode", collector: "M. S. Madhavikutty IAS",
     profile: "https://kozhikode.nic.in/en/district-collector/",
+    profileUpdatedOn: "13 Oct 2026",
     contact: "https://kozhikode.nic.in/en/about-district/whos-who/",
     office: "Kozhikode Collectorate, Civil Station P.O., Kozhikode 673020",
     phone: "0495-2371400", email: "dckzk.ker@nic.in",
@@ -137,6 +149,7 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Wayanad", collector: "Chelsasini V. IAS",
     profile: "https://wayanad.gov.in/en/district-magistrate-district-collector-wayanad/",
+    profileUpdatedOn: "16 Sep 2026",
     contact: "https://wayanad.gov.in/en/tribal-cell-helpline/",
     office: "District Collectorate, Civil Station, North Kalpetta P.O., Wayanad",
     phone: "04936-202230", email: "dcwayanad@kerala.gov.in",
@@ -145,20 +158,34 @@ export const districtAdministration: ReadonlyArray<DistrictAdministration> = [
   {
     name: "Kannur", collector: "P. Vishnu Raj IAS",
     profile: "https://kannur.nic.in/en/list-of-collectors/",
-    contact: "https://www.ceo.kerala.gov.in/telephone-numbers",
-    office: "District Collectorate, Kannur",
+    profileUpdatedOn: "30 Sep 2026",
+    contact: "https://kannur.nic.in/en/whos-who/",
+    office: "District Collectorate, Civil Station, Collectorate Road, Kannur 670002",
     phone: "0497-2700243", email: "dcknr.ker@nic.in",
     population: 2523003, gramaPanchayats: 71, blockPanchayats: 11, municipalities: 9, corporations: 1,
   },
   {
     name: "Kasaragod", collector: "Sreedhanya Suresh IAS",
-    profile: "https://kasargod.nic.in/en/district-collectors-of-kasargod/",
+    profile: "https://kasargod.nic.in/district-collector/",
+    profileUpdatedOn: "23 Sep 2026",
     contact: "https://kasargod.nic.in/en/contact-collector/",
     office: "Civil Station, Vidyanagar, Kasaragod 671123",
     phone: "04994-256400", email: "dckas.kerala@gov.in",
     population: 1307375, gramaPanchayats: 38, blockPanchayats: 6, municipalities: 3, corporations: 0,
   },
 ];
+
+export const districtAdministration: ReadonlyArray<DistrictAdministration> = directory.map(({ profileUpdatedOn, ...district }) => ({
+  ...district,
+  collectorSource: {
+    source: `${district.name} District Administration`,
+    dataset: "District Collector listing",
+    url: district.profile,
+    sourceUpdatedAt: `${profileUpdatedOn} (page update)`,
+    fetchedAt: checked,
+    basis: "Collector named by the district portal and cross-checked against the Chief Electoral Officer’s district directory.",
+  },
+}));
 
 export function districtAdministrationBySlug(slug: string) {
   return districtAdministration.find((district) => slugify(district.name) === slug);
