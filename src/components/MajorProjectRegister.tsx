@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { TransportSection, TransportValues } from "@/components/TransportReport";
-import { majorProjects, majorProjectSectors, type MajorProjectStage } from "@/data/majorProjectsActuals";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { CmSourceDetails } from "@/components/CmSourceDetails";
+import { MajorProjectAttention, ProjectProgress, ProjectScheduleDates } from "@/components/MajorProjectAttention";
+import { slugify } from "@/data/districts";
+import { isOngoingDistrictProject, majorProjects, majorProjectSectors, type MajorProject, type MajorProjectStage } from "@/data/majorProjectsActuals";
+import { majorProjectSchedules } from "@/data/majorProjectSchedule";
+import styles from "./MajorProjectRegister.module.css";
 
 const stages: Record<MajorProjectStage, string> = {
   "Works in progress": "bg-blue-50 text-blue-900",
@@ -14,52 +20,122 @@ const stages: Record<MajorProjectStage, string> = {
 
 const field = "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus-visible:outline-2 focus-visible:outline-blue-600";
 const stageOrder = Object.keys(stages);
+const districts = [...new Set(majorProjects.flatMap(({ districts }) => districts ?? []))].sort((a, b) => a.localeCompare(b, "en-IN"));
+const statewide = "Statewide and multi-district";
+const blankFilters = { search: "", district: "", sector: "", stage: "" };
 
-export default function MajorProjectRegister() {
-  const [search, setSearch] = useState("");
-  const [sector, setSector] = useState("");
-  const [stage, setStage] = useState("");
-  const term = search.trim().toLowerCase();
-  const records = majorProjects.filter((record) =>
-    (!sector || record.sector === sector) && (!stage || (record.stage === stage && !record.historical)) &&
-    (!term || `${record.name} ${record.location} ${record.districts?.join(" ") ?? ""} ${record.summary}`.toLowerCase().includes(term)),
-  ).sort((a, b) => stageOrder.indexOf(a.stage) - stageOrder.indexOf(b.stage));
+function ProjectRecord({ project }: { project: MajorProject }) {
+  const schedule = majorProjectSchedules[project.id];
 
   return (
-    <section id="project-records" className="scroll-mt-20 space-y-3" aria-labelledby="projects-register-heading">
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
-        <h2 id="projects-register-heading" className="text-xl font-extrabold text-slate-900">Project records</h2>
-        <div className="mt-3 grid gap-3 sm:grid-cols-[1.4fr_1fr_1fr]">
-          <label className="grid gap-1.5 text-xs font-bold text-slate-700">Search by project or district
-            <input type="search" className={field} value={search} onChange={(event) => setSearch(event.target.value)} />
-          </label>
-          <label className="grid gap-1.5 text-xs font-bold text-slate-700">Sector
-            <select className={field} value={sector} onChange={(event) => setSector(event.target.value)}>
-              <option value="">All sectors</option>
-              {majorProjectSectors.map((option) => <option key={option}>{option}</option>)}
-            </select>
-          </label>
-          <label className="grid gap-1.5 text-xs font-bold text-slate-700">Reported stage
-            <select className={field} value={stage} onChange={(event) => setStage(event.target.value)}>
-              <option value="">All stages</option>
-              {Object.keys(stages).map((option) => <option key={option}>{option}</option>)}
-            </select>
-          </label>
+    <article id={`project-${project.id}`} className={styles.item}>
+      <header>
+        <div>
+          <span className={`inline-block rounded-full px-2 py-0.5 text-[11px] font-extrabold ${project.historical ? "bg-slate-100 text-slate-700" : stages[project.stage]}`}>{project.historical ? "Earlier progress report" : project.stage}</span>
+          <h4>{project.name}</h4>
         </div>
-        <p role="status" className="mt-3 text-xs font-medium text-slate-600">Showing {records.length} of {majorProjects.length} sourced records</p>
-      </div>
-      <div className="grid gap-3 xl:grid-cols-2 2xl:grid-cols-3">
-        {records.map((record) => (
-          <TransportSection key={record.id} id={"project-" + record.id} title={record.name} source={{ ...record.source, basis: record.source.basis ?? record.stage }} sourceIcons>
-            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
-              <span className={`rounded-full px-2.5 py-1 ${stages[record.stage]}`}>{record.historical ? "Earlier progress report" : record.stage}</span>
-              <span>{record.location}</span>
+        <CmSourceDetails label={`${project.name} source`} sources={[project.source]} />
+      </header>
+      <p className={styles.meta}>{project.location} · {project.sector} · {project.source.period}</p>
+      <p className={styles.copy}>{project.summary}</p>
+      <ProjectProgress project={project} />
+      {project.measure && <p className={styles.measure}><strong>{project.measure.value}</strong> · {project.measure.label}</p>}
+      {schedule && (
+        <div className={styles.schedule}>
+          <header>
+            <strong>{schedule.delayMonths} months added to schedule</strong>
+            <CmSourceDetails label={`${project.name} schedule evidence`} sources={[schedule.source]} />
+          </header>
+          <ProjectScheduleDates schedule={schedule} />
+        </div>
+      )}
+    </article>
+  );
+}
+
+export default function MajorProjectRegister() {
+  const [filters, setFilters] = useState(blankFilters);
+  const term = filters.search.trim().toLocaleLowerCase("en-IN");
+  const records = majorProjects.filter((record) =>
+    (!filters.district || (filters.district === statewide ? record.districts?.length !== 1 : record.districts?.includes(filters.district))) &&
+    (!filters.sector || record.sector === filters.sector) &&
+    (!filters.stage || (record.stage === filters.stage && !record.historical)) &&
+    (!term || `${record.name} ${record.location} ${record.districts?.join(" ") ?? ""} ${record.summary}`.toLocaleLowerCase("en-IN").includes(term)),
+  );
+
+  const ongoing = records.filter(isOngoingDistrictProject);
+  const groups = [...districts, statewide].map((name) => ({
+    name,
+    projects: ongoing.filter((project) => (project.districts?.length === 1 ? project.districts[0] : statewide) === name),
+  })).filter(({ projects }) => projects.length > 0);
+  const other = records.filter((project) => !isOngoingDistrictProject(project)).sort((a, b) => Number(!!a.historical) - Number(!!b.historical) || stageOrder.indexOf(a.stage) - stageOrder.indexOf(b.stage));
+  const hasFilters = Object.values(filters).some(Boolean);
+
+  function setFilter(key: keyof typeof blankFilters, value: string) {
+    setFilters((current) => ({ ...current, [key]: value }));
+  }
+
+  function reveal(id: string) {
+    if (records.some((record) => record.id === id)) return;
+    setFilters(blankFilters);
+    window.requestAnimationFrame(() => document.getElementById(`project-${id}`)?.scrollIntoView({ block: "start" }));
+  }
+
+  return (
+    <>
+      <MajorProjectAttention reveal={reveal} />
+      <section id="project-records" className="scroll-mt-20 space-y-3" aria-labelledby="projects-register-heading">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+          <header className={styles.heading}>
+            <div>
+              <h2 id="projects-register-heading">Projects by district</h2>
+              <p>Ongoing projects first. Sanctions, awards, completed works and earlier reports appear below.</p>
             </div>
-            <p className="text-sm leading-relaxed text-slate-700">{record.summary}</p>
-            {record.measure && <TransportValues items={[record.measure]} />}
-          </TransportSection>
+            {hasFilters && <button type="button" className={styles.link} onClick={() => setFilters(blankFilters)}>Clear filters</button>}
+          </header>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-[1.35fr_1fr_1fr_1fr]">
+            <label className="grid gap-1.5 text-xs font-bold text-slate-700">Search by project or district
+              <input type="search" value={filters.search} className={field} onChange={(event) => setFilter("search", event.target.value)} />
+            </label>
+            <label className="grid gap-1.5 text-xs font-bold text-slate-700">District
+              <select className={field} value={filters.district} onChange={(event) => setFilter("district", event.target.value)}>
+                <option value="">All districts</option>
+                {districts.map((name) => <option key={name}>{name}</option>)}
+                <option>{statewide}</option>
+              </select>
+            </label>
+            <label className="grid gap-1.5 text-xs font-bold text-slate-700">Sector
+              <select className={field} value={filters.sector} onChange={(event) => setFilter("sector", event.target.value)}>
+                <option value="">All sectors</option>
+                {majorProjectSectors.map((name) => <option key={name}>{name}</option>)}
+              </select>
+            </label>
+            <label className="grid gap-1.5 text-xs font-bold text-slate-700">Reported stage
+              <select className={field} value={filters.stage} onChange={(event) => setFilter("stage", event.target.value)}>
+                <option value="">All stages</option>
+                {stageOrder.map((name) => <option key={name}>{name}</option>)}
+              </select>
+            </label>
+          </div>
+          <p role="status" className="mt-3 text-xs font-medium text-slate-600">Showing {records.length} of {majorProjects.length} sourced records · {ongoing.length} ongoing</p>
+        </div>
+        {groups.map(({ name, projects }) => (
+          <section key={name} className={styles.districtGroup} aria-label={`${name} ongoing projects`}>
+            <header>
+              <div className="flex flex-wrap items-center gap-2"><h3>{name}</h3><span className="rounded-full bg-white px-2 py-0.5 text-xs font-bold text-slate-700">{projects.length} ongoing</span></div>
+              {name !== statewide && <Link href={`/districts/${slugify(name)}#district-projects`} className={styles.link} aria-label={`Open ${name} district projects`}>District projects <ArrowUpRight size={13} aria-hidden="true" /></Link>}
+            </header>
+            <div className={styles.cards}>{projects.map((project) => <ProjectRecord key={project.id} project={project} />)}</div>
+          </section>
         ))}
-      </div>
-    </section>
+        {other.length > 0 && (
+          <section className={styles.group} aria-labelledby="other-project-records-heading">
+            <header className={styles.heading}><h3 id="other-project-records-heading">Other project records</h3></header>
+            <div className={styles.cards}>{other.map((project) => <ProjectRecord key={project.id} project={project} />)}</div>
+          </section>
+        )}
+        {records.length === 0 && <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">No projects match these filters.</p>}
+      </section>
+    </>
   );
 }

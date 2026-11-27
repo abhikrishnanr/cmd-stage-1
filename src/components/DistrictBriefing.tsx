@@ -6,14 +6,14 @@ import styles from "./DistrictBriefing.module.css";
 
 const numbers = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 
-export function DistrictMiniBars({ rows, unit, maximum, label }: { rows: DistrictBar[]; unit?: DistrictFinding["unit"]; maximum?: number; label: string }) {
+export function DistrictMiniBars({ rows, unit, maximum, label }: { rows: readonly DistrictBar[]; unit?: DistrictFinding["unit"] | "km" | "homes"; maximum?: number; label: string }) {
   const scale = maximum ?? Math.max(1, ...rows.map((row) => row.value));
   return (
     <ul aria-label={label} className={styles.chart}>
       {rows.map(({ label, value, href, reference }) => (
         <li key={label} className={styles.barRow}>
           {href ? <Link href={href} className={styles.rowLink}>{label}</Link> : <span>{label}</span>}
-          <strong>{unit === "₹" && "₹"}{numbers.format(value)}{unit === "%" && "%"}</strong>
+          <strong>{unit === "₹" && "₹"}{numbers.format(value)}{unit === "%" ? "%" : unit && unit !== "₹" ? ` ${unit}` : ""}</strong>
           <span className={styles.track} aria-hidden="true">
             <span className={reference ? styles.reference : undefined} style={{ width: `${value / scale * 100}%` }} />
           </span>
