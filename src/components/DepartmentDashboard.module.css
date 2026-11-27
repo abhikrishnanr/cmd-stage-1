@@ -1,0 +1,60 @@
+.page { display: grid; min-width: 0; gap: 1rem; padding: clamp(.8rem, 2vw, 1.25rem); }
+.hero { position: relative; isolation: isolate; border-radius: 1.3rem; padding: clamp(1rem, 3vw, 1.8rem); color: white; background: radial-gradient(ellipse at 96% 0%, var(--department-accent), transparent 65%), linear-gradient(115deg, #102347, color-mix(in srgb, #13294c 55%, var(--department-accent))); box-shadow: 0 7px 24px rgb(18 47 77 / .14); }
+.hero::before { position: absolute; z-index: -1; inset: 0 0 0 42%; border-radius: inherit; content: ""; background: repeating-radial-gradient(ellipse at 100% 110%, transparent 0 22px, #ffffff1a 24px, transparent 26px 38px); mask-image: linear-gradient(to right, transparent, #000); }
+.hero:has(details[open]) { z-index: 10; }
+.heading { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: .75rem; }
+.heading h1 { color: white; font-size: clamp(1.65rem, 5vw, 3rem); font-weight: 850; line-height: 1.07; }
+.heading > div > p { margin-top: .42rem; max-width: 39rem; color: #ebf3fb; font-size: .84rem; line-height: 1.43; }
+.badge { display: grid; width: 2.7rem; height: 2.7rem; place-items: center; border: 1px solid #ffffff57; border-radius: .8rem; background: #ffffff15; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 168px), 1fr)); gap: .52rem; margin-top: .9rem; }
+.metric { position: relative; min-width: 0; padding: .58rem .68rem .66rem; border: 1px solid #ffffff45; border-radius: .75rem; background: #ffffff15; }
+.metric > header, .signal > header, .card > header { display: flex; align-items: flex-start; justify-content: space-between; gap: .4rem; }
+.metric h2 { padding-top: .22rem; font-size: .75rem; font-weight: 750; }
+.metric > strong { color: white; font-size: clamp(1.12rem, 2.5vw, 1.57rem); font-weight: 820; letter-spacing: -.018em; font-variant-numeric: tabular-nums; }
+.metric > p { margin-top: .08rem; color: #e7f0f9; font-size: .68rem; }
+.metric > header > details, .signal > header > details { position: static; }
+.metric > header > details > div, .signal > header > details > div { top: 3rem; right: auto; left: .65rem; }
+.metric:nth-child(even) > header > details > div, .metric:last-child > header > details > div, .signal:last-child > header > details > div { right: .65rem; left: auto; }
+.metric:has(details[open]), .signal:has(details[open]) { z-index: 10; }
+.links { display: flex; flex-wrap: wrap; gap: .35rem .6rem; padding: .55rem .75rem; border: 1px solid #dfe7ef; border-radius: .8rem; background: white; }
+.links a, .signal > a { display: inline-flex; align-items: center; gap: .25rem; padding: .18rem; color: #1c4d73; font-size: .72rem; font-weight: 780; }
+.links a:hover, .signal > a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.attention, .card { scroll-margin-top: 78px; }
+.attention > h2 { display: flex; align-items: center; gap: .45rem; margin-bottom: .5rem; color: #19334f; font-size: 1.1rem; font-weight: 820; }
+.attention > h2 svg { color: #9b5417; }
+.attentionGrid { display: grid; gap: .65rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+.signal { position: relative; display: flex; flex-direction: column; gap: .32rem; min-width: 0; padding: .74rem; border: 1px solid #e8d8c0; border-top: 3px solid #a66528; border-radius: .88rem; background: linear-gradient(135deg, #fff4e4, white 88%); }
+.signal h3, .card h2 { color: #203b54; font-size: .89rem; font-weight: 820; }
+.signal > strong { color: #814516; font-size: 1.25rem; font-weight: 850; font-variant-numeric: tabular-nums; }
+.signal > p, .card > header > div > p, .note { color: #445970; font-size: .75rem; line-height: 1.45; }
+.signal > a { align-self: flex-start; margin-top: auto; padding-left: 0; }
+.charts { display: grid; gap: .9rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr)); align-items: start; }
+.card { display: grid; min-width: 0; gap: .68rem; padding: .9rem; border: 1px solid #dce6ea; border-radius: .9rem; background: white; }
+.card h2 { font-size: 1rem; }
+.card > header > div > p { margin-top: .22rem; }
+.details { padding: .47rem .6rem; border: 1px solid #dce6ed; border-radius: .65rem; }
+.details summary { cursor: pointer; color: #215074; font-size: .75rem; font-weight: 770; }
+.details[open] summary { margin-bottom: .45rem; }
+.trendScroll { overflow-x: auto; }
+.trend { display: grid; min-width: max-content; gap: .4rem; align-items: start; text-align: center; }
+.trend li { display: grid; gap: .27rem; min-width: 0; padding: .2rem .27rem; align-content: start; }
+.trend li > span { color: #4a5f75; font-size: .68rem; }
+.trend li > strong { color: #243a51; font-size: .73rem; font-variant-numeric: tabular-nums; }
+.column { display: flex; align-items: end; justify-content: center; height: 7.5rem; border-bottom: 1px solid #cdd9e4; background: linear-gradient(to top, #f5f8fa, transparent 50%); }
+.column span { width: min(55%, 38px); border-radius: .35rem .35rem 0 0; }
+.composition { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); align-items: center; gap: .85rem; }
+.donut { display: grid; width: min(100%, 10.5rem); place-items: center; justify-self: center; aspect-ratio: 1; border-radius: 50%; }
+.donut > span { display: grid; width: 73%; place-content: center; aspect-ratio: 1; border-radius: 50%; background: white; color: #24405a; text-align: center; }
+.donut strong { font-weight: 830; font-size: .94rem; }
+.donut small { color: #53677b; font-size: .63rem; }
+.legend { display: grid; gap: .35rem; }
+.legend li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .4rem; padding: .43rem .55rem; border-radius: .5rem; background: #f2f6f8; color: #31465d; font-size: .73rem; }
+.legend i { width: .58rem; height: .58rem; border-radius: .16rem; }
+.legend strong { font-variant-numeric: tabular-nums; }
+
+@media (max-width: 560px) {
+  .signal > header > details > div { right: .65rem; left: auto; }
+  .heading { gap: .47rem; }
+  .badge { width: 2rem; height: 2rem; }
+  .badge svg { width: 18px; height: 18px; }
+}
