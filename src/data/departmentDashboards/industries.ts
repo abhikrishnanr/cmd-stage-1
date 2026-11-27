@@ -27,11 +27,11 @@ const programme = {
   fetchedAt: checkedAt,
 };
 
-const programmeTotalsSource = {
+const currentProgrammeSource = {
   ...programme,
-  dataset: "Year of Enterprises · All view",
-  period: "FY 2022–23 through in-progress FY 2026–27",
-  basis: "Cumulative starts, investment and employment reported by the programme. The current financial year is partial.",
+  dataset: "Year of Enterprises · 2026–27 achievements and district and category reports",
+  period: "FY 2026–27 to date",
+  basis: "Select 2026–27 on the official dashboard. Figures cover investment, starts and employment reported by Year of Enterprises for the current financial year to date.",
 } satisfies DepartmentSource;
 
 const programmeDistrictsSource = {
@@ -71,7 +71,30 @@ const enterpriseHistory = [
   { label: "2024–25", value: 109692, investment: 7217.8, employment: 231468 },
 ] as const;
 
-const districts = [
+const currentDistricts = [
+  { label: "Ernakulam", starts: 4911, value: 926.18, employment: 12492 },
+  { label: "Thiruvananthapuram", starts: 6723, value: 505.94, employment: 15713 },
+  { label: "Palakkad", starts: 4377, value: 478.19, employment: 10178 },
+  { label: "Malappuram", starts: 4966, value: 374.22, employment: 12403 },
+  { label: "Thrissur", starts: 5227, value: 319.78, employment: 10703 },
+  { label: "Alappuzha", starts: 5543, value: 308.63, employment: 10354 },
+  { label: "Kottayam", starts: 3405, value: 280.45, employment: 6872 },
+  { label: "Kollam", starts: 5071, value: 271.03, employment: 10023 },
+  { label: "Kozhikode", starts: 2107, value: 172.35, employment: 5380 },
+  { label: "Kannur", starts: 1642, value: 152.31, employment: 3772 },
+  { label: "Pathanamthitta", starts: 2703, value: 117.18, employment: 5636 },
+  { label: "Wayanad", starts: 812, value: 61.91, employment: 1889 },
+  { label: "Kasaragod", starts: 733, value: 58.94, employment: 1602 },
+  { label: "Idukki", starts: 754, value: 57.08, employment: 1622 },
+] as const;
+
+const currentCategories = [
+  { label: "Services", starts: 24663, value: 2011.15, employment: 57559, color: "#087b71" },
+  { label: "Trade", starts: 20074, value: 1398.59, employment: 38947, color: "#3364a0" },
+  { label: "Manufacturing", starts: 4237, value: 674.45, employment: 12133, color: "#a85e1a" },
+] as const;
+
+const previousDistricts = [
   { label: "Ernakulam", starts: 6635, value: 1480.04, employment: 15782 },
   { label: "Malappuram", starts: 7398, value: 636.99, employment: 17430 },
   { label: "Thrissur", starts: 8194, value: 557.26, employment: 17387 },
@@ -88,22 +111,30 @@ const districts = [
   { label: "Idukki", starts: 1015, value: 84.30, employment: 2148 },
 ] as const;
 
-const fiscalYearProgramme = { starts: 71741, investment: 6065.16, employment: 155198 };
-const ernakulamShare = (100 * districts[0].value / fiscalYearProgramme.investment).toFixed(1);
+const currentProgramme = { starts: 48974, investment: 4084.19, employment: 108639 };
+const previousProgramme = { starts: 71741, investment: 6065.16, employment: 155198 };
+const leadingDistrictsInvestment = currentDistricts.slice(0, 3).reduce((total, { value }) => total + value, 0);
+const leadingDistrictsShare = (100 * leadingDistrictsInvestment / currentProgramme.investment).toFixed(1);
+const servicesShare = (100 * currentCategories[0].value / currentProgramme.investment).toFixed(1);
 const number = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 
 export const industriesDashboard = {
   title: "Industries",
-  description: "Track industrial output and the enterprises, investment and employment reported by Kerala’s Year of Enterprises programme.",
+  description: "Track this financial year’s investment in Kerala’s Year of Enterprises programme, with district and sector breakdowns and the latest industrial production figures.",
   icon: "Factory",
   accent: "#245d7d",
   measures: [
+    { label: "Year of Enterprises investment", value: `₹${number.format(currentProgramme.investment)} crore`, note: `FY 2026–27 to date · Checked ${checkedAt}`, source: currentProgrammeSource, featured: true },
+    { label: "New enterprises", value: number.format(currentProgramme.starts), note: "FY 2026–27 to date · Year of Enterprises", source: currentProgrammeSource },
+    { label: "Reported employment", value: number.format(currentProgramme.employment), note: "FY 2026–27 to date · Year of Enterprises", source: currentProgrammeSource },
     { label: "General industrial production index", value: "84.6", note: "Apr–Jun 2026 · FY 2011–12 = 100", source: iipReport },
-    { label: "Programme enterprise starts", value: "4,73,284", note: "Cumulative · all programme years", source: programmeTotalsSource },
-    { label: "Programme-reported investment", value: "₹32,833.08 crore", note: "Cumulative · all programme years", source: programmeTotalsSource },
-    { label: "Programme-reported employment", value: "10,12,649", note: "Cumulative · all programme years", source: programmeTotalsSource },
   ],
   attention: [
+    {
+      title: "Three districts account for nearly half of investment", value: `${leadingDistrictsShare}% of FY 2026–27 investment`,
+      detail: `Ernakulam leads at ₹${number.format(currentDistricts[0].value)} crore, followed by Thiruvananthapuram and Palakkad. The three districts report ₹${number.format(leadingDistrictsInvestment)} crore combined this financial year to date.`,
+      sources: [currentProgrammeSource], section: "industry-districts",
+    },
     {
       title: "Industrial production fell in the first quarter", value: "−9.31% year on year",
       detail: "The general index fell from a revised 93.3 to 84.6 in Apr–Jun 2026, the lowest first-quarter reading in the five years shown.",
@@ -114,13 +145,29 @@ export const industriesDashboard = {
       detail: "Manufacturing rose 3.04% year on year while the electricity production index fell 18.06%. Compare each sector against the same quarter.",
       sources: [iipReport], section: "industry-sectors",
     },
-    {
-      title: "Ernakulam led reported programme investment", value: `${ernakulamShare}% of statewide programme investment`,
-      detail: `Ernakulam reported ₹${number.format(districts[0].value)} crore in FY 2025–26. Thrissur recorded the highest number of programme starts, at ${number.format(districts[2].starts)}.`,
-      sources: [programmeDistrictsSource], section: "industry-districts",
-    },
   ],
   charts: [
+    {
+      id: "industry-districts", title: "Year of Enterprises investment by district", period: "FY 2026–27 to date · Six highest reported amounts",
+      sources: [currentProgrammeSource], unit: "₹ crore", color: "#087b71", rows: currentDistricts.slice(0, 6),
+      details: {
+        columns: ["District", "New enterprises", "Investment (₹ crore)", "Reported employment"],
+        rows: [
+          ...currentDistricts.map(({ label, starts, value, employment }) => [label, starts, value, employment]),
+          ["Kerala total", currentProgramme.starts, currentProgramme.investment, currentProgramme.employment],
+        ],
+      },
+      note: "Exact figures cover all 14 districts.",
+    },
+    {
+      id: "industry-investment-sectors", title: "Year of Enterprises investment by sector", period: "FY 2026–27 to date · Investment reported by enterprise category",
+      kind: "composition", sources: [currentProgrammeSource], unit: "₹ crore", rows: currentCategories,
+      details: {
+        columns: ["Sector", "New enterprises", "Investment (₹ crore)", "Reported employment"],
+        rows: currentCategories.map(({ label, starts, value, employment }) => [label, starts, value, employment]),
+      },
+      note: `Services account for ${servicesShare}% of reported investment so far this financial year.`,
+    },
     {
       id: "industry-output", title: "Industrial production in the first quarter", period: "Apr–Jun each year · FY 2011–12 = 100",
       kind: "trend", sources: [iipReport, iipHistory], rows: q1History,
@@ -144,13 +191,13 @@ export const industriesDashboard = {
       },
     },
     {
-      id: "industry-districts", title: "Programme investment by district", period: "Six highest reported amounts · FY 2025–26",
-      sources: [programmeDistrictsSource], unit: "₹ crore", color: "#76518b", rows: districts.slice(0, 6),
+      id: "industry-districts-2025", title: "Previous year’s programme investment by district", period: "Full FY 2025–26 · Six highest reported amounts",
+      sources: [programmeDistrictsSource], unit: "₹ crore", color: "#76518b", rows: previousDistricts.slice(0, 6),
       details: {
         columns: ["District", "Programme starts", "Investment (₹ crore)", "Reported employment"],
         rows: [
-          ...districts.map(({ label, starts, value, employment }) => [label, starts, value, employment]),
-          ["Kerala total", fiscalYearProgramme.starts, fiscalYearProgramme.investment, fiscalYearProgramme.employment],
+          ...previousDistricts.map(({ label, starts, value, employment }) => [label, starts, value, employment]),
+          ["Kerala total", previousProgramme.starts, previousProgramme.investment, previousProgramme.employment],
         ],
       },
       note: "District amounts are rounded independently by the publisher.",

@@ -12,6 +12,8 @@
 .metric h2 { padding-top: .22rem; font-size: .75rem; font-weight: 750; }
 .metric > strong { color: white; font-size: clamp(1.12rem, 2.5vw, 1.57rem); font-weight: 820; letter-spacing: -.018em; font-variant-numeric: tabular-nums; }
 .metric > p { margin-top: .08rem; color: #e7f0f9; font-size: .68rem; }
+.metric[data-featured] { border-color: #f4d489; background: linear-gradient(132deg, #f1bf5b38, #f1bf5b0f); }
+.metric[data-featured] > strong { color: #ffe3a1; }
 .metric > header > details, .signal > header > details, .card > header > details { position: static; }
 .metric > header > details > div, .signal > header > details > div, .card > header > details > div { top: 3rem; right: .65rem; max-width: calc(100% - 1.3rem); }
 .metric:has(details[open]), .signal:has(details[open]), .card:has(> header > details[open]) { z-index: 10; }

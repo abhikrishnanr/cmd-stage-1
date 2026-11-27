@@ -10,7 +10,7 @@ import styles from "./DepartmentDashboard.module.css";
 export type DepartmentSource = DataProvenance & { url: string; period: string };
 type ChartRow = { label: string; value: number; color?: string };
 
-type Measure = { label: string; value: string; source: DepartmentSource; note?: string };
+type Measure = { label: string; value: string; source: DepartmentSource; note?: string; featured?: boolean };
 
 type Attention = {
   title: string;
@@ -65,8 +65,8 @@ export function DepartmentDashboard({ data }: { data: DepartmentDashboardData })
           <CmSourceDetails sources={sources} label={`${data.title} sources`} inverted />
         </div>
         <div className={styles.metrics}>
-          {data.measures.map(({ label, value, source, note }) => (
-            <article className={styles.metric} key={label}>
+          {data.measures.map(({ label, value, source, note, featured }) => (
+            <article className={styles.metric} data-featured={featured || undefined} key={label}>
               <header><h2>{label}</h2><CmSourceDetails sources={[source]} label={`${label} source`} inverted /></header>
               <strong>{value}</strong>
               <p>{note ?? source.period}</p>
