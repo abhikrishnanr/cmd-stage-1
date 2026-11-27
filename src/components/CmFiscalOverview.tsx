@@ -10,11 +10,19 @@ import { useCagKeralaAccounts } from "@/hooks/useCagKeralaAccounts";
 import styles from "./CmFiscalOverview.module.css";
 
 const definitions = [
-  { id: "revenue-receipts", label: "Revenue receipts", icon: Coins, tone: "teal" },
-  { id: "total-expenditure", label: "Total expenditure", icon: Banknote, tone: "blue" },
-  { id: "capital-expenditure", label: "Capital expenditure", icon: TrendingUp, tone: "violet" },
-  { id: "fiscal-balance", label: "Fiscal balance", icon: Scale, tone: "rose" },
+  { id: "revenue-receipts", label: "Revenue receipts", icon: Coins, tone: "teal", previous: 26700.95 },
+  { id: "total-expenditure", label: "Total expenditure", icon: Banknote, tone: "blue", previous: 44556.14 },
+  { id: "capital-expenditure", label: "Capital expenditure", icon: TrendingUp, tone: "violet", previous: 3534.48 },
+  { id: "fiscal-balance", label: "Fiscal balance", icon: Scale, tone: "rose", previous: 17888.17 },
 ] as const;
+const previousRevenueDeficit = 14320.71;
+const previousSource = {
+  source: "CAG Kerala",
+  dataset: "Monthly Key Indicators · June 2025, pages 1–2",
+  url: "https://cag.gov.in/uploads/state_accounts_report/account-report-MKI-jUNE-2025-English-06870ff0596b584-84700173.pdf",
+  period: "Apr–Jun 2025",
+  basis: "Unaudited provisional accounts",
+};
 
 const budgetHistory = keralaBudgetLastGoodSnapshot.overallPosition;
 const annualAccounts = budgetHistory.history.filter((item) => item.financialYearStart >= 2020 && item.financialYearStart <= 2024);
@@ -30,6 +38,8 @@ const percent = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
 export function CmFiscalOverview() {
   const { data } = useCagKeralaAccounts();
   const source = { ...cagFiscalSource(data), url: data.source.workbookUrl };
+  const hasMatchedPeriod = data.actualThrough === "2026-06-30";
+  const periodSources = hasMatchedPeriod ? [source, previousSource] : [source];
   const items = definitions.flatMap((item) => {
     const metric = cagMetric(data, item.id);
     return metric ? [{ ...item, actual: metric.actual }] : [];
@@ -39,6 +49,7 @@ export function CmFiscalOverview() {
   const balance = cagMetric(data, "revenue-balance")?.actual;
   const coverage = receipts !== undefined && spending !== undefined && spending > 0 ? receipts / spending * 100 : null;
   const hasComparison = receipts !== undefined && spending !== undefined && balance !== undefined;
+  const shortfallChange = balance !== undefined ? previousRevenueDeficit + balance : null;
 
   return (
     <section id="state-finances" aria-labelledby="cm-fiscal-title" className={styles.section}>
@@ -48,17 +59,29 @@ export function CmFiscalOverview() {
           <h2 id="cm-fiscal-title">State finances</h2>
           <p>{source.period} · {source.basis}</p>
         </div>
-        <CmSourceDetails sources={[source, annualSource]} label="State finance sources" inverted />
+        <CmSourceDetails sources={[...periodSources, annualSource]} label="State finance sources" inverted />
       </header>
 
       <div className={styles.content}>
         <dl className={styles.metrics}>
-          {items.map(({ id, label, icon: Icon, actual, tone }) => (
-            <div key={id} data-tone={tone} className={styles.metric}>
-              <dt><Icon size={16} aria-hidden="true" />{label}</dt>
-              <dd>{crore(actual)}</dd>
-            </div>
-          ))}
+          {items.map(({ id, label, icon: Icon, actual, tone, previous }) => {
+            const isBalance = id === "fiscal-balance";
+            const change = (Math.abs(actual) - previous) / previous * 100;
+            const direction = isBalance ? (change < 0 ? "smaller deficit" : "larger deficit") : (change < 0 ? "lower" : "higher");
+            const comparison = change === 0 ? "Unchanged" : `${percent.format(Math.abs(change))}% ${direction}`;
+            return (
+              <div key={id} data-tone={tone} className={styles.metric}>
+                <dt><Icon size={16} aria-hidden="true" />{label}</dt>
+                <dd>{crore(actual)}
+                  {hasMatchedPeriod && (
+                    <span className={styles.metricChange} title={`Apr–Jun 2025: ${crore(isBalance ? -previous : previous)}`}>
+                      {isBalance && actual >= 0 ? "No deficit" : comparison}<span className={styles.period}> vs Apr–Jun 2025</span>
+                    </span>
+                  )}
+                </dd>
+              </div>
+            );
+          })}
         </dl>
 
         <div className={styles.figures}>
@@ -66,7 +89,7 @@ export function CmFiscalOverview() {
             <figure className={styles.current}>
               <figcaption className={styles.caption}>
                 <div><h3>Revenue spending and receipts</h3><p>{source.period}</p></div>
-                <CmSourceDetails sources={[source]} label="Provisional accounts source" />
+                <CmSourceDetails sources={periodSources} label="Provisional accounts sources" />
               </figcaption>
               <div className={styles.currentBars}>
                 {[{ label: "Revenue receipts", value: receipts, className: styles.teal }, { label: "Revenue expenditure", value: spending, className: styles.blue }].map((row) => (
@@ -79,7 +102,12 @@ export function CmFiscalOverview() {
               {balance < 0 && coverage !== null && (
                 <div className={styles.signal}>
                   <ArrowDownRight aria-hidden="true" size={17} />
-                  <p><strong>{crore(-balance)} revenue shortfall.</strong> Receipts covered {percent.format(coverage)}% of revenue expenditure in the same period.</p>
+                  <p>
+                    <strong>{crore(-balance)} revenue shortfall.</strong> Receipts covered {percent.format(coverage)}% of revenue expenditure.
+                    {hasMatchedPeriod && shortfallChange !== null && (shortfallChange === 0
+                      ? " The shortfall was unchanged from Apr–Jun 2025."
+                      : ` The shortfall was ${crore(Math.abs(shortfallChange))} ${shortfallChange > 0 ? "smaller" : "larger"} than in Apr–Jun 2025.`)}
+                  </p>
                 </div>
               )}
             </figure>

@@ -53,6 +53,8 @@
 .metric dt { display: flex; align-items: center; gap: 6px; font-size: .72rem; font-weight: 720; color: #343e54; }
 .metric dt svg { flex: none; color: var(--metric-ink); }
 .metric dd { margin-top: 4px; font-size: clamp(.86rem, 2vw, 1.22rem); font-weight: 830; font-variant-numeric: tabular-nums; letter-spacing: -.035em; color: var(--metric-ink); }
+.metricChange { display: block; margin-top: 3px; font-size: .68rem; font-weight: 760; letter-spacing: 0; color: var(--metric-ink); line-height: 1.4; }
+.period { color: #586476; font-weight: 600; }
 .figures { display: grid; gap: 10px; }
 .current, .history { display: grid; align-content: start; gap: 10px; min-width: 0; padding: 11px; border: 1px solid #e2eaf1; border-radius: 14px; background: white; }
 .caption { display: flex; align-items: start; justify-content: space-between; gap: 8px; }
